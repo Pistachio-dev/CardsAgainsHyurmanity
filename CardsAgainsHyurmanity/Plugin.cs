@@ -15,11 +15,11 @@ namespace CardsAgainsHyurmanity;
 
 public sealed class Plugin : IDalamudPlugin
 {
-    private const string CommandName = "/CardsAgainsHyurmanity";
+    private const string CommandName = "/cah";
 
     public Configuration Configuration { get; init; }
 
-    public readonly WindowSystem WindowSystem = new("CardsAgainsHyurmanity");
+    public readonly WindowSystem WindowSystem = new("Cards Agains Hyurmanity");
     private ConfigWindow ConfigWindow { get; init; }
     private MainWindow MainWindow { get; init; }
     private IServiceProvider serviceProvider { get; init; }

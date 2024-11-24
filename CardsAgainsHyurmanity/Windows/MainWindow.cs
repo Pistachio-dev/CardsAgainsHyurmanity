@@ -1,3 +1,4 @@
+using CardsAgainsHyurmanity.Modules;
 using DalamudBasics.GUI.Windows;
 using DalamudBasics.Logging;
 using ImGuiNET;
@@ -22,6 +23,9 @@ public class MainWindow : PluginWindowBase, IDisposable
 
     protected override void SafeDraw()
     {
-        throw new NotImplementedException();
+        if (ImGui.Button("test"))
+        {
+            new CahDataLoader().Load();
+        }
     }
 }
