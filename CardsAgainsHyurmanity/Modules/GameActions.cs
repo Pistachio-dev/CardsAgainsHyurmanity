@@ -130,7 +130,7 @@ namespace CardsAgainsHyurmanity.Modules
 
                 player.AssignedNumberForTzarPick = playerNumber;
 
-                chatOutput.WriteChat($"({playerNumber}) {response} <se.14>", null, firstLine ? 1000 : 5000);
+                chatOutput.WriteChat($"({playerNumber}) {response} <se.14>", null, firstLine ? 1000 : configuration.AnswersRolloutDelayInMs);
                 firstLine = false;
 
                 playerNumber++;
@@ -146,11 +146,11 @@ namespace CardsAgainsHyurmanity.Modules
             {
                 if (response.Contains("_"))
                 {
-                    response = response.ReplaceFirst("_", $"_{pick}_");
+                    response = response.ReplaceFirst("_", $"{pick}");
                 }
                 else
                 {
-                    response = $"{response} _{pick}_";
+                    response = $"{response} {pick}";
                 }
             }
 
@@ -243,9 +243,9 @@ namespace CardsAgainsHyurmanity.Modules
         }
 
         public void AddChatListeners()
-        {
-            chatListener.AddPreprocessedMessageListener(TzarPickChatListener);
+        {            
             chatListener.AddPreprocessedMessageListener(PlayerPicksChatListener);
+            chatListener.AddPreprocessedMessageListener(TzarPickChatListener);
         }
 
         public void TzarPickChatListener(XivChatType type, string senderFullName, string message, DateTime receivedAt)
@@ -297,6 +297,7 @@ namespace CardsAgainsHyurmanity.Modules
                     choices[i] = choice;
                 }
 
+                logService.Info($"Pick detected for {senderFullName} from message \"{message}\"");
                 ApplyPlayerPick(choices, pickingPlayer);
 
                 if (HaveAllPlayersPicked())

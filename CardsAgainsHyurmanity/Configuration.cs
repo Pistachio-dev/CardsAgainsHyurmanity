@@ -18,4 +18,5 @@ public class Configuration : IConfiguration
     public List<CahPackSettings> PackSelections { get; set; } = new();
     public int InitialWhiteCardsDrawnAmount { get; set; } = 10;
     public int AwesomePointsToWin { get; set; } = 10;
+    public int AnswersRolloutDelayInMs { get; set; } = 4000;
 }

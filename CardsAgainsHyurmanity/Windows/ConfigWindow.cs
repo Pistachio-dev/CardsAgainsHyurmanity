@@ -20,7 +20,7 @@ public class ConfigWindow : PluginWindowBase, IDisposable
 
     public ConfigWindow(ILogService logService, IServiceProvider serviceProvider) : base(logService, "Configuration")
     {
-        Size = new Vector2(500, 500);
+        Size = new Vector2(500, 600);
         SizeCondition = ImGuiCond.Appearing;
         this.configurationService = serviceProvider.GetRequiredService<IConfigurationService<Configuration>>();
 
@@ -49,6 +49,7 @@ public class ConfigWindow : PluginWindowBase, IDisposable
         DrawSectionHeader("Game");
         formFactory.AddValidationText(formFactory.DrawIntInput("Starting white cards", nameof(Configuration.InitialWhiteCardsDrawnAmount), EnforcePositiveInt));
         formFactory.AddValidationText(formFactory.DrawIntInput("Awesome points to win", nameof(Configuration.AwesomePointsToWin), EnforcePositiveInt));
+        formFactory.AddValidationText(formFactory.DrawIntInput("Delay between answers (in ms)", nameof(Configuration.AnswersRolloutDelayInMs), EnforcePositiveInt));
     }
 
     private void DrawSectionHeader(string title)
