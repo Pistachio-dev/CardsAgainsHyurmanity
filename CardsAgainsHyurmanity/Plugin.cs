@@ -26,6 +26,7 @@ public sealed class Plugin : IDalamudPlugin
     private ConfigWindow ConfigWindow { get; init; }
     private MainWindow MainWindow { get; init; }
     private PackSelectionWindow PackSelectionWindow { get; init; }
+    private CardViewerWindow CardViewerWindow { get; init; }
     private IServiceProvider serviceProvider { get; init; }
     private ILogService logService { get; set; }
 
@@ -38,11 +39,13 @@ public sealed class Plugin : IDalamudPlugin
 
         ConfigWindow = new ConfigWindow(logService, serviceProvider);
         MainWindow = new MainWindow(logService, serviceProvider, this);
-        PackSelectionWindow = new PackSelectionWindow(logService, serviceProvider);
+        PackSelectionWindow = new PackSelectionWindow(logService, serviceProvider, this);
+        CardViewerWindow = new CardViewerWindow(logService, serviceProvider);
 
         WindowSystem.AddWindow(ConfigWindow);
         WindowSystem.AddWindow(MainWindow);
         WindowSystem.AddWindow(PackSelectionWindow);
+        WindowSystem.AddWindow(CardViewerWindow);
 
         serviceProvider.GetRequiredService<ICommandManager>().AddHandler(CommandName, new CommandInfo(OnCommand)
         {
@@ -103,4 +106,13 @@ public sealed class Plugin : IDalamudPlugin
     public void ToggleConfigUI() => ConfigWindow.Toggle();
     public void ToggleMainUI() => MainWindow.Toggle();
     public void TogglePackSelectorUI() => PackSelectionWindow.Toggle();
+
+    public void ViewCards(LoadedCahCards dataToView)
+    {
+        CardViewerWindow.CardsToView = dataToView;
+        if (!CardViewerWindow.IsOpen)
+        {
+            CardViewerWindow.Toggle();
+        }
+    }
 }

@@ -16,13 +16,15 @@ namespace CardsAgainsHyurmanity.Windows;
 
 public class PackSelectionWindow : PluginWindowBase, IDisposable
 {
+    private readonly Plugin plugin;
     private CahPackCollection fullData;
     private IConfigurationService<Configuration> configService;
     private Configuration configuration;
     private GameActions gameActions;
     private CahGame game;
     private HashSet<int> changedIndexes = new();
-    public PackSelectionWindow(ILogService logService, IServiceProvider serviceProvider)
+    private CahDataLoader loader;
+    public PackSelectionWindow(ILogService logService, IServiceProvider serviceProvider, Plugin plugin)
         : base(logService, "Card pack selector", ImGuiWindowFlags.AlwaysAutoResize)
     {
         SizeConstraints = new WindowSizeConstraints
@@ -36,6 +38,8 @@ public class PackSelectionWindow : PluginWindowBase, IDisposable
         configuration = configService.GetConfiguration();
         fullData = serviceProvider.GetRequiredService<CahDataLoader>().GetFullData();
         gameActions = serviceProvider.GetRequiredService<GameActions>();
+        loader = serviceProvider.GetRequiredService<CahDataLoader>();
+        this.plugin = plugin;
     }
 
     public void Dispose() { }
@@ -54,6 +58,11 @@ public class PackSelectionWindow : PluginWindowBase, IDisposable
             ImGui.SameLine();
             ImGui.TextColored(new Vector4(1, 0, 0, 1), $"You have unsaved changes");
         }
+
+        DrawActionButton(() => plugin.ViewCards(loader.BuildDeck(configuration.PackSelections)), "View selected cards");
+
+
+        
         foreach (var entry in configService.GetConfiguration().PackSelections)
         {
             DrawCheckbox(entry);

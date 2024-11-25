@@ -10,6 +10,6 @@ namespace CardsAgainsHyurmanity.Model.Game
     {
         public List<Player> Players { get; set; } = new();
         public Player? Tzar { get; set; }
-        public LoadedCahCards Deck { get; set; }
+        public LoadedCahCards Deck { get; set; }        
     }
 }
