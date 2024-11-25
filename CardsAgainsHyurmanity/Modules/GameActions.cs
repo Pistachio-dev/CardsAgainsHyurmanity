@@ -136,7 +136,7 @@ namespace CardsAgainsHyurmanity.Modules
                 playerNumber++;
             }
 
-            chatOutput.WriteChat($"{game.Tzar.FullName.GetFirstName()}, write the number of your favorite");
+            chatOutput.WriteChat($"{game.Tzar.FullName.GetFirstName()}, write the number of your favorite", null, configuration.AnswersRolloutDelayInMs);
         }
 
         private string GetPlayerResponse(Player player)
@@ -232,7 +232,7 @@ namespace CardsAgainsHyurmanity.Modules
             }
 
             chatOutput.WriteChat($"{winner.FullName.WithoutWorldName()} wins and gets one Awesome point! <se.15>");
-            chatOutput.WriteChat($"Their answer was {GetPlayerResponse(winner)}");
+            chatOutput.WriteChat($"Their answer was {GetPlayerResponse(winner)}", null, 1000);
             NextRound();
         }
 
