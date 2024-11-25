@@ -59,7 +59,8 @@ public class PackSelectionWindow : PluginWindowBase, IDisposable
             ImGui.TextColored(new Vector4(1, 0, 0, 1), $"You have unsaved changes");
         }
 
-        DrawActionButton(() => plugin.ViewCards(loader.BuildDeck(configuration.PackSelections)), "View selected cards");
+        DrawActionButton(() => plugin.ViewCards(loader.BuildDeck(configuration.PackSelections)), 
+            changes ? "View selected cards (save to update)" : "View selected cards");
         
         foreach (var entry in configService.GetConfiguration().PackSelections)
         {
