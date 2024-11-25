@@ -123,28 +123,38 @@ namespace CardsAgainsHyurmanity.Modules
             new Random().Shuffle<Player>(randomizedList);
 
             int playerNumber = 1;
+            bool firstLine = true;
             foreach (var player in randomizedList)
             {
-                var response = game.BlackCard.text;
-                foreach (var pick in player.Picks)
-                {
-                    if (response.Contains("_"))
-                    {
-                        response = response.ReplaceFirst("_", $"_{pick}_");                        
-                    }
-                    else
-                    {
-                        response = $"{response} _{pick}_";
-                    }
-                    
-                }
+                var response = GetPlayerResponse(player);
 
                 player.AssignedNumberForTzarPick = playerNumber;
 
-                chatOutput.WriteChat($"({playerNumber}) {response} <se.14>", null, 5000);
+                chatOutput.WriteChat($"({playerNumber}) {response} <se.14>", null, firstLine ? 1000 : 5000);
+                firstLine = false;
 
                 playerNumber++;
             }
+
+            chatOutput.WriteChat($"{game.Tzar.FullName.GetFirstName()}, write the number of your favorite");
+        }
+
+        private string GetPlayerResponse(Player player)
+        {
+            var response = game.BlackCard.text;
+            foreach (var pick in player.Picks)
+            {
+                if (response.Contains("_"))
+                {
+                    response = response.ReplaceFirst("_", $"_{pick}_");
+                }
+                else
+                {
+                    response = $"{response} _{pick}_";
+                }
+            }
+
+            return response;
         }
 
         public void AddTargetPlayer()
@@ -194,10 +204,13 @@ namespace CardsAgainsHyurmanity.Modules
             }
             else
             {
+                chatOutput.WriteCommand("mk off", 1000, game.Tzar.FullName);
                 tzarIndex = (game.Players.IndexOf(game.Tzar) + 1) % game.Players.Count;
             }
 
             game.Tzar = game.Players[tzarIndex];
+
+            chatOutput.WriteCommand("mk attack1", 1000, game.Tzar.FullName);
             chatOutput.WriteChat($"{game.Tzar.FullName.WithoutWorldName()} is the card Tzar.");
         }
 
@@ -218,7 +231,8 @@ namespace CardsAgainsHyurmanity.Modules
                 return;
             }
 
-            chatOutput.WriteChat($"{winner.FullName.WithoutWorldName()} wins and gets one Awesome point!");
+            chatOutput.WriteChat($"{winner.FullName.WithoutWorldName()} wins and gets one Awesome point! <se.15>");
+            chatOutput.WriteChat($"Their answer was {GetPlayerResponse(winner)}");
             NextRound();
         }
 
