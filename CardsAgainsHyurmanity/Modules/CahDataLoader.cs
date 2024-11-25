@@ -4,16 +4,10 @@ using CardsAgainsHyurmanity.Model.CAHData;
 using CardsAgainsHyurmanity.Model.Game;
 using DalamudBasics.Configuration;
 using DalamudBasics.Logging;
-using ECommons;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using static FFXIVClientStructs.FFXIV.Client.System.String.Utf8String.Delegates;
 
 namespace CardsAgainsHyurmanity.Modules
 {
@@ -41,14 +35,24 @@ namespace CardsAgainsHyurmanity.Modules
 
         public LoadedCahCards BuildDeck(List<CahPackSettings> settings)
         {
-            var indexes = settings.Select(p => p.IndexInData).ToList();
+            var indexes = settings.Where(p => p.Enabled).Select(p => p.IndexInData).ToList();
+            return BuildDeck(indexes);
+        }
+
+        public LoadedCahCards BuildDeck(int packIndex)
+        {
+            return BuildDeck(new List<int> { packIndex });
+        }
+
+        private LoadedCahCards BuildDeck(List<int> packIndexes)
+        {
             var deck = new LoadedCahCards();
-            var data = GetFullData();            
-            (int blackCount, int whiteCount) = GetTotalCardAmount(indexes);
-            deck.BlackCards = new BlackCard[whiteCount];
+            var data = GetFullData();
+            (int blackCount, int whiteCount) = GetTotalCardAmount(packIndexes);
+            deck.BlackCards = new BlackCard[blackCount];
             deck.WhiteCards = new string[whiteCount];
 
-            return Populate(indexes, ref deck);
+            return Populate(packIndexes, ref deck);
         }
 
         // Arrays must have been sized already.
@@ -83,6 +87,8 @@ namespace CardsAgainsHyurmanity.Modules
                     }
                 }
             }
+
+            deck.LoadedPackNames = enabledPackIndexes.Select(index => data.packs[index].name).ToArray();
 
             return deck;
         }

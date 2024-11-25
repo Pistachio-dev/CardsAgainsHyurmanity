@@ -1,15 +1,14 @@
 using CardsAgainsHyurmanity.Model.CAH;
-using CardsAgainsHyurmanity.Model.CAHData;
 using CardsAgainsHyurmanity.Model.Game;
 using CardsAgainsHyurmanity.Modules;
 using DalamudBasics.Configuration;
 using DalamudBasics.GUI.Windows;
 using DalamudBasics.Logging;
+using Humanizer;
 using ImGuiNET;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
 
 namespace CardsAgainsHyurmanity.Windows;
@@ -41,6 +40,11 @@ public class CardViewerWindow : PluginWindowBase, IDisposable
 
     public void Dispose() { }
 
+    public void EnsureOpen()
+    {
+        ImGui.SetWindowCollapsed(false);
+    }
+
     protected override void SafeDraw()
     {
         if (CardsToView == null)
@@ -48,6 +52,7 @@ public class CardViewerWindow : PluginWindowBase, IDisposable
             return;
         }
 
+        ImGui.TextUnformatted($"Packs: {CardsToView.LoadedPackNames.Humanize()}.");
         if (ImGui.CollapsingHeader($"Black cards ({CardsToView.BlackCards.Length})"))
         {
             foreach (var blackCard in CardsToView.BlackCards)

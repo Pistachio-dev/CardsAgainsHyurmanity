@@ -13,6 +13,7 @@ using CardsAgainsHyurmanity.Windows;
 using CardsAgainsHyurmanity.Model.Game;
 using CardsAgainsHyurmanity.Modules;
 using System.Net;
+using ImGuiNET;
 
 namespace CardsAgainsHyurmanity;
 
@@ -114,5 +115,7 @@ public sealed class Plugin : IDalamudPlugin
         {
             CardViewerWindow.Toggle();
         }
+
+        CardViewerWindow.EnsureOpen();
     }
 }

@@ -1,9 +1,4 @@
 using CardsAgainsHyurmanity.Model.CAHData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CardsAgainsHyurmanity.Model.Game
 {
@@ -11,5 +6,6 @@ namespace CardsAgainsHyurmanity.Model.Game
     {
         public string[] WhiteCards = [];
         public BlackCard[] BlackCards = [];
+        public string[] LoadedPackNames = [];
     }
 }

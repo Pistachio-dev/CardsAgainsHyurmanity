@@ -60,12 +60,12 @@ public class PackSelectionWindow : PluginWindowBase, IDisposable
         }
 
         DrawActionButton(() => plugin.ViewCards(loader.BuildDeck(configuration.PackSelections)), "View selected cards");
-
-
         
         foreach (var entry in configService.GetConfiguration().PackSelections)
         {
             DrawCheckbox(entry);
+            ImGui.SameLine();
+            DrawActionButton(() => plugin.ViewCards(loader.BuildDeck(entry.IndexInData)), $"View cards##{entry.IndexInData}");
         }
     }
 
