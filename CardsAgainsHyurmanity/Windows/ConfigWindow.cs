@@ -1,7 +1,9 @@
 using System;
 using System.Numerics;
+using Dalamud.Game.Text;
 using Dalamud.Interface.Windowing;
 using DalamudBasics.Configuration;
+using DalamudBasics.GUI.Forms;
 using DalamudBasics.GUI.Windows;
 using DalamudBasics.Logging;
 using ImGuiNET;
@@ -11,14 +13,19 @@ namespace CardsAgainsHyurmanity.Windows;
 
 public class ConfigWindow : PluginWindowBase, IDisposable
 {
-    private IConfiguration configuration;
+    private Configuration configuration;
+    private ImGuiFormFactory<Configuration> formFactory;
+    private IConfigurationService<Configuration> configurationService;
+    private readonly Vector4 lightGreen = new Vector4(162 / 255f, 1, 153 / 255f, 1);
 
-    public ConfigWindow(ILogService logService, IServiceProvider sp) : base(logService, "Configuration")
+    public ConfigWindow(ILogService logService, IServiceProvider serviceProvider) : base(logService, "Configuration")
     {
-        Size = new Vector2(232, 90);
-        SizeCondition = ImGuiCond.Always;
+        Size = new Vector2(500, 500);
+        SizeCondition = ImGuiCond.Appearing;
+        this.configurationService = serviceProvider.GetRequiredService<IConfigurationService<Configuration>>();
 
-        configuration = sp.GetRequiredService<IConfiguration>();
+        this.formFactory = new ImGuiFormFactory<Configuration>(() => configurationService.GetConfiguration(), (data) => configurationService.SaveConfiguration());
+
     }
 
     public void Dispose() { }
@@ -29,6 +36,29 @@ public class ConfigWindow : PluginWindowBase, IDisposable
 
     protected override void SafeDraw()
     {
-        
+        DrawSectionHeader("Chat");
+        ImGui.BeginGroup();
+        ImGui.TextUnformatted("Write to: ");
+        formFactory.DrawUshortRadio(nameof(Configuration.DefaultOutputChatType), sameLine: true,
+            [("/echo", (ushort)XivChatType.Echo, null),
+                ("/party", (ushort)XivChatType.Party, null),
+                ("/alliance", (ushort)XivChatType.Alliance, null),
+                ("/say", (ushort)XivChatType.Say, null)]);
+        ImGui.EndGroup();
+
+        DrawSectionHeader("Game");
+        formFactory.AddValidationText(formFactory.DrawIntInput("Starting white cards", nameof(Configuration.InitialWhiteCardsDrawnAmount), EnforcePositiveInt));
+        formFactory.AddValidationText(formFactory.DrawIntInput("Awesome points to win", nameof(Configuration.AwesomePointsToWin), EnforcePositiveInt));
+    }
+
+    private void DrawSectionHeader(string title)
+    {
+        ImGui.Separator();
+        ImGui.TextColored(lightGreen, title);
+    }
+
+    private string? EnforcePositiveInt(int number)
+    {
+        return number >= 0 ? null : "Number must be positive";
     }
 }

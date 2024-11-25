@@ -16,4 +16,6 @@ public class Configuration : IConfiguration
     public int LimitedChatChannelsMessageDelayInMs { get; set; } = 1500;
 
     public List<CahPackSettings> PackSelections { get; set; } = new();
+    public int InitialWhiteCardsDrawnAmount { get; set; } = 10;
+    public int AwesomePointsToWin { get; set; } = 10;
 }

@@ -14,6 +14,7 @@ using CardsAgainsHyurmanity.Model.Game;
 using CardsAgainsHyurmanity.Modules;
 using System.Net;
 using ImGuiNET;
+using ECommons;
 
 namespace CardsAgainsHyurmanity;
 
@@ -33,6 +34,8 @@ public sealed class Plugin : IDalamudPlugin
 
     public Plugin(IDalamudPluginInterface pluginInterface)
     {
+        ECommonsMain.Init(pluginInterface, this);
+
         serviceProvider = BuildServiceProvider(pluginInterface);
         logService = serviceProvider.GetRequiredService<ILogService>();        
 
@@ -84,6 +87,7 @@ public sealed class Plugin : IDalamudPlugin
         serviceCollection.AddSingleton<CahGame>();
         serviceCollection.AddSingleton<CahDataLoader>();
         serviceCollection.AddSingleton<GameActions>();
+        serviceCollection.AddSingleton<CahChatOutput>();
 
         return serviceCollection.BuildServiceProvider();
     }
@@ -94,6 +98,8 @@ public sealed class Plugin : IDalamudPlugin
         serviceProvider.GetRequiredService<ILogService>().AttachToGameLogicLoop(framework);
         serviceProvider.GetRequiredService<IChatListener>().InitializeAndRun("[CAH]");
         serviceProvider.GetRequiredService<HookManager>();
+        serviceProvider.GetRequiredService<CahChatOutput>().InitializeAndAttachToGameLogicLoop(framework);
+        serviceProvider.GetRequiredService<GameActions>().AddChatListeners();
     }
 
     private void OnCommand(string command, string args)

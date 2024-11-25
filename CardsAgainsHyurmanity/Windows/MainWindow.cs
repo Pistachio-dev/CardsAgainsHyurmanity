@@ -13,6 +13,7 @@ public class MainWindow : PluginWindowBase, IDisposable
 {
     private readonly Plugin plugin;
     private CahGame game;
+    private GameActions gameActions;
     public MainWindow(ILogService logService, IServiceProvider serviceProvider, Plugin plugin)
         : base(logService, "CardsAgainsHyurmanity", ImGuiWindowFlags.AlwaysAutoResize)
     {
@@ -24,6 +25,7 @@ public class MainWindow : PluginWindowBase, IDisposable
 
         game = serviceProvider.GetRequiredService<CahGame>();
         this.plugin = plugin;
+        this.gameActions = serviceProvider.GetRequiredService<GameActions>();
     }
 
     public void Dispose() { }
@@ -31,7 +33,24 @@ public class MainWindow : PluginWindowBase, IDisposable
     protected override void SafeDraw()
     {
         DrawPlayerTable();
+        if (game.Players.Count >= 3 && game.Stage == GameStage.NotStarted)
+        {
+            DrawActionButton(() => gameActions.StartGame(), "Start game");
+        }
+        if (game.Stage == GameStage.PlayersPicking)
+        {
+            DrawActionButton(() => gameActions.PresentPicks(), "Someone is afk, skip to the round end");
+        }
+        if (game.Stage == GameStage.TzarPicking)
+        {
+            DrawActionButton(() => gameActions.NextRound(), "Tzar is afk, skip to next round");
+        }
+
+        DrawActionButton(() => gameActions.AddTargetPlayer(), "Add target player");
+        ImGui.SameLine();
         DrawActionButton(() => plugin.TogglePackSelectorUI(), "Select card packs");
+        ImGui.SameLine();
+        DrawActionButton(() => plugin.ToggleConfigUI(), "Configuration");
     }
 
     private void DrawPlayerTable()
@@ -41,7 +60,8 @@ public class MainWindow : PluginWindowBase, IDisposable
         if (ImGui.BeginTable("##PlayerTable", 2, flags))
         {
             ImGui.TableSetupColumn("Player", ImGuiTableColumnFlags.WidthStretch, 0.8f);
-            ImGui.TableSetupColumn("Awesome points", ImGuiTableColumnFlags.WidthStretch, 0.2f);
+            ImGui.TableSetupColumn("A-points", ImGuiTableColumnFlags.WidthStretch, 0.2f);
+            DrawTooltip("Awesome poins");
 
             ImGui.TableHeadersRow();
 
