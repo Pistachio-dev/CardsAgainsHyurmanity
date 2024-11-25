@@ -25,7 +25,12 @@ namespace CardsAgainsHyurmanity.Modules
                 s.Append($"({i + 1}) {player.WhiteCards[i]}");
             }
 
-            WriteChat(s.ToString(), GetOutputTypeForTell(), 2000);
+            SendTell(s.ToString(), player.FullName, GetOutputTypeForTell(), DelayBetweenTells);
+        }
+
+        public void TellYouAreTzar(Player player)
+        {
+            SendTell("Look at you. You are the card Tzar now.", player.FullName, GetOutputTypeForTell(), DelayBetweenTells);
         }
     }
 }

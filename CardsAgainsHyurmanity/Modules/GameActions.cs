@@ -58,18 +58,30 @@ namespace CardsAgainsHyurmanity.Modules
             }
 
             loader.RandomizeDeck(game.Deck);
+            SetOrAdvanceTzar();
 
             foreach (var player in game.Players)
             {
                 player.WhiteCards = game.Deck.DrawWhite(configuration.InitialWhiteCardsDrawnAmount);
-                chatOutput.TellPlayerWhiteCards(player);
                 player.Picks.Clear();
+                SendWhiteCardsOrTzarNotice(player);
             }
             
-            SetOrAdvanceTzar();
             DrawNewBlackCard();
             PresentBlackCard();
             game.Stage = GameStage.PlayersPicking;
+        }
+
+        private void SendWhiteCardsOrTzarNotice(Player player)
+        {
+            if (player == game.Tzar)
+            {
+                chatOutput.TellYouAreTzar(player);
+            }
+            else
+            {
+                chatOutput.TellPlayerWhiteCards(player);
+            }            
         }
 
         private void DrawNewBlackCard()
@@ -84,7 +96,7 @@ namespace CardsAgainsHyurmanity.Modules
                 player.Picks.Clear();
                 player.AssignedNumberForTzarPick = 0;
                 player.WhiteCards.AddRange(game.Deck.DrawWhite(game.BlackCard.pick));
-                chatOutput.TellPlayerWhiteCards(player);
+                SendWhiteCardsOrTzarNotice(player);
             }
 
             SetOrAdvanceTzar();
@@ -96,7 +108,7 @@ namespace CardsAgainsHyurmanity.Modules
         private void PresentBlackCard()
         {
             chatOutput.WriteChat($"Black card: {game.BlackCard.text}.");
-            chatOutput.WriteChat($"Pick {game.BlackCard.pick} white {"card".ToQuantity(game.BlackCard.pick)} by writing their number");
+            chatOutput.WriteChat($"Pick {"white card".ToQuantity(game.BlackCard.pick)} by writing their number");
             if (game.BlackCard.pick > 1)
             {
                 chatOutput.WriteChat("Use a comma (,) to separate the card numbers.");
@@ -105,6 +117,7 @@ namespace CardsAgainsHyurmanity.Modules
 
         public void PresentPicks()
         {
+            chatOutput.WriteChat("Everyone picked, let's see what they made.");
             game.Stage = GameStage.TzarPicking;
             var randomizedList = game.Players.Where(p => p != game.Tzar).ToArray();
             new Random().Shuffle<Player>(randomizedList);
@@ -115,10 +128,22 @@ namespace CardsAgainsHyurmanity.Modules
                 var response = game.BlackCard.text;
                 foreach (var pick in player.Picks)
                 {
-                    response.ReplaceFirst("_", $"_{pick}_");
+                    if (response.Contains("_"))
+                    {
+                        response = response.ReplaceFirst("_", $"_{pick}_");                        
+                    }
+                    else
+                    {
+                        response = $"{response} _{pick}_";
+                    }
+                    
                 }
 
+                player.AssignedNumberForTzarPick = playerNumber;
+
                 chatOutput.WriteChat($"({playerNumber}) {response} <se.14>", null, 5000);
+
+                playerNumber++;
             }
         }
 
@@ -178,7 +203,13 @@ namespace CardsAgainsHyurmanity.Modules
 
         private void ApplyTzarPick(int number)
         {
-            var winner = game.Players.First(player => player.AssignedNumberForTzarPick == number);
+            var winner = game.Players.FirstOrDefault(player => player.AssignedNumberForTzarPick == number);
+            if (winner == null)
+            {
+                logService.Error($"No player with assigned number {number} was found");
+                return;
+            }
+
             winner.AwesomePoints += 1;
 
             if (winner.AwesomePoints == configuration.AwesomePointsToWin)
@@ -187,6 +218,7 @@ namespace CardsAgainsHyurmanity.Modules
                 return;
             }
 
+            chatOutput.WriteChat($"{winner.FullName.WithoutWorldName()} wins and gets one Awesome point!");
             NextRound();
         }
 
@@ -211,9 +243,10 @@ namespace CardsAgainsHyurmanity.Modules
                     return;
                 }
 
-                if (!int.TryParse(message, out int pick) || pick < 1 || pick > game.Players.Count - 1)
+                if (!int.TryParse(message.Trim(), out int pick) || pick < 1 || pick > game.Players.Count - 1)
                 {
                     logService.Info($"Picking for Tzar {game.Tzar.FullName} is invalid: can't be parsed or it's out of range.");
+                    return;
                 }
 
                 ApplyTzarPick(pick);
