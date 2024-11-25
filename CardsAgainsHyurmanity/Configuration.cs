@@ -1,6 +1,8 @@
+using CardsAgainsHyurmanity.Model.CAHData;
 using Dalamud.Game.Text;
 using DalamudBasics.Configuration;
 using System;
+using System.Collections.Generic;
 
 namespace CardsAgainsHyurmanity;
 
@@ -12,4 +14,6 @@ public class Configuration : IConfiguration
     public bool LogOutgoingChatOutput { get; set; } = true;
     public bool LogClientOnlyChatOutput { get; set; } = true;
     public int LimitedChatChannelsMessageDelayInMs { get; set; } = 1500;
+
+    public List<CahPackSettings> PackSelections { get; set; } = new();
 }

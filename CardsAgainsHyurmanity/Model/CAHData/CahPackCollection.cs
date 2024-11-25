@@ -1,15 +1,12 @@
-using System;
+using CardsAgainsHyurmanity.Model.CAHData;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CardsAgainsHyurmanity.Model.CAH
 {
     public class CahPackCollection
     {
-        public string[] White {  get; set; }
-        public string[] Black { get; set; }
-        public Dictionary<string, CahPack> CahPacks { get; set; }
+        public string[] white {  get; set; }
+        public BlackCard[] black { get; set; }
+        public CahPack[] packs { get; set; }
     }
 }

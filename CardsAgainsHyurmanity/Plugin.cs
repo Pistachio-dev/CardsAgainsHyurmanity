@@ -10,6 +10,9 @@ using DalamudBasics.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using CardsAgainsHyurmanity.Windows;
+using CardsAgainsHyurmanity.Model.Game;
+using CardsAgainsHyurmanity.Modules;
+using System.Net;
 
 namespace CardsAgainsHyurmanity;
 
@@ -22,21 +25,24 @@ public sealed class Plugin : IDalamudPlugin
     public readonly WindowSystem WindowSystem = new("Cards Agains Hyurmanity");
     private ConfigWindow ConfigWindow { get; init; }
     private MainWindow MainWindow { get; init; }
+    private PackSelectionWindow PackSelectionWindow { get; init; }
     private IServiceProvider serviceProvider { get; init; }
     private ILogService logService { get; set; }
 
     public Plugin(IDalamudPluginInterface pluginInterface)
     {
         serviceProvider = BuildServiceProvider(pluginInterface);
-        logService = serviceProvider.GetRequiredService<ILogService>();
+        logService = serviceProvider.GetRequiredService<ILogService>();        
 
         InitializeServices(serviceProvider);
 
         ConfigWindow = new ConfigWindow(logService, serviceProvider);
-        MainWindow = new MainWindow(logService, serviceProvider);
+        MainWindow = new MainWindow(logService, serviceProvider, this);
+        PackSelectionWindow = new PackSelectionWindow(logService, serviceProvider);
 
         WindowSystem.AddWindow(ConfigWindow);
         WindowSystem.AddWindow(MainWindow);
+        WindowSystem.AddWindow(PackSelectionWindow);
 
         serviceProvider.GetRequiredService<ICommandManager>().AddHandler(CommandName, new CommandInfo(OnCommand)
         {
@@ -51,6 +57,8 @@ public sealed class Plugin : IDalamudPlugin
 
         // Adds another button that is doing the same but for the main ui of the plugin
         pluginInterface.UiBuilder.OpenMainUi += ToggleMainUI;
+
+        serviceProvider.GetRequiredService<CahDataLoader>().InitializeConfigIfNeeded();
     }
 
     public void Dispose()
@@ -69,6 +77,9 @@ public sealed class Plugin : IDalamudPlugin
         IServiceCollection serviceCollection = new ServiceCollection();
         serviceCollection.AddAllDalamudBasicsServices<Configuration>(pluginInterface);
         serviceCollection.AddSingleton<StringDebugUtils>();
+        serviceCollection.AddSingleton<CahGame>();
+        serviceCollection.AddSingleton<CahDataLoader>();
+        serviceCollection.AddSingleton<GameActions>();
 
         return serviceCollection.BuildServiceProvider();
     }
@@ -91,4 +102,5 @@ public sealed class Plugin : IDalamudPlugin
 
     public void ToggleConfigUI() => ConfigWindow.Toggle();
     public void ToggleMainUI() => MainWindow.Toggle();
+    public void TogglePackSelectorUI() => PackSelectionWindow.Toggle();
 }

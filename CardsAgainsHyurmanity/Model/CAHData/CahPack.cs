@@ -8,10 +8,10 @@ namespace CardsAgainsHyurmanity.Model.CAH
 {
     public class CahPack
     {
-        public string Name {  get; set; }
-        public string Description { get; set; }
-        public bool Official { get; set; }
-        public int[] White {  get; set; }
-        public int[] Black { get; set; }
+        public string name {  get; set; }
+        public string description { get; set; }
+        public bool official { get; set; }
+        public int[] white {  get; set; }
+        public int[] black { get; set; }
     }
 }
