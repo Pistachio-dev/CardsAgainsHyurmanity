@@ -1,6 +1,7 @@
 using CardsAgainsHyurmanity.Model.CAH;
 using CardsAgainsHyurmanity.Model.Game;
 using CardsAgainsHyurmanity.Modules;
+using CardsAgainsHyurmanity.Modules.DataLoader;
 using DalamudBasics.Configuration;
 using DalamudBasics.GUI.Windows;
 using DalamudBasics.Logging;

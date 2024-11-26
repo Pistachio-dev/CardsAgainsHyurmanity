@@ -5,8 +5,8 @@ namespace CardsAgainsHyurmanity.Model.CAH
 {
     public class CahPackCollection
     {
-        public string[] white {  get; set; }
-        public BlackCard[] black { get; set; }
-        public CahPack[] packs { get; set; }
+        public List<string> white {  get; set; }
+        public List<BlackCard> black { get; set; }
+        public List<CahPack> packs { get; set; }
     }
 }

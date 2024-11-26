@@ -1,7 +1,6 @@
 using CardsAgainsHyurmanity.Model.Game;
-using Dalamud.Game.ClientState.Objects;
+using CardsAgainsHyurmanity.Modules.DataLoader;
 using Dalamud.Game.Text;
-using Dalamud.Plugin.Services;
 using DalamudBasics.Chat.ClientOnlyDisplay;
 using DalamudBasics.Chat.Listener;
 using DalamudBasics.Configuration;
@@ -12,7 +11,6 @@ using ECommons;
 using Humanizer;
 using System;
 using System.Linq;
-using static System.Collections.Specialized.BitVector32;
 
 namespace CardsAgainsHyurmanity.Modules
 {

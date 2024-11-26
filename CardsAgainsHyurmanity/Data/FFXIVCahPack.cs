@@ -1,8 +1,14 @@
 namespace CardsAgainsHyurmanity.Data
 {
-    public static class FFXIV
+    public class FFXIVCahPack : ICustomCahPack
     {
-        public static string[] Black => [
+        public string Name => "Final Fantasy XIV";
+
+        public string Description => "Theme with both lore, game and degeneracy topics from FFXIV";
+
+        public bool Official => false;
+
+        public string[] Black => [
             "In the final raid, as per tradition, you will fight _ inside _.",
             "_'s hunting log has several entries for _, obviously.",
             "Welcome to _, please put away your minions, weapons and _",
@@ -87,9 +93,9 @@ namespace CardsAgainsHyurmanity.Data
             "I really love being followed by my new Wind-Up _",
             "The _ is a CANCER, and i'm the barber's blade!",
             "Latest trial: _, (Savage)",
-        ];
+        ];        
 
-        public static string[] White = [
+        public string[] White => [
             "He-of-strong-yet-tender-fingers",
             "You pull it, you tank it, you bop it, you twist it",
             "I swear I didn't know she was a lalafell",

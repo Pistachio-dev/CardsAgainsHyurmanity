@@ -4,12 +4,14 @@ using CardsAgainsHyurmanity.Model.CAHData;
 using CardsAgainsHyurmanity.Model.Game;
 using DalamudBasics.Configuration;
 using DalamudBasics.Logging;
+using ECommons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text.Json;
 
-namespace CardsAgainsHyurmanity.Modules
+namespace CardsAgainsHyurmanity.Modules.DataLoader
 {
     public class CahDataLoader
     {
@@ -48,7 +50,7 @@ namespace CardsAgainsHyurmanity.Modules
         {
             var deck = new LoadedCahCards();
             var data = GetFullData();
-            (int blackCount, int whiteCount) = GetTotalCardAmount(packIndexes);
+            (var blackCount, var whiteCount) = GetTotalCardAmount(packIndexes);
             deck.BlackCards = new BlackCard[blackCount];
             deck.WhiteCards = new string[whiteCount];
 
@@ -62,8 +64,8 @@ namespace CardsAgainsHyurmanity.Modules
             HashSet<int> whiteIndexes = new();
             HashSet<int> blackIndexes = new();
 
-            int blackIndex = 0;
-            int whiteIndex = 0;
+            var blackIndex = 0;
+            var whiteIndex = 0;
             foreach (var i in enabledPackIndexes)
             {
                 var packData = data.packs[i];
@@ -125,38 +127,75 @@ namespace CardsAgainsHyurmanity.Modules
 
         private CahPackCollection Load()
         {
-            CahPackCollection? collection = JsonSerializer.Deserialize<CahPackCollection>(CompactJsonData.Data);
+            var collection = JsonSerializer.Deserialize<CahPackCollection>(CompactJsonData.Data);
             if (collection == null)
             {
                 throw new Exception("Cah data was null somehow. Weird.");
             }
 
+            AppendCustomPack(collection, new FFXIVCahPack());
             data = collection;
+
             return data;
+        }
+
+        private void AppendCustomPack(CahPackCollection collection, ICustomCahPack customPack)
+        {
+            var package = new CahPack()
+            {
+                name = customPack.Name,
+                description = customPack.Description,
+                official = customPack.Official,
+            };
+
+            var blackIndexes = new List<int>(customPack.Black.Length);
+            var blackIndex = collection.black.Count;
+            foreach (var blackCardText in customPack.Black)
+            {
+                var pick = blackCardText.Count(c => c == '_');
+                collection.black.Add(new BlackCard() { pick = pick, text = blackCardText });
+                blackIndexes.Add(blackIndex);
+                blackIndex++;
+            }
+
+            var whiteIndexes = new List<int>(customPack.White.Length);
+            var whiteIndex = collection.white.Count;
+            foreach (var whiteCardText in customPack.White)
+            {
+                collection.white.Add(whiteCardText);
+                whiteIndexes.Add(whiteIndex);
+                whiteIndex++;
+            }
+
+            package.white = whiteIndexes.ToArray();
+            package.black = blackIndexes.ToArray();
+            collection.packs = new CahPack[1] { package }.Concat(collection.packs).ToList();
         }
 
         public void InitializeConfigIfNeeded()
         {
             var configuration = configService.GetConfiguration();
-            if (configuration.PackSelections.Any())
+            var fullCollection = Load();
+            if (configuration.PackSelections.Count == fullCollection.packs.Count)
             {
                 return;
             }
-            var fullCollection = Load();
-            var packDictionary = new List<CahPackSettings>();
-            for(int i = 0; i < fullCollection.packs.Length; i++)
-            {
+
+            HashSet<string> enabledPackNames = new HashSet<string>(configuration.PackSelections.Where(p => p.Enabled).Select(p => p.Name));
+            var packList = new List<CahPackSettings>();
+            for (var i = 0; i < fullCollection.packs.Count; i++)
+            {                
                 var pack = fullCollection.packs[i];
-                packDictionary.Add(new CahPackSettings()
+                bool enabled = enabledPackNames.Contains(fullCollection.packs[i].name);
+                packList.Add(new CahPackSettings()
                 {
                     Name = pack.name,
-                    Enabled = pack.name == "CAH Base Set" ? true : false,
+                    Enabled = pack.name == "CAH Base Set" ? true : enabled,
                     IndexInData = i
                 });
-
             }
 
-            configuration.PackSelections = packDictionary;
+            configuration.PackSelections = packList;
             configService.SaveConfiguration();
         }
     }
