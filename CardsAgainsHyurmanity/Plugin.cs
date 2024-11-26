@@ -1,3 +1,7 @@
+using CardsAgainsHyurmanity.Model.Game;
+using CardsAgainsHyurmanity.Modules;
+using CardsAgainsHyurmanity.Modules.DataLoader;
+using CardsAgainsHyurmanity.Windows;
 using Dalamud.Game.Command;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
@@ -7,15 +11,9 @@ using DalamudBasics.Debugging;
 using DalamudBasics.DependencyInjection;
 using DalamudBasics.Interop;
 using DalamudBasics.Logging;
+using ECommons;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using CardsAgainsHyurmanity.Windows;
-using CardsAgainsHyurmanity.Model.Game;
-using CardsAgainsHyurmanity.Modules;
-using System.Net;
-using ImGuiNET;
-using ECommons;
-using CardsAgainsHyurmanity.Modules.DataLoader;
 
 namespace CardsAgainsHyurmanity;
 
@@ -38,7 +36,7 @@ public sealed class Plugin : IDalamudPlugin
         ECommonsMain.Init(pluginInterface, this);
 
         serviceProvider = BuildServiceProvider(pluginInterface);
-        logService = serviceProvider.GetRequiredService<ILogService>();        
+        logService = serviceProvider.GetRequiredService<ILogService>();
 
         InitializeServices(serviceProvider);
 
@@ -77,7 +75,7 @@ public sealed class Plugin : IDalamudPlugin
         ConfigWindow.Dispose();
         MainWindow.Dispose();
 
-        serviceProvider.GetRequiredService<ICommandManager>().RemoveHandler(CommandName);        
+        serviceProvider.GetRequiredService<ICommandManager>().RemoveHandler(CommandName);
     }
 
     private IServiceProvider BuildServiceProvider(IDalamudPluginInterface pluginInterface)
@@ -112,7 +110,9 @@ public sealed class Plugin : IDalamudPlugin
     private void DrawUI() => WindowSystem.Draw();
 
     public void ToggleConfigUI() => ConfigWindow.Toggle();
+
     public void ToggleMainUI() => MainWindow.Toggle();
+
     public void TogglePackSelectorUI() => PackSelectionWindow.Toggle();
 
     public void ViewCards(LoadedCahCards dataToView)

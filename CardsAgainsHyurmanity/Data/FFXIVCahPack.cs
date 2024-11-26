@@ -93,7 +93,7 @@ namespace CardsAgainsHyurmanity.Data
             "I really love being followed by my new Wind-Up _",
             "The _ is a CANCER, and i'm the barber's blade!",
             "Latest trial: _, (Savage)",
-        ];        
+        ];
 
         public string[] White => [
             "He-of-strong-yet-tender-fingers",

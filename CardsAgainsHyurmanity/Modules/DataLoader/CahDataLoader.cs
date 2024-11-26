@@ -4,11 +4,9 @@ using CardsAgainsHyurmanity.Model.CAHData;
 using CardsAgainsHyurmanity.Model.Game;
 using DalamudBasics.Configuration;
 using DalamudBasics.Logging;
-using ECommons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.PortableExecutable;
 using System.Text.Json;
 
 namespace CardsAgainsHyurmanity.Modules.DataLoader
@@ -184,7 +182,7 @@ namespace CardsAgainsHyurmanity.Modules.DataLoader
             HashSet<string> enabledPackNames = new HashSet<string>(configuration.PackSelections.Where(p => p.Enabled).Select(p => p.Name));
             var packList = new List<CahPackSettings>();
             for (var i = 0; i < fullCollection.packs.Count; i++)
-            {                
+            {
                 var pack = fullCollection.packs[i];
                 bool enabled = enabledPackNames.Contains(fullCollection.packs[i].name);
                 packList.Add(new CahPackSettings()

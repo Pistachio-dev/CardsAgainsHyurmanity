@@ -14,6 +14,7 @@ public class MainWindow : PluginWindowBase, IDisposable
     private readonly Plugin plugin;
     private CahGame game;
     private GameActions gameActions;
+
     public MainWindow(ILogService logService, IServiceProvider serviceProvider, Plugin plugin)
         : base(logService, "CardsAgainsHyurmanity", ImGuiWindowFlags.AlwaysAutoResize)
     {
@@ -28,7 +29,8 @@ public class MainWindow : PluginWindowBase, IDisposable
         this.gameActions = serviceProvider.GetRequiredService<GameActions>();
     }
 
-    public void Dispose() { }
+    public void Dispose()
+    { }
 
     protected override void SafeDraw()
     {

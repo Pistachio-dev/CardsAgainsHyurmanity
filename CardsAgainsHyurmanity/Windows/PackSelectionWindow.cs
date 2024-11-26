@@ -25,6 +25,7 @@ public class PackSelectionWindow : PluginWindowBase, IDisposable
     private CahGame game;
     private HashSet<int> changedIndexes = new();
     private CahDataLoader loader;
+
     public PackSelectionWindow(ILogService logService, IServiceProvider serviceProvider, Plugin plugin)
         : base(logService, "Card pack selector", ImGuiWindowFlags.AlwaysAutoResize)
     {
@@ -43,7 +44,8 @@ public class PackSelectionWindow : PluginWindowBase, IDisposable
         this.plugin = plugin;
     }
 
-    public void Dispose() { }
+    public void Dispose()
+    { }
 
     protected override void SafeDraw()
     {
@@ -52,7 +54,7 @@ public class PackSelectionWindow : PluginWindowBase, IDisposable
         {
             changedIndexes.Clear();
             configService.SaveConfiguration();
-            gameActions.ReloadDeck();            
+            gameActions.ReloadDeck();
         }, "Save and remake deck"));
         if (changes)
         {
@@ -60,9 +62,9 @@ public class PackSelectionWindow : PluginWindowBase, IDisposable
             ImGui.TextColored(new Vector4(1, 0, 0, 1), $"You have unsaved changes");
         }
 
-        DrawActionButton(() => plugin.ViewCards(loader.BuildDeck(configuration.PackSelections)), 
+        DrawActionButton(() => plugin.ViewCards(loader.BuildDeck(configuration.PackSelections)),
             changes ? "View selected cards (save to update)" : "View selected cards");
-        
+
         foreach (var entry in configService.GetConfiguration().PackSelections)
         {
             DrawCheckbox(entry);

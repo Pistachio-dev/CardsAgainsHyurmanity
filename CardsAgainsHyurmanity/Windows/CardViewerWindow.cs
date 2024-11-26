@@ -23,6 +23,7 @@ public class CardViewerWindow : PluginWindowBase, IDisposable
     private GameActions gameActions;
     private CahGame game;
     private HashSet<int> changedIndexes = new();
+
     public CardViewerWindow(ILogService logService, IServiceProvider serviceProvider)
         : base(logService, "Card viewer")
     {
@@ -39,7 +40,8 @@ public class CardViewerWindow : PluginWindowBase, IDisposable
         gameActions = serviceProvider.GetRequiredService<GameActions>();
     }
 
-    public void Dispose() { }
+    public void Dispose()
+    { }
 
     public void EnsureOpen()
     {
@@ -72,6 +74,6 @@ public class CardViewerWindow : PluginWindowBase, IDisposable
             {
                 ImGui.TextUnformatted(whiteCard);
             }
-        }      
+        }
     }
 }

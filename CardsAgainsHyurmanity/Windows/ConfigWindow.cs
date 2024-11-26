@@ -1,13 +1,12 @@
-using System;
-using System.Numerics;
 using Dalamud.Game.Text;
-using Dalamud.Interface.Windowing;
 using DalamudBasics.Configuration;
 using DalamudBasics.GUI.Forms;
 using DalamudBasics.GUI.Windows;
 using DalamudBasics.Logging;
 using ImGuiNET;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Numerics;
 
 namespace CardsAgainsHyurmanity.Windows;
 
@@ -25,10 +24,10 @@ public class ConfigWindow : PluginWindowBase, IDisposable
         this.configurationService = serviceProvider.GetRequiredService<IConfigurationService<Configuration>>();
 
         this.formFactory = new ImGuiFormFactory<Configuration>(() => configurationService.GetConfiguration(), (data) => configurationService.SaveConfiguration());
-
     }
 
-    public void Dispose() { }
+    public void Dispose()
+    { }
 
     public override void PreDraw()
     {

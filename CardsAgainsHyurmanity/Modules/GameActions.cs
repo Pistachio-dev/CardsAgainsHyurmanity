@@ -49,7 +49,7 @@ namespace CardsAgainsHyurmanity.Modules
             {
                 player.AwesomePoints = 0;
             }
-            
+
             if (game.Deck == null)
             {
                 game.Deck = loader.BuildDeck(configuration.PackSelections);
@@ -64,7 +64,7 @@ namespace CardsAgainsHyurmanity.Modules
                 player.Picks.Clear();
                 SendWhiteCardsOrTzarNotice(player);
             }
-            
+
             DrawNewBlackCard();
             PresentBlackCard();
             game.Stage = GameStage.PlayersPicking;
@@ -79,7 +79,7 @@ namespace CardsAgainsHyurmanity.Modules
             else
             {
                 chatOutput.TellPlayerWhiteCards(player);
-            }            
+            }
         }
 
         private void DrawNewBlackCard()
@@ -88,7 +88,7 @@ namespace CardsAgainsHyurmanity.Modules
         }
 
         public void NextRound()
-        {            
+        {
             foreach (var player in game.Players)
             {
                 player.Picks.Clear();
@@ -241,7 +241,7 @@ namespace CardsAgainsHyurmanity.Modules
         }
 
         public void AddChatListeners()
-        {            
+        {
             chatListener.AddPreprocessedMessageListener(PlayerPicksChatListener);
             chatListener.AddPreprocessedMessageListener(TzarPickChatListener);
         }
@@ -283,7 +283,7 @@ namespace CardsAgainsHyurmanity.Modules
                 }
 
                 int[] choices = new int[game.BlackCard.pick];
-                for(int i = 0; i < numbers.Length; i++)
+                for (int i = 0; i < numbers.Length; i++)
                 {
                     var number = numbers[i];
                     if (!int.TryParse(number, out int choice) || choice < 1 || choice > pickingPlayer.WhiteCards.Count)

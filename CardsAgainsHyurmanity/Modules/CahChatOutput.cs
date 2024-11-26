@@ -12,6 +12,7 @@ namespace CardsAgainsHyurmanity.Modules
     public class CahChatOutput : ChatOutput
     {
         private const int DelayBetweenTells = 2000;
+
         public CahChatOutput(IConfiguration configuration, ILogService logService, IClientChatGui chatGui, IClientState clientState, ITargetingService targetingService)
             : base(configuration, logService, chatGui, clientState, targetingService)
         {
