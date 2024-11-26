@@ -1,5 +1,6 @@
 using CardsAgainsHyurmanity.Model.Game;
 using CardsAgainsHyurmanity.Modules;
+using CardsAgainsHyurmanity.Modules.DataLoader;
 using DalamudBasics.GUI.Windows;
 using DalamudBasics.Logging;
 using ImGuiNET;
@@ -14,6 +15,7 @@ public class MainWindow : PluginWindowBase, IDisposable
     private readonly Plugin plugin;
     private CahGame game;
     private GameActions gameActions;
+    private CahDataLoader dataLoader;
 
     public MainWindow(ILogService logService, IServiceProvider serviceProvider, Plugin plugin)
         : base(logService, "CardsAgainsHyurmanity", ImGuiWindowFlags.AlwaysAutoResize)
@@ -27,6 +29,7 @@ public class MainWindow : PluginWindowBase, IDisposable
         game = serviceProvider.GetRequiredService<CahGame>();
         this.plugin = plugin;
         this.gameActions = serviceProvider.GetRequiredService<GameActions>();
+        this.dataLoader = serviceProvider.GetRequiredService<CahDataLoader>();
     }
 
     public void Dispose()
@@ -34,6 +37,18 @@ public class MainWindow : PluginWindowBase, IDisposable
 
     protected override void SafeDraw()
     {
+        if (!plugin.CardsAreLoaded)
+        {
+            ImGui.TextUnformatted("Cards are not loaded");
+            DrawActionButton(() =>
+            {
+                dataLoader.GetFullData();
+                plugin.CardsAreLoaded = true;
+            }, "Load cards");
+
+            return;
+        }
+
         DrawPlayerTable();
         if (game.Players.Count >= 3 && game.Stage == GameStage.NotStarted)
         {

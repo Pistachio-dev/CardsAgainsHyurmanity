@@ -24,6 +24,7 @@ public sealed class Plugin : IDalamudPlugin
     public Configuration Configuration { get; init; }
 
     public readonly WindowSystem WindowSystem = new("Cards Agains Hyurmanity");
+    public bool CardsAreLoaded { get; set; } = false;
     private ConfigWindow ConfigWindow { get; init; }
     private MainWindow MainWindow { get; init; }
     private PackSelectionWindow PackSelectionWindow { get; init; }
