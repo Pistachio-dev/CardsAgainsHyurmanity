@@ -1,9 +1,11 @@
+using CardsAgainsHyurmanity.Model.CAHData;
 using CardsAgainsHyurmanity.Model.Game;
 using CardsAgainsHyurmanity.Modules;
 using CardsAgainsHyurmanity.Modules.DataLoader;
 using Dalamud.Game.ClientState.Objects;
 using Dalamud.Plugin.Services;
 using DalamudBasics.Chat.ClientOnlyDisplay;
+using DalamudBasics.Configuration;
 using DalamudBasics.GUI.Windows;
 using DalamudBasics.Logging;
 using DalamudBasics.Targeting;
@@ -23,6 +25,7 @@ public class MainWindow : PluginWindowBase, IDisposable
     private ITargetingService targetingService;
     private IClientChatGui chatGui;
     private Player? playerToRemove;
+    private Configuration configuration;
 
     public MainWindow(ILogService logService, IServiceProvider serviceProvider, Plugin plugin)
         : base(logService, "CardsAgainsHyurmanity", ImGuiWindowFlags.AlwaysAutoResize)
@@ -39,6 +42,7 @@ public class MainWindow : PluginWindowBase, IDisposable
         this.dataLoader = serviceProvider.GetRequiredService<CahDataLoader>();
         this.targetingService = serviceProvider.GetRequiredService<ITargetingService>();
         this.chatGui = serviceProvider.GetRequiredService<IClientChatGui>();
+        this.configuration = serviceProvider.GetRequiredService<IConfigurationService<Configuration>>().GetConfiguration();
     }
 
     public void Dispose()
@@ -77,6 +81,18 @@ public class MainWindow : PluginWindowBase, IDisposable
         DrawActionButton(() => plugin.TogglePackSelectorUI(), "Select card packs");
         ImGui.SameLine();
         DrawActionButton(() => plugin.ToggleConfigUI(), "Configuration");
+
+        if (configuration.UseTestData)
+        {
+            if (ImGui.Button("Force multiOption"))
+            {
+                game.BlackCard = new BlackCard()
+                {
+                    text = "This is _ multioption _",
+                    pick = 2,
+                };
+            }
+        }
     }
 
     private void DrawPlayerTable()
