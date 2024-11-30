@@ -98,9 +98,9 @@ namespace CardsAgainsHyurmanity.Modules
             SetOrAdvanceTzar();
             foreach (var player in game.Players)
             {
+                player.WhiteCards.AddRange(game.Deck.DrawWhite(player.Picks.Count));
                 player.Picks.Clear();
                 player.AssignedNumberForTzarPick = 0;
-                player.WhiteCards.AddRange(game.Deck.DrawWhite(game.BlackCard.pick));
                 SendWhiteCardsOrTzarNotice(player);
             }
             
@@ -114,6 +114,11 @@ namespace CardsAgainsHyurmanity.Modules
             game.ResetButKeepPlayers();
         }
 
+        public void RedealCards()
+        {
+
+
+        }
         private void PresentBlackCard()
         {
             chatOutput.WriteChat($"Black card: {game.BlackCard.text}.");
