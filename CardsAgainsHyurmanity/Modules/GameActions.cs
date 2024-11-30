@@ -122,7 +122,7 @@ namespace CardsAgainsHyurmanity.Modules
         {
             chatOutput.WriteChat("Everyone picked, let's see what they made.");
             game.Stage = GameStage.TzarPicking;
-            var randomizedList = game.Players.Where(p => p != game.Tzar).ToArray();
+            var randomizedList = game.GetNonTzarActivePlayers();
             new Random().Shuffle<Player>(randomizedList);
 
             int playerNumber = 1;
@@ -181,9 +181,20 @@ namespace CardsAgainsHyurmanity.Modules
             return;
         }
 
+        public void AddChatListeners()
+        {
+            chatListener.AddPreprocessedMessageListener(PlayerPicksChatListener);
+            chatListener.AddPreprocessedMessageListener(TzarPickChatListener);
+        }
+
+        public void ToggleAFK(Player player)
+        {
+            player.AFK = !player.AFK;
+        }
+
         private bool HaveAllPlayersPicked()
         {
-            return !game.Players.Any(p => p != game.Tzar && !p.Picks.Any());
+            return !game.GetNonTzarActivePlayers().Any(p => !p.Picks.Any());
         }
 
         private void ApplyPlayerPick(int[] numbersPicked, Player player)
@@ -200,6 +211,12 @@ namespace CardsAgainsHyurmanity.Modules
 
         private void SetOrAdvanceTzar()
         {
+            if (!game.Players.Any(p => !p.AFK))
+            {
+                clientChatGui.Print("Everyone is AFK!");
+                return;
+            }
+
             int tzarIndex;
             if (game.Tzar == null)
             {
@@ -208,13 +225,22 @@ namespace CardsAgainsHyurmanity.Modules
             else
             {
                 chatOutput.WriteCommand("mk off", 1000, game.Tzar.FullName);
-                tzarIndex = (game.Players.IndexOf(game.Tzar) + 1) % game.Players.Count;
+                tzarIndex = GetNextTzarIndex();
             }
 
             game.Tzar = game.Players[tzarIndex];
+            while (game.Tzar.AFK)
+            {
+                game.Tzar = game.Players[GetNextTzarIndex()];
+            }
 
             chatOutput.WriteCommand("mk attack1", 1000, game.Tzar.FullName);
             chatOutput.WriteChat($"{game.Tzar.FullName.WithoutWorldName()} is the card Tzar.");
+        }
+
+        private int GetNextTzarIndex()
+        {
+            return (game.Players.IndexOf(game.Tzar) + 1) % game.Players.Count;
         }
 
         private void ApplyTzarPick(int number)
@@ -245,13 +271,7 @@ namespace CardsAgainsHyurmanity.Modules
             game.Stage = GameStage.NotStarted;
         }
 
-        public void AddChatListeners()
-        {
-            chatListener.AddPreprocessedMessageListener(PlayerPicksChatListener);
-            chatListener.AddPreprocessedMessageListener(TzarPickChatListener);
-        }
-
-        public void TzarPickChatListener(XivChatType type, string senderFullName, string message, DateTime receivedAt)
+        private void TzarPickChatListener(XivChatType type, string senderFullName, string message, DateTime receivedAt)
         {
             if (game.Stage == GameStage.TzarPicking)
             {
@@ -270,7 +290,7 @@ namespace CardsAgainsHyurmanity.Modules
             }
         }
 
-        public void PlayerPicksChatListener(XivChatType type, string senderFullName, string message, DateTime receivedAt)
+        private void PlayerPicksChatListener(XivChatType type, string senderFullName, string message, DateTime receivedAt)
         {
             if (game.Stage == GameStage.PlayersPicking)
             {

@@ -83,10 +83,11 @@ public class MainWindow : PluginWindowBase, IDisposable
     {
         const ImGuiTableFlags flags = ImGuiTableFlags.SizingFixedFit | ImGuiTableFlags.Resizable | ImGuiTableFlags.Borders;
 
-        if (ImGui.BeginTable("##PlayerTable", 2, flags))
+        if (ImGui.BeginTable("##PlayerTable", 3, flags))
         {
             ImGui.TableSetupColumn("Player", ImGuiTableColumnFlags.WidthStretch, 0.8f);
             ImGui.TableSetupColumn("A-points", ImGuiTableColumnFlags.WidthStretch, 0.2f);
+            ImGui.TableSetupColumn("", ImGuiTableColumnFlags.WidthStretch, 0.2f);
             DrawTooltip("Awesome poins");
 
             ImGui.TableHeadersRow();
@@ -99,6 +100,10 @@ public class MainWindow : PluginWindowBase, IDisposable
                 if (game.Tzar == player)
                 {
                     playerNameText += " (card tzar)";
+                }
+                if (player.AFK)
+                {
+                    playerNameText += "(AFK)";
                 }
 
                 ImGui.TextUnformatted(playerNameText);
@@ -123,6 +128,13 @@ public class MainWindow : PluginWindowBase, IDisposable
 
                 ImGui.TableNextColumn();
                 ImGui.TextUnformatted(player.AwesomePoints.ToString());
+
+                ImGui.TableNextColumn();
+                if (ImGui.Button($"##{player.FullName}"))
+                {
+                    gameActions.ToggleAFK(player);
+                }
+                DrawTooltip(player.AFK ? "Unmark as AFK" : "Mark as AFK");
             }
 
             ImGui.EndTable();
