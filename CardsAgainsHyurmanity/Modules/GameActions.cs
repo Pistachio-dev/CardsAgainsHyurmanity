@@ -94,6 +94,7 @@ namespace CardsAgainsHyurmanity.Modules
 
         public void NextRound()
         {
+            SetOrAdvanceTzar();
             foreach (var player in game.Players)
             {
                 player.Picks.Clear();
@@ -101,8 +102,7 @@ namespace CardsAgainsHyurmanity.Modules
                 player.WhiteCards.AddRange(game.Deck.DrawWhite(game.BlackCard.pick));
                 SendWhiteCardsOrTzarNotice(player);
             }
-
-            SetOrAdvanceTzar();
+            
             DrawNewBlackCard();
             PresentBlackCard();
             game.Stage = GameStage.PlayersPicking;
