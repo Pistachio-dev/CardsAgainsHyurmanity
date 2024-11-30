@@ -2,16 +2,16 @@ using CardsAgainsHyurmanity.Model.CAHData;
 using CardsAgainsHyurmanity.Model.Game;
 using CardsAgainsHyurmanity.Modules;
 using CardsAgainsHyurmanity.Modules.DataLoader;
-using Dalamud.Game.ClientState.Objects;
-using Dalamud.Plugin.Services;
 using DalamudBasics.Chat.ClientOnlyDisplay;
 using DalamudBasics.Configuration;
+using DalamudBasics.Extensions;
 using DalamudBasics.GUI.Windows;
 using DalamudBasics.Logging;
 using DalamudBasics.Targeting;
 using ImGuiNET;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Linq;
 using System.Numerics;
 
 namespace CardsAgainsHyurmanity.Windows;
@@ -116,14 +116,18 @@ public class MainWindow : PluginWindowBase, IDisposable
             {
                 ImGui.TableNextRow();
                 ImGui.TableNextColumn();
-                string playerNameText = player.FullName;
-                if (game.Tzar == player)
-                {
-                    playerNameText += " (card tzar)";
-                }
+                string playerNameText = player.FullName.WithoutWorldName();
                 if (player.AFK)
                 {
                     playerNameText += "(AFK)";
+                }
+                else if (game.Tzar == player)
+                {
+                    playerNameText += game.Stage == GameStage.TzarPicking ? " (picking winner)" : " (card tzar)";
+                }
+                else if (game.Stage == GameStage.PlayersPicking)
+                {
+                    playerNameText += player.Picks.Any() ? string.Empty : " (picking)";
                 }
 
                 ImGui.TextUnformatted(playerNameText);
