@@ -121,7 +121,7 @@ public class MainWindow : PluginWindowBase, IDisposable
                 DrawTooltip("Click to target the player, shift + right click to remove them.");
 
 
-                ImGui.TableNextRow();
+                ImGui.TableNextColumn();
                 ImGui.TextUnformatted(player.AwesomePoints.ToString());
             }
 
