@@ -43,6 +43,11 @@ namespace CardsAgainsHyurmanity.Modules
             game.Deck = loader.RandomizeDeck(loader.BuildDeck(configuration.PackSelections));
         }
 
+        public void RemovePlayer(Player player)
+        {
+            game.Players.Remove(player);
+        }
+
         public void StartGame()
         {
             foreach (var player in game.Players)

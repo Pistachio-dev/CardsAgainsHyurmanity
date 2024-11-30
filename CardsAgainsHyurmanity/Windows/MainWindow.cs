@@ -1,8 +1,12 @@
 using CardsAgainsHyurmanity.Model.Game;
 using CardsAgainsHyurmanity.Modules;
 using CardsAgainsHyurmanity.Modules.DataLoader;
+using Dalamud.Game.ClientState.Objects;
+using Dalamud.Plugin.Services;
+using DalamudBasics.Chat.ClientOnlyDisplay;
 using DalamudBasics.GUI.Windows;
 using DalamudBasics.Logging;
+using DalamudBasics.Targeting;
 using ImGuiNET;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -16,6 +20,9 @@ public class MainWindow : PluginWindowBase, IDisposable
     private CahGame game;
     private GameActions gameActions;
     private CahDataLoader dataLoader;
+    private ITargetingService targetingService;
+    private IClientChatGui chatGui;
+    private Player? playerToRemove;
 
     public MainWindow(ILogService logService, IServiceProvider serviceProvider, Plugin plugin)
         : base(logService, "CardsAgainsHyurmanity", ImGuiWindowFlags.AlwaysAutoResize)
@@ -30,6 +37,8 @@ public class MainWindow : PluginWindowBase, IDisposable
         this.plugin = plugin;
         this.gameActions = serviceProvider.GetRequiredService<GameActions>();
         this.dataLoader = serviceProvider.GetRequiredService<CahDataLoader>();
+        this.targetingService = serviceProvider.GetRequiredService<ITargetingService>();
+        this.chatGui = serviceProvider.GetRequiredService<IClientChatGui>();
     }
 
     public void Dispose()
@@ -94,11 +103,35 @@ public class MainWindow : PluginWindowBase, IDisposable
 
                 ImGui.TextUnformatted(playerNameText);
 
+                if (ImGui.IsItemClicked(ImGuiMouseButton.Left))
+                {
+                    if (targetingService.TargetPlayer(player.FullName))
+                    {
+                        chatGui.Print($"Targeting {player.FullName}.");
+                    }
+                    else
+                    {
+                        chatGui.Print($"Could not target {player.FullName}.");
+                    }
+                }
+                if (ImGui.IsItemClicked(ImGuiMouseButton.Right) && ImGui.GetIO().KeyShift)
+                {
+                    playerToRemove = player;
+                }
+                DrawTooltip("Click to target the player, shift + right click to remove them.");
+
+
                 ImGui.TableNextRow();
                 ImGui.TextUnformatted(player.AwesomePoints.ToString());
             }
 
             ImGui.EndTable();
+        }
+
+        if (playerToRemove != null)
+        {
+            gameActions.RemovePlayer(playerToRemove);
+            playerToRemove = null;
         }
     }
 }
