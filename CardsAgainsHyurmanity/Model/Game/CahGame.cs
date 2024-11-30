@@ -16,5 +16,16 @@ namespace CardsAgainsHyurmanity.Model.Game
         {
             return Players.Where(p => p != Tzar && !p.AFK).ToArray();
         }
+
+        public void ResetButKeepPlayers()
+        {
+            Tzar = null;
+            Stage = GameStage.NotStarted;
+
+            foreach (var player in Players)
+            {
+                player.Reset();
+            }
+        }
     }
 }

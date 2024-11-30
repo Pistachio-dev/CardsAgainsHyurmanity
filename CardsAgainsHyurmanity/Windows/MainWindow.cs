@@ -81,6 +81,10 @@ public class MainWindow : PluginWindowBase, IDisposable
         DrawActionButton(() => plugin.TogglePackSelectorUI(), "Select card packs");
         ImGui.SameLine();
         DrawActionButton(() => plugin.ToggleConfigUI(), "Configuration");
+        if (game.Stage != GameStage.NotStarted)
+        {
+            DrawWithinDisableBlock(ImGui.GetIO().KeyShift, () => DrawActionButton(() => gameActions.EndGame(), "Reset game"));
+        }        
 
         if (configuration.UseTestData)
         {

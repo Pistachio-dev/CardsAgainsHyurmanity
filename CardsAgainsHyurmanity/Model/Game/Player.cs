@@ -10,5 +10,13 @@ namespace CardsAgainsHyurmanity.Model.Game
         public List<string> WhiteCards { get; set; } = new();
         public List<string> Picks { get; set; } = new();
         public int AssignedNumberForTzarPick { get; set; } = 0;
+
+        public void Reset()
+        {
+            AwesomePoints = 0;
+            WhiteCards.Clear();
+            Picks.Clear();
+            AssignedNumberForTzarPick = 0;
+        }
     }
 }

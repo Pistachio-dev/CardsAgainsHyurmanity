@@ -109,6 +109,11 @@ namespace CardsAgainsHyurmanity.Modules
             game.Stage = GameStage.PlayersPicking;
         }
 
+        public void EndGame()
+        {
+            game.ResetButKeepPlayers();
+        }
+
         private void PresentBlackCard()
         {
             chatOutput.WriteChat($"Black card: {game.BlackCard.text}.");
