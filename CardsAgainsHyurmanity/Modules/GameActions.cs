@@ -17,6 +17,7 @@ namespace CardsAgainsHyurmanity.Modules
 {
     public class GameActions
     {
+        private const string bloodSacrificeText = "#BloodSacrifice";
         private readonly CahGame game;
         private readonly CahDataLoader loader;
         private readonly CahChatOutput chatOutput;
@@ -114,11 +115,22 @@ namespace CardsAgainsHyurmanity.Modules
             game.ResetButKeepPlayers();
         }
 
-        public void RedealCards()
+        private void RedealCards(Player player)
         {
+            if (player.AwesomePoints == 0)
+            {
+                chatOutput.WriteChat($"The dark lord looks upon {player.FullName.GetFirstName()}'s lack of Awesome Points in disgust. Your sacrifice was not accepted.");
+                return;
+            }
+            player.AwesomePoints -= 1;
+            int currentCardAmount = player.WhiteCards.Count();
+            player.WhiteCards.Clear();
+            player.WhiteCards.AddRange(game.Deck.DrawWhite(currentCardAmount));
 
-
+            chatOutput.WriteChat($"The dark lord looks upon {player.FullName.GetFirstName()}'s offering, satisfied, and waves their hand. Your sacrifice grants them a new set of white cards.");
+            chatOutput.TellPlayerWhiteCards(player);
         }
+
         private void PresentBlackCard()
         {
             chatOutput.WriteChat($"Black card: {game.BlackCard.text}.");
@@ -126,6 +138,10 @@ namespace CardsAgainsHyurmanity.Modules
             if (game.BlackCard.pick > 1)
             {
                 chatOutput.WriteChat("Use a comma (,) to separate the card numbers.");
+            }
+            if (new Random().Next(100) <= 5)
+            {
+                chatOutput.WriteChat($"Hey, you. You can type {bloodSacrificeText} to sacrifice an Awesome Point to the dark lord and receive a new set of white cards. But you didn't hear it from me.");
             }
         }
 
@@ -196,6 +212,7 @@ namespace CardsAgainsHyurmanity.Modules
         {
             chatListener.AddPreprocessedMessageListener(PlayerPicksChatListener);
             chatListener.AddPreprocessedMessageListener(TzarPickChatListener);
+            chatListener.AddPreprocessedMessageListener(BloodSacrificeChatListener);
         }
 
         public void ToggleAFK(Player player)
@@ -309,6 +326,22 @@ namespace CardsAgainsHyurmanity.Modules
                 }
 
                 ApplyTzarPick(pick);
+            }
+        }
+
+        private void BloodSacrificeChatListener(XivChatType type, string senderFullName, string message, DateTime receivedAt)
+        {
+            if (message.Trim().Equals(bloodSacrificeText, StringComparison.OrdinalIgnoreCase))
+            {
+                var player = game.Players.Find(p => p.FullName == senderFullName);
+                if (player == null)
+                {
+                    logService.Info($"Blood sacrifice received for {senderFullName}, but it's not on the player list.");
+                    return;
+                }
+
+                logService.Info($"Blood sacrifice received for {senderFullName}.");
+                RedealCards(player);
             }
         }
 
