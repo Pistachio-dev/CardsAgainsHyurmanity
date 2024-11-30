@@ -10,6 +10,7 @@ using DalamudBasics.Targeting;
 using ECommons;
 using Humanizer;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CardsAgainsHyurmanity.Modules
@@ -200,10 +201,17 @@ namespace CardsAgainsHyurmanity.Modules
         private void ApplyPlayerPick(int[] numbersPicked, Player player)
         {
             player.Picks.Clear();
+            List<string> whiteCardsToRemove = new();
             foreach (var number in numbersPicked)
             {
-                player.Picks.Add(player.WhiteCards[number - 1]);
-                player.WhiteCards.RemoveAt(number - 1);
+                var pick = player.WhiteCards[number - 1];
+                player.Picks.Add(pick);
+                whiteCardsToRemove.Add(pick);
+            }
+
+            foreach (var card in whiteCardsToRemove)
+            {
+                player.WhiteCards.Remove(card);
             }
 
             chatOutput.WriteChat($"{player.FullName.GetFirstName()} picked");
@@ -298,9 +306,15 @@ namespace CardsAgainsHyurmanity.Modules
         {
             if (game.Stage == GameStage.PlayersPicking)
             {
-                var pickingPlayer = game.Players.FirstOrDefault(p => p.FullName == senderFullName);
+                var pickingPlayer = game.GetNonTzarActivePlayers().FirstOrDefault(p => p.FullName == senderFullName);
                 if (pickingPlayer == null)
                 {
+                    return;
+                }
+
+                if (pickingPlayer.Picks.Any())
+                {
+                    logService.Info($"Skipping picking for player {pickingPlayer.FullName}, they already picked.");
                     return;
                 }
 
@@ -315,9 +329,14 @@ namespace CardsAgainsHyurmanity.Modules
                 for (int i = 0; i < numbers.Length; i++)
                 {
                     var number = numbers[i];
-                    if (!int.TryParse(number, out int choice) || choice < 1 || choice > pickingPlayer.WhiteCards.Count)
+                    if (!int.TryParse(number, out int choice))
                     {
                         logService.Info($"Picking for player {pickingPlayer.FullName} is invalid, can't parse {number}");
+                        return;
+                    }
+                    if (choice < 1 || choice > pickingPlayer.WhiteCards.Count)
+                    {
+                        logService.Info($"Picking for player {pickingPlayer.FullName} is invalid, {number} is not in the white card list.");
                         return;
                     }
 
