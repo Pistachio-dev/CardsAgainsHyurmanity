@@ -213,7 +213,11 @@ namespace CardsAgainsHyurmanity.Modules
         {
             if (!game.Players.Any(p => !p.AFK))
             {
-                clientChatGui.Print("Everyone is AFK!");
+                clientChatGui.Print("Everyone is AFK! Unmarking them!");
+                foreach (var player in game.Players)
+                {
+                    player.AFK = false;
+                }
                 return;
             }
 
