@@ -1,3 +1,4 @@
+using CardsAgainsHyurmanity.Data.TestData;
 using CardsAgainsHyurmanity.Model.Game;
 using CardsAgainsHyurmanity.Modules;
 using CardsAgainsHyurmanity.Modules.DataLoader;
@@ -7,6 +8,7 @@ using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using DalamudBasics.Chat.Listener;
+using DalamudBasics.Configuration;
 using DalamudBasics.Debugging;
 using DalamudBasics.DependencyInjection;
 using DalamudBasics.Interop;
@@ -100,6 +102,11 @@ public sealed class Plugin : IDalamudPlugin
         serviceProvider.GetRequiredService<HookManager>();
         serviceProvider.GetRequiredService<CahChatOutput>().InitializeAndAttachToGameLogicLoop(framework, "[CaH]");
         serviceProvider.GetRequiredService<GameActions>().AddChatListeners();
+        var config = serviceProvider.GetRequiredService<IConfigurationService<Configuration>>().GetConfiguration();
+        if (config.UseTestData)
+        {
+            serviceProvider.GetRequiredService<CahGame>().AddTestPlayers();
+        }        
     }
 
     private void OnCommand(string command, string args)

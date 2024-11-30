@@ -19,4 +19,6 @@ public class Configuration : IConfiguration
     public int InitialWhiteCardsDrawnAmount { get; set; } = 10;
     public int AwesomePointsToWin { get; set; } = 10;
     public int AnswersRolloutDelayInMs { get; set; } = 4000;
+
+    public bool UseTestData { get; set; } = false;
 }
