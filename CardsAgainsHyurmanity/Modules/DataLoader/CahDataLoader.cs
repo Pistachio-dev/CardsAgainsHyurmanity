@@ -16,6 +16,7 @@ namespace CardsAgainsHyurmanity.Modules.DataLoader
         private readonly IConfigurationService<Configuration> configService;
         private readonly ILogService logService;
         private CahPackCollection? data = null;
+        private string[] enabledByDefaultPacks = ["CAH Base Set", "Final Fantasy XIV"];
 
         public CahDataLoader(IConfigurationService<Configuration> configService, ILogService logService)
         {
@@ -188,7 +189,7 @@ namespace CardsAgainsHyurmanity.Modules.DataLoader
                 packList.Add(new CahPackSettings()
                 {
                     Name = pack.name,
-                    Enabled = pack.name == "CAH Base Set" ? true : enabled,
+                    Enabled = enabledByDefaultPacks.Contains(pack.name) ? true : enabled,
                     IndexInData = i
                 });
             }
