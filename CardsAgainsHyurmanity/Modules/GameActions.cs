@@ -215,6 +215,14 @@ namespace CardsAgainsHyurmanity.Modules
             return;
         }
 
+        public void WritePlayerScores()
+        {
+            foreach (var player in game.Players)
+            {
+                chatOutput.WriteChat($"{player.FullName.WithoutWorldName()}: {player.AwesomePoints} A-points");
+            }
+        }
+
         public void AddChatListeners()
         {
             chatListener.AddPreprocessedMessageListener(PlayerPicksChatListener);

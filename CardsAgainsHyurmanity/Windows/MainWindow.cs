@@ -84,7 +84,11 @@ public class MainWindow : PluginWindowBase, IDisposable
         if (game.Stage != GameStage.NotStarted)
         {
             DrawWithinDisableBlock(ImGui.GetIO().KeyShift, () => DrawActionButton(() => gameActions.EndGame(), "Reset game"));
-        }        
+            DrawTooltip("Resets the game scores ands tate, but keeps the players. Hold shift to enable.");
+            ImGui.SameLine();
+            DrawActionButton(() => gameActions.WritePlayerScores(), "Write scores");
+            DrawTooltip("Writes the player scores in chat.");
+        }
 
         if (configuration.UseTestData)
         {
