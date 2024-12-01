@@ -202,7 +202,14 @@ namespace CardsAgainsHyurmanity.Modules
                 return;
             }
 
-            game.Players.Add(new Player() { FullName = targetFullName });
+            var player = new Player() { FullName = targetFullName };
+            if (game.Stage != GameStage.NotStarted)
+            {
+                player.WhiteCards.AddRange(game.Deck.DrawWhite(configuration.InitialWhiteCardsDrawnAmount));
+            }
+
+            game.Players.Add(player);
+
             chatOutput.WriteChat($"{targetFullName} joins the game.");
 
             return;
