@@ -357,7 +357,7 @@ namespace CardsAgainsHyurmanity.Data
             "Making airship components with a frying pan",
             "Aetheric copyright infringement",
             "A suspiciously low level lewd catgirl",
-            "An casual Limsa aetheryte afternoon orgy",
+            "A casual Limsa aetheryte afternoon orgy",
             "Your computer begging you to not join the syncshell",
             "The fattest, roundest cat",
             "Waiting in line to enter a virtual venue",
