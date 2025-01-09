@@ -133,6 +133,9 @@ namespace CardsAgainsHyurmanity.Modules.DataLoader
             }
 
             AppendCustomPack(collection, new FFXIVCahPack());
+#if DEBUG
+            AppendCustomPack(collection, new LoadTestPack());
+#endif
             data = collection;
 
             return data;

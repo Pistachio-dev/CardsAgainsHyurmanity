@@ -23,7 +23,7 @@ namespace CardsAgainsHyurmanity.Modules
             StringBuilder s = new StringBuilder("Your white cards: ");
             for (int i = 0; i < player.WhiteCards.Count; i++)
             {
-                if (s.Length > 420)
+                if ((s.Length + player.WhiteCards[i].Length) > 420)
                 {
                     SendTell(s.ToString(), player.FullName, GetOutputTypeForTell(), DelayBetweenTells);
                     s.Clear();
