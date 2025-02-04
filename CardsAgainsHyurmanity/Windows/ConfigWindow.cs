@@ -49,6 +49,8 @@ public class ConfigWindow : PluginWindowBase, IDisposable
         formFactory.AddValidationText(formFactory.DrawIntInput("Starting white cards", nameof(Configuration.InitialWhiteCardsDrawnAmount), EnforcePositiveInt));
         formFactory.AddValidationText(formFactory.DrawIntInput("Awesome points to win", nameof(Configuration.AwesomePointsToWin), EnforcePositiveInt));
         formFactory.AddValidationText(formFactory.DrawIntInput("Delay between answers (in ms)", nameof(Configuration.AnswersRolloutDelayInMs), EnforcePositiveInt));
+        formFactory.DrawCheckbox("Remove outgoing /tells", nameof(Configuration.RemoveOutgoingCardsChat));
+        DrawTooltip("Removes the outgoing /tell for player cards, so your chatbox does not get spammed. This will not affect any other messaage.");
     }
 
     private void DrawSectionHeader(string title)

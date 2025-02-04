@@ -24,6 +24,7 @@ public sealed class Plugin : IDalamudPlugin
     private const string CommandName = "/cah";
 
     public Configuration Configuration { get; init; }
+    public const string Watermark = "[CaH]";
 
     public readonly WindowSystem WindowSystem = new("Cards Agains Hyurmanity");
     public bool CardsAreLoaded { get; set; } = false;
@@ -90,6 +91,7 @@ public sealed class Plugin : IDalamudPlugin
         serviceCollection.AddSingleton<CahDataLoader>();
         serviceCollection.AddSingleton<GameActions>();
         serviceCollection.AddSingleton<CahChatOutput>();
+        serviceCollection.AddSingleton<ReceivedChatMuter>();
 
         return serviceCollection.BuildServiceProvider();
     }
@@ -98,11 +100,12 @@ public sealed class Plugin : IDalamudPlugin
     {
         IFramework framework = serviceProvider.GetRequiredService<IFramework>();
         serviceProvider.GetRequiredService<ILogService>().AttachToGameLogicLoop(framework);
-        serviceProvider.GetRequiredService<IChatListener>().InitializeAndRun("[CAH]", ChatChannelSets.CommonChannelsAndLinkshells);
+        serviceProvider.GetRequiredService<IChatListener>().InitializeAndRun(Watermark, ChatChannelSets.CommonChannelsAndLinkshells);
         serviceProvider.GetRequiredService<HookManager>();
-        serviceProvider.GetRequiredService<CahChatOutput>().InitializeAndAttachToGameLogicLoop(framework, "[CaH]");
+        serviceProvider.GetRequiredService<CahChatOutput>().InitializeAndAttachToGameLogicLoop(framework, Watermark);
         serviceProvider.GetRequiredService<GameActions>().AddChatListeners();
         var config = serviceProvider.GetRequiredService<IConfigurationService<Configuration>>().GetConfiguration();
+        serviceProvider.GetRequiredService<ReceivedChatMuter>().AddOutgoingChatMuter();
         if (config.UseTestData)
         {
             serviceProvider.GetRequiredService<CahGame>().AddTestPlayers();
