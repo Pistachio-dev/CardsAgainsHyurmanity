@@ -129,6 +129,7 @@ namespace CardsAgainsHyurmanity.Data
             "\"Oh she's definitely feeling your _\" - wrestling commentator about a bee tuber",
             "\"My word, he just _ the referee! The scoundrel...\" - wrestling commentator about an old teenager",
             "\"Oh, look at that massive _\" - wrestling commentator about a horsecatgirl",
+            "\"Don't your _s weight heavy?\" ~ floating snake god",
             //-------------------- Borrowed,
             "Im sorry sire we don't allow _ at the Gold Saucer",
             "After weeks of grinding, I finally got _",
