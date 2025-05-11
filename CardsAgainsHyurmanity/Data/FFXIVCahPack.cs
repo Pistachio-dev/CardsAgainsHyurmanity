@@ -138,6 +138,7 @@ namespace CardsAgainsHyurmanity.Data
             "It's nothing personal, but I must have your _",
             "B is for _!!!",
             "As a last attempt to surpass the Warrior of Light, Omega became _",
+            "\"For the glory of _ I STRIKE!\" ~ Zelenia, union representative",
             //-------------------- Borrowed,
             "Im sorry sire we don't allow _ at the Gold Saucer",
             "After weeks of grinding, I finally got _",
@@ -172,7 +173,8 @@ namespace CardsAgainsHyurmanity.Data
             "New content added: _ (Chaotic). Good fucking luck.",
         ];
 
-        public string[] White => [
+        public string[] White => [            
+            "ANNIHILATION! ANNIHILATION!!!!",
             "MY RING!!!",
             "Thavnarian Onion allergy",
             "twitch.tv/honeyblive",
