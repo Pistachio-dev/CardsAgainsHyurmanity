@@ -38,8 +38,12 @@
         "type": "Project",
         "dependencies": {
           "DalamudPackager": "[12.0.0, )",
+          "ECommons": "[2.2.0.2, )",
           "Microsoft.Extensions.DependencyInjection": "[9.0.4, )"
         }
+      },
+      "ecommons": {
+        "type": "Project"
       }
     }
   }
