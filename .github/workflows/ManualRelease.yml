@@ -1,7 +1,7 @@
 name: "Manual Release"
 on: workflow_dispatch
 env:
-  assemblyName: "CardsAgainsHyurmanity"
+  assemblyName: "CardsAgainstHyurmanity"
   version: "0.0.0.0"
   tag: "unset_tag"
   target_repo: ${{ github.action_repository }} # Change this if releasing on a different repo. Eg Pistachio-dev/WorkflowsTestReleaseOnly
