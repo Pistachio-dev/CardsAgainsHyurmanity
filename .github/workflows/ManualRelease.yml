@@ -15,7 +15,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
-          set-safe-directory: false
+      - name: "Debug check of structure"
+        run: tree
       - name: "Verify version information"
         run: .\.github\Workflows\UpdateVersions.ps1 -PluginAssemblyName "${{env.assemblyName}}"
       - name: "Get version number"
