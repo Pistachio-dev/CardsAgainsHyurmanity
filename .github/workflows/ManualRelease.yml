@@ -16,7 +16,7 @@ jobs:
         with:
           submodules: recursive
       - name: "Debug check of structure"
-        run: tree
+        run: tree /f /a
       - name: "Verify version information"
         run: .\.github\Workflows\UpdateVersions.ps1 -PluginAssemblyName "${{env.assemblyName}}"
       - name: "Get version number"
