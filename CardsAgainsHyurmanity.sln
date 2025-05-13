@@ -5,7 +5,7 @@ VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardsAgainsHyurmanity", "CardsAgainsHyurmanity\CardsAgainsHyurmanity.csproj", "{13C812E9-0D42-4B95-8646-40EEBF30636F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalamudBasics", "..\TruthOrDareHelper\DalamudBasics\DalamudBasics\DalamudBasics.csproj", "{B1C8C36A-8DEA-1D5C-2D57-61E33229B8BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalamudBasics", "..\DalamudBasics\DalamudBasics\DalamudBasics.csproj", "{EB63A4A6-A495-A4E6-ECB8-FFD5188567E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{13C812E9-0D42-4B95-8646-40EEBF30636F}.Debug|x64.Build.0 = Debug|x64
 		{13C812E9-0D42-4B95-8646-40EEBF30636F}.Release|x64.ActiveCfg = Release|x64
 		{13C812E9-0D42-4B95-8646-40EEBF30636F}.Release|x64.Build.0 = Release|x64
-		{B1C8C36A-8DEA-1D5C-2D57-61E33229B8BD}.Debug|x64.ActiveCfg = Debug|x64
-		{B1C8C36A-8DEA-1D5C-2D57-61E33229B8BD}.Debug|x64.Build.0 = Debug|x64
-		{B1C8C36A-8DEA-1D5C-2D57-61E33229B8BD}.Release|x64.ActiveCfg = Release|x64
-		{B1C8C36A-8DEA-1D5C-2D57-61E33229B8BD}.Release|x64.Build.0 = Release|x64
+		{EB63A4A6-A495-A4E6-ECB8-FFD5188567E9}.Debug|x64.ActiveCfg = Debug|x64
+		{EB63A4A6-A495-A4E6-ECB8-FFD5188567E9}.Debug|x64.Build.0 = Debug|x64
+		{EB63A4A6-A495-A4E6-ECB8-FFD5188567E9}.Release|x64.ActiveCfg = Release|x64
+		{EB63A4A6-A495-A4E6-ECB8-FFD5188567E9}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

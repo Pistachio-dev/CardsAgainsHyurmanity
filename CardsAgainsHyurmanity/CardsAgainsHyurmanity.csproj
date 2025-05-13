@@ -1,7 +1,10 @@
-<Project Sdk="Dalamud.NET.Sdk/12.0.2">
+﻿<Project Sdk="Dalamud.NET.Sdk/12.0.2">
   <PropertyGroup>
-    <Version>0.0.0.1</Version>
-    <Description>CardsAgainsHyurmanity</Description>
+    <RootNamespace>CardsAgainsHyurmanity</RootNamespace>
+    <AssemblyName>CardsAgainsHyurmanity</AssemblyName>
+    <FileVersion>9.0.0.1</FileVersion>
+    <AssemblyVersion>9.0.0.1</AssemblyVersion>
+    <Description>Cards Against Humanity, made to play inside FFXIV, with an additional FFXIV pack.</Description>
     <PackageProjectUrl>https://github.com/goatcorp/CardsAgainsHyurmanity</PackageProjectUrl>
   </PropertyGroup>
 
@@ -25,6 +28,6 @@
   </ItemGroup>
     
   <ItemGroup>
-    <ProjectReference Include="..\..\TruthOrDareHelper\DalamudBasics\DalamudBasics\DalamudBasics.csproj" />
-  </ItemGroup>
+    <ProjectReference Include="..\..\DalamudBasics\DalamudBasics\DalamudBasics.csproj" />
+  </ItemGroup>    
 </Project>
