@@ -28,6 +28,6 @@
   </ItemGroup>
     
   <ItemGroup>
-    <ProjectReference Include="..\..\DalamudBasics\DalamudBasics\DalamudBasics.csproj" />
-  </ItemGroup>    
+    <ProjectReference Include="..\DalamudBasics\DalamudBasics\DalamudBasics.csproj" />
+  </ItemGroup>   
 </Project>
