@@ -26,7 +26,7 @@ jobs:
       - name: "Debug that we have the correct version"
         run: Write-Output "Recognized eversion ${{env.version}}"
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.x.x'
       - name: Restore dependencies
