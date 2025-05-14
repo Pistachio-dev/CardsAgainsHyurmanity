@@ -17,14 +17,14 @@ jobs:
           submodules: recursive
       - name: Debug file structure errors
         run: tree /f /a
-      # - name: "Verify version information"
-      #   run: .\.github\Workflows\UpdateVersions.ps1 -PluginAssemblyName "${{env.assemblyName}}"
-      # - name: "Get version number"
-      #   run: |
-      #       $versionRetrieved = .\.github\Workflows\GetVersionNumber.ps1 -PluginAssemblyName "${{env.assemblyName}}"
-      #       echo "version=$versionRetrieved" >> $env:GITHUB_ENV            
-      # - name: "Debug that we have the correct version"
-      #   run: Write-Output "Recognized eversion ${{env.version}}"
+      - name: "Verify version information"
+        run: .\.github\Workflows\UpdateVersions.ps1 -PluginAssemblyName "${{env.assemblyName}}"
+      - name: "Get version number"
+        run: |
+            $versionRetrieved = .\.github\Workflows\GetVersionNumber.ps1 -PluginAssemblyName "${{env.assemblyName}}"
+            echo "version=$versionRetrieved" >> $env:GITHUB_ENV            
+      - name: "Debug that we have the correct version"
+        run: Write-Output "Recognized eversion ${{env.version}}"
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
