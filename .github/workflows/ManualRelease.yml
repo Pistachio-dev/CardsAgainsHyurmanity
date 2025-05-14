@@ -37,9 +37,10 @@ jobs:
           cd ..
           dotnet restore
           Write-Output "DalamudBasics restored"
-          cd ..
+          cd ..\CardsAgainstHyurmanity
           dotnet restore
           Write-Output "CardsAgainstHyurmanity restored"
+          cd ..
       - name: Download Dalamud
         run: |
           Invoke-WebRequest -Uri https://goatcorp.github.io/dalamud-distrib/latest.zip -OutFile latest.zip
