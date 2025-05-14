@@ -6,7 +6,6 @@
     <AssemblyVersion>9.0.0.1</AssemblyVersion>
     <Description>Cards Against Humanity, made to play inside FFXIV, with an additional FFXIV pack.</Description>
     <PackageProjectUrl>https://github.com/goatcorp/CardsAgainstHyurmanity</PackageProjectUrl>
-    <PackageId>ThisIsNotWhatIWantedToSpendMyTimeOn</PackageId>
   </PropertyGroup>
 
 <PropertyGroup>
