@@ -40,8 +40,8 @@ jobs:
           $ver = "${{env.internalPluginVersion}}"
           Write-Output "Version: $($ver)"
           invoke-expression 'dotnet build --no-restore --configuration Release --nologo -p:Version=$ver -p:FileVersion=$ver -p:AssemblyVersion=$ver'
-      - name: Archive
-        run: Compress-Archive -Path ${{env.internalPluginName}}/bin/Release/* -DestinationPath ${{env.assemblyName}}.zip
+      - name: Archive (move the dalamud packager artifact somewhere easier to access)
+        run: Copy-Item -Path ${{env.internalPluginName}}/bin/x64/Release/${{env.internalPluginName}} -DestinationPath ${{env.internalPluginName}}.zip
       - name: Retrieve data for release
         run: |
           $localPatchNotes = "$(.\.github\Workflows\GetChangeLog.ps1 -PluginAssemblyName ${{env.internalPluginName}})"
