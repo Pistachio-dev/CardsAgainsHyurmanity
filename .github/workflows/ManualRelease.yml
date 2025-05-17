@@ -62,6 +62,7 @@ jobs:
       - name: Update downloads and timestamp
         run: |
           # inlinining the whole thing because it would not take an url as parameter no matter what, so screw it
+          Write-Output ${{fromJson(steps.release.outputs.asset)[0].browser_download_url}}
           $zipDownloadURL = ${{toJson(fromJson(steps.release.outputs.assets)[0].browser_download_url)}}
           Write-Output "Download URL is $($zipDownloadUrl)"
           $basePluginFolderPath = "${{env.internalPluginName}}\"
