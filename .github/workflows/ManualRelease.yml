@@ -3,7 +3,7 @@
 name: "Manual Release"
 on: workflow_dispatch
 env:
-  internalPluginName: "plugin_assembly_name_here"  # Set this to the assembly name of the plugin to process
+  internalPluginName: "CardsAgainstHyurmanity"  # Set this to the assembly name of the plugin to process
   target_repo: ${{ github.action_repository }} # Change this if releasing on a different repo. Eg Pistachio-dev/WorkflowsTestReleaseOnly
   token: ${{secrets.GITHUB_TOKEN}} # You'll need a special token with permissions on that repo
   internalPluginVersion: "0.0.0.0" # Set by the "Get version number" step
