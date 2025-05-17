@@ -55,7 +55,7 @@ jobs:
         id: release
         uses: softprops/action-gh-release@v2
         with:
-          files: ${{env.internalPluginName}}.zip
+          files: latest.zip
           body_path: .\PatchNotes.txt
           tag_name: ${{env.tag}}
           make_latest: $true
@@ -64,7 +64,6 @@ jobs:
       - name: Update downloads and timestamp
         run: |
           # inlinining the whole thing because it would not take an url as parameter no matter what, so screw it
-          Write-Output ${{steps.release.outputs.assets}}
           $zipDownloadURL = ${{toJson(fromJson(steps.release.outputs.assets)[0].browser_download_url)}}
           Write-Output "Download URL is $($zipDownloadUrl)"
           $basePluginFolderPath = "${{env.internalPluginName}}\"
