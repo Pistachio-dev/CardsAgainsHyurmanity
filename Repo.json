@@ -1,0 +1,28 @@
+[
+  {
+    "Author": "Pistachio Herald",
+    "Name": "Cards Agains Hyurmanity",
+    "Punchline": "Cards Against Humanity, ingame",
+    "Description": "Play cards against humanity over game chat. Type /cah to open the main window.",
+    "ApplicableVersion": "any",
+    "Tags": [
+      "cards",
+      "against",
+      "humanity",
+      "party",
+      "nsfw",
+      "game",
+      "venue",
+      "cah",
+      "funny",
+      "politically",
+      "incorrect"
+    ],
+    "DalamudApiLevel": 12,
+    "AssemblyVersion": "0.3.0.3",
+    "Changelog": "- Added new cards\n- Added to release pipeline",
+    "DownloadLinkInstall": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.3.0.3_release/latest.zip",
+    "DownloadLinkUpdate": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.3.0.3_release/latest.zip",
+    "LastUpdate": 1747487014
+  }
+]
