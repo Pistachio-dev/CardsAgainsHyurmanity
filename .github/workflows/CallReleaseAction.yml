@@ -4,7 +4,7 @@ on: workflow_dispatch
 
 jobs:
     call-workflow:
-        uses: Pistachio-dev/Workflows/.github/workflows/ManualRelease.yml@main
+        uses: Pistachio-dev/Workflows/.github/workflows/ManualRelease.yml@master
         permissions:
             contents: write
         with:
