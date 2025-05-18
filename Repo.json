@@ -19,10 +19,10 @@
       "incorrect"
     ],
     "DalamudApiLevel": 12,
-    "AssemblyVersion": "0.3.0.5",
+    "AssemblyVersion": "0.3.0.6",
     "Changelog": "- Added new cards\n- Added to release pipeline",
-    "DownloadLinkInstall": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.3.0.5_release/latest.zip",
-    "DownloadLinkUpdate": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.3.0.5_release/latest.zip",
-    "LastUpdate": 1747567767
+    "DownloadLinkInstall": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.3.0.6_release/latest.zip",
+    "DownloadLinkUpdate": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.3.0.6_release/latest.zip",
+    "LastUpdate": 1747573840
   }
 ]
