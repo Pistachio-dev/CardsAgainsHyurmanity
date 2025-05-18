@@ -1,5 +1,5 @@
 {
-    "AssemblyVersion" : "0.3.0.3",
+    "AssemblyVersion" : "0.3.0.4",
     "DalamudApiLevel" : 12,
     "ChangeLog": "- Added new cards\n- Added to release pipeline",
     "IsTest": false
