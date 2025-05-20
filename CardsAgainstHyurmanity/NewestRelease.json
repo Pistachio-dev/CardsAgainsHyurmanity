@@ -1,6 +1,6 @@
 {
-    "AssemblyVersion" : "0.3.0.10",
+    "AssemblyVersion" : "0.3.0.11",
     "DalamudApiLevel" : 12,
-    "ChangeLog": "",
+    "ChangeLog": "- Fixed pipeline not writing a needed field in the repo.",
     "IsTest": false
 }
