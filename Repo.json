@@ -19,10 +19,11 @@
       "incorrect"
     ],
     "DalamudApiLevel": 12,
-    "AssemblyVersion": "0.3.0.10",
-    "Changelog": "",
-    "DownloadLinkInstall": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.3.0.10_release/latest.zip",
-    "DownloadLinkUpdate": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.3.0.10_release/latest.zip",
-    "LastUpdate": 1747597406
+    "AssemblyVersion": "0.3.0.11",
+    "Changelog": "- Fixed pipeline not writing a needed field in the repo.",
+    "DownloadLinkInstall": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.3.0.11_release/latest.zip",
+    "DownloadLinkUpdate": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.3.0.11_release/latest.zip",
+    "LastUpdate": 1747728754,
+    "InternalName": "CardsAgainstHyurmanity"
   }
 ]
