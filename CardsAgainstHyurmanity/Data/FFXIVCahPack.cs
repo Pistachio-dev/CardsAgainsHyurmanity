@@ -142,7 +142,7 @@ namespace CardsAgainstHyurmanity.Data
             //-------------------- Borrowed,
             "Im sorry sire we don't allow _ at the Gold Saucer",
             "After weeks of grinding, I finally got _",
-            "Many people don't expect Archon Loft to taste of _.",
+            "Many people don't expect Archon Loaf to taste of _.",
             "Such _. This was NOT my intention.",
             "The secret ingredient in Meol is _, because it is cheap and abundant.",
             "The most vile, forbidden black magic spell: _",
