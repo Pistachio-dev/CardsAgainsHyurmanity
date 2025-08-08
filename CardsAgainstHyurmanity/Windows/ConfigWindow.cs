@@ -3,7 +3,7 @@ using DalamudBasics.Configuration;
 using DalamudBasics.GUI.Forms;
 using DalamudBasics.GUI.Windows;
 using DalamudBasics.Logging;
-using ImGuiNET;
+using Dalamud.Bindings.ImGui;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Numerics;
@@ -20,7 +20,7 @@ public class ConfigWindow : PluginWindowBase, IDisposable
     public ConfigWindow(ILogService logService, IServiceProvider serviceProvider) : base(logService, "Configuration")
     {
         Size = new Vector2(500, 600);
-        SizeCondition = ImGuiCond.Appearing;
+        //SizeCondition = ImGuiCond.Appearing;
         this.configurationService = serviceProvider.GetRequiredService<IConfigurationService<Configuration>>();
 
         this.formFactory = new ImGuiFormFactory<Configuration>(() => configurationService.GetConfiguration(), (data) => configurationService.SaveConfiguration());

@@ -6,7 +6,7 @@ using CardsAgainstHyurmanity.Modules.DataLoader;
 using DalamudBasics.Configuration;
 using DalamudBasics.GUI.Windows;
 using DalamudBasics.Logging;
-using ImGuiNET;
+using Dalamud.Bindings.ImGui;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;

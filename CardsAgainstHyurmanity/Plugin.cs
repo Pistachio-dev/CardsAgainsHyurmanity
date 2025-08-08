@@ -73,7 +73,7 @@ public sealed class Plugin : IDalamudPlugin
 
     public void Dispose()
     {
-        serviceProvider.GetRequiredService<HookManager>().Dispose();
+        //serviceProvider.GetRequiredService<HookManager>().Dispose();
         WindowSystem.RemoveAllWindows();
 
         ConfigWindow.Dispose();

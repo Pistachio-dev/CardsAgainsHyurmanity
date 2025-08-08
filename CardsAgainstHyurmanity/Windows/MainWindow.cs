@@ -8,7 +8,7 @@ using DalamudBasics.Extensions;
 using DalamudBasics.GUI.Windows;
 using DalamudBasics.Logging;
 using DalamudBasics.Targeting;
-using ImGuiNET;
+using Dalamud.Bindings.ImGui;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
