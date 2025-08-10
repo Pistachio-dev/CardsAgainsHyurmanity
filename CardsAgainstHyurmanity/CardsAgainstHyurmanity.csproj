@@ -30,14 +30,6 @@
   <ItemGroup>
     <ProjectReference Include="..\DalamudBasics\DalamudBasics\DalamudBasics.csproj" />
   </ItemGroup>
-    <ItemGroup>
-        <Reference Include="Dalamud.Bindings.ImGui">
-            <HintPath>C:\Users\omigu\AppData\Roaming\xivlauncher\Addon\Hooks\dev\Dalamud.Bindings.ImGui.dll</HintPath>
-        </Reference>
-    </ItemGroup>
-  <ItemGroup>
-    <PackageReference Update="DalamudPackager" Version="13.0.0" />
-  </ItemGroup>   
     <Target Name="GetGitHash" BeforeTargets="GetAssemblyVersion" Returns="InformationalVersion">
     <Exec Command="git rev-parse --short HEAD" ConsoleToMSBuild="true" StandardOutputImportance="low" ContinueOnError="true">
       <Output TaskParameter="ExitCode" PropertyName="GitCommitHashSuccess" />
