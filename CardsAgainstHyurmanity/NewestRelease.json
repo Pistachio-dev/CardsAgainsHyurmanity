@@ -1,6 +1,6 @@
 {
-    "AssemblyVersion" : "0.3.1.0",
+    "AssemblyVersion" : "0.4.0.0",
     "DalamudApiLevel" : 13,
-    "ChangeLog": "7.3 patch",
+    "ChangeLog": "- Added a context menu entry so that players can be added from party list or friend list\n- Added game auto save and auto load, so crashes don't cockblock everyone'",
     "IsTest": false
 }
