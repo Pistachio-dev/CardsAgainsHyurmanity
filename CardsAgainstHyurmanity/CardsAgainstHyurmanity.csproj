@@ -29,6 +29,8 @@
     
   <ItemGroup>
     <PackageReference Include="Humanizer.Core" Version="2.14.1" />
+    <PackageReference Include="Metalama.Extensions.DependencyInjection" Version="2025.1.12" />
+    <PackageReference Include="Metalama.Framework" Version="2025.1.12" />
   </ItemGroup>
     
   <ItemGroup>

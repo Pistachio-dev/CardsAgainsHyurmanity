@@ -13,6 +13,7 @@ using DalamudBasics.Debugging;
 using DalamudBasics.DependencyInjection;
 using DalamudBasics.Interop;
 using DalamudBasics.Logging;
+using DalamudBasics.SaveGames;
 using ECommons;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -87,12 +88,15 @@ public sealed class Plugin : IDalamudPlugin
         IServiceCollection serviceCollection = new ServiceCollection();
         serviceCollection.AddAllDalamudBasicsServices<Configuration>(pluginInterface);
         serviceCollection.AddSingleton<StringDebugUtils>();
-        serviceCollection.AddSingleton<CahGame>();
         serviceCollection.AddSingleton<CahDataLoader>();
         serviceCollection.AddSingleton<GameActions>();
         serviceCollection.AddSingleton<CahChatOutput>();
         serviceCollection.AddSingleton<ReceivedChatMuter>();
         serviceCollection.AddSingleton<ContextMenuManager>();
+        serviceCollection.AddSingleton<ISaveManager<CahGame>, SaveManager<CahGame>>(sp => 
+            new SaveManager<CahGame>("CaHSaveGame.json", sp.GetRequiredService<ILogService>(), sp.GetRequiredService<IClientState>()));
+        serviceCollection.AddSingleton<CahGame>((sp) => sp.GetRequiredService<IFramework>().RunOnFrameworkThread(
+            () => sp.GetRequiredService<ISaveManager<CahGame>>().GetCharacterSaveInMemory()).Result);
 
         return serviceCollection.BuildServiceProvider();
     }
@@ -111,7 +115,7 @@ public sealed class Plugin : IDalamudPlugin
         if (config.UseTestData)
         {
             serviceProvider.GetRequiredService<CahGame>().AddTestPlayers();
-        }        
+        }
     }
 
     private void OnCommand(string command, string args)

@@ -40,16 +40,19 @@ namespace CardsAgainstHyurmanity.Modules
             this.chatListener = chatListener;
         }
 
+        [StateChangingAndSavingAction]
         public void ReloadDeck()
         {
             game.Deck = loader.RandomizeDeck(loader.BuildDeck(configuration.PackSelections));
         }
 
+        [StateChangingAndSavingAction]
         public void RemovePlayer(Player player)
         {
             game.Players.Remove(player);
         }
 
+        [StateChangingAndSavingAction]
         public void StartGame()
         {
             foreach (var player in game.Players)
@@ -89,11 +92,13 @@ namespace CardsAgainstHyurmanity.Modules
             }
         }
 
+        [StateChangingAndSavingAction]
         private void DrawNewBlackCard()
         {
             game.BlackCard = game.Deck.DrawBlack(1)[0];
         }
 
+        [StateChangingAndSavingAction]
         public void NextRound()
         {
             SetOrAdvanceTzar();
@@ -110,11 +115,13 @@ namespace CardsAgainstHyurmanity.Modules
             game.Stage = GameStage.PlayersPicking;
         }
 
+        [StateChangingAndSavingAction]
         public void EndGame()
         {
             game.ResetButKeepPlayers();
         }
 
+        [StateChangingAndSavingAction]
         private void RedealCards(Player player)
         {
             if (player.AwesomePoints == 0)
@@ -145,6 +152,7 @@ namespace CardsAgainstHyurmanity.Modules
             }
         }
 
+        [StateChangingAndSavingAction]
         public void PresentPicks()
         {
             chatOutput.WriteChat("Everyone picked, let's see what they made.");
@@ -189,7 +197,6 @@ namespace CardsAgainstHyurmanity.Modules
 
         public void AddPlayerByName(string fullName)
         {
-
             AddPlayer(fullName);
         }
 
@@ -205,6 +212,7 @@ namespace CardsAgainstHyurmanity.Modules
             AddPlayer(targetFullName);
         }
 
+        [StateChangingAndSavingAction]
         private void AddPlayer(string fullName)
         {
             if (game.Players.Any(p => p.FullName == fullName))
@@ -241,6 +249,7 @@ namespace CardsAgainstHyurmanity.Modules
             chatListener.AddPreprocessedMessageListener(BloodSacrificeChatListener);
         }
 
+        [StateChangingAndSavingAction]
         public void ToggleAFK(Player player)
         {
             player.AFK = !player.AFK;
@@ -252,6 +261,7 @@ namespace CardsAgainstHyurmanity.Modules
             return !game.GetNonTzarActivePlayers().Any(p => !p.Picks.Any());
         }
 
+        [StateChangingAndSavingAction]
         private void ApplyPlayerPick(int[] numbersPicked, Player player)
         {
             player.Picks.Clear();
@@ -309,6 +319,7 @@ namespace CardsAgainstHyurmanity.Modules
             return (game.Players.IndexOf(game.Tzar) + 1) % game.Players.Count;
         }
 
+        [StateChangingAndSavingAction]
         private void ApplyTzarPick(int number)
         {
             var winner = game.Players.FirstOrDefault(player => player.AssignedNumberForTzarPick == number);
