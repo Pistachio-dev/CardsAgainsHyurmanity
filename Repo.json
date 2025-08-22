@@ -18,12 +18,12 @@
       "politically",
       "incorrect"
     ],
-    "DalamudApiLevel": 12,
-    "AssemblyVersion": "0.3.0.12",
-    "Changelog": "",
-    "DownloadLinkInstall": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.3.0.12_release/CardsAgainstHyurmanity.zip",
-    "DownloadLinkUpdate": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.3.0.12_release/CardsAgainstHyurmanity.zip",
-    "LastUpdate": 1747737985,
+    "DalamudApiLevel": 13,
+    "AssemblyVersion": "0.3.1.0",
+    "Changelog": "7.3 patch",
+    "DownloadLinkInstall": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.3.1.0_release/CardsAgainstHyurmanity.zip",
+    "DownloadLinkUpdate": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.3.1.0_release/CardsAgainstHyurmanity.zip",
+    "LastUpdate": 1754825664,
     "InternalName": "CardsAgainstHyurmanity"
   }
 ]
