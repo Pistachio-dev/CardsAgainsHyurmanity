@@ -244,6 +244,7 @@ namespace CardsAgainstHyurmanity.Modules
         public void ToggleAFK(Player player)
         {
             player.AFK = !player.AFK;
+            chatOutput.WriteChat($"{player.FullName} is {(player.AFK ? "gone, but not forgotten (AFK)" : "back. Maybe with a vengeance (no longer AFK)")}");
         }
 
         private bool HaveAllPlayersPicked()
