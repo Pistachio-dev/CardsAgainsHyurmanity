@@ -187,6 +187,12 @@ namespace CardsAgainstHyurmanity.Modules
             return response;
         }
 
+        public void AddPlayerByName(string fullName)
+        {
+
+            AddPlayer(fullName);
+        }
+
         public void AddTargetPlayer()
         {
             if (!targetingService.TrySaveTargetPlayerReference(out var targetReference) || targetReference == null)
@@ -196,13 +202,18 @@ namespace CardsAgainstHyurmanity.Modules
             }
 
             var targetFullName = targetReference.GetFullName();
-            if (game.Players.Any(p => p.FullName == targetFullName))
+            AddPlayer(targetFullName);
+        }
+
+        private void AddPlayer(string fullName)
+        {
+            if (game.Players.Any(p => p.FullName == fullName))
             {
                 clientChatGui.Print("Target player is already in the game.");
                 return;
             }
 
-            var player = new Player() { FullName = targetFullName };
+            var player = new Player() { FullName = fullName };
             if (game.Stage != GameStage.NotStarted)
             {
                 player.WhiteCards.AddRange(game.Deck.DrawWhite(configuration.InitialWhiteCardsDrawnAmount));
@@ -210,7 +221,7 @@ namespace CardsAgainstHyurmanity.Modules
 
             game.Players.Add(player);
 
-            chatOutput.WriteChat($"{targetFullName} joins the game.");
+            chatOutput.WriteChat($"{fullName} joins the game.");
 
             return;
         }

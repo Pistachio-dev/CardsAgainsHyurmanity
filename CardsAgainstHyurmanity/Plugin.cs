@@ -92,6 +92,7 @@ public sealed class Plugin : IDalamudPlugin
         serviceCollection.AddSingleton<GameActions>();
         serviceCollection.AddSingleton<CahChatOutput>();
         serviceCollection.AddSingleton<ReceivedChatMuter>();
+        serviceCollection.AddSingleton<ContextMenuManager>();
 
         return serviceCollection.BuildServiceProvider();
     }
@@ -106,6 +107,7 @@ public sealed class Plugin : IDalamudPlugin
         serviceProvider.GetRequiredService<GameActions>().AddChatListeners();
         var config = serviceProvider.GetRequiredService<IConfigurationService<Configuration>>().GetConfiguration();
         serviceProvider.GetRequiredService<ReceivedChatMuter>().AddOutgoingChatMuter();
+        serviceProvider.GetRequiredService<ContextMenuManager>();
         if (config.UseTestData)
         {
             serviceProvider.GetRequiredService<CahGame>().AddTestPlayers();
