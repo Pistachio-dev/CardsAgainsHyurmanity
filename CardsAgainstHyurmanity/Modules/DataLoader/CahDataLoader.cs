@@ -16,7 +16,7 @@ namespace CardsAgainstHyurmanity.Modules.DataLoader
         private readonly IConfigurationService<Configuration> configService;
         private readonly ILogService logService;
         private CahPackCollection? data = null;
-        private string[] enabledByDefaultPacks = ["CAH Base Set", "Final Fantasy XIV"];
+        private string[] enabledByDefaultPacks = ["Final Fantasy XIV"];
 
         public CahDataLoader(IConfigurationService<Configuration> configService, ILogService logService)
         {
