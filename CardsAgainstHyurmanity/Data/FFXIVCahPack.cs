@@ -16,7 +16,7 @@ namespace CardsAgainstHyurmanity.Data
             "Welcome to _, please put away your minions, weapons and _",
             "After several days with mods not working, mare users have resorted to _",
             "_ did nothing wrong, except _",
-            "Your band cannot _ Valigarrrrmannda",
+            "\"Your band cannot _ Valigarrrrmannda\" ~ugly giant, being wrong",
             "You have done well to reach _, now bare your _ to me",
             "I'd like to stay and chat, but I've gotta _",
             "_, son! They harden in response to _",
