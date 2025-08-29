@@ -341,7 +341,8 @@ namespace CardsAgainstHyurmanity.Modules
                 return;
             }
 
-            chatOutput.WriteChat($"{winner.FullName.WithoutWorldName()} wins and gets one Awesome point! <se.15>");
+            chatOutput.WriteChat($"{winner.FullName.WithoutWorldName()} wins and gets one Awesome point!" +
+                $" {winner.AwesomePoints}/{configuration.AwesomePointsToWin} <se.15>");
             chatOutput.WriteChat($"Their answer was {GetPlayerResponse(winner)}", null, 1000);
             NextRound();
         }
