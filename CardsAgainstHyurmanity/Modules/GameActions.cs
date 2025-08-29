@@ -6,6 +6,7 @@ using DalamudBasics.Chat.Listener;
 using DalamudBasics.Configuration;
 using DalamudBasics.Extensions;
 using DalamudBasics.Logging;
+using DalamudBasics.SaveGames;
 using DalamudBasics.Targeting;
 using ECommons;
 using Humanizer;
@@ -17,8 +18,9 @@ namespace CardsAgainstHyurmanity.Modules
 {
     public class GameActions
     {
-        private const string bloodSacrificeText = "#BloodSacrifice";
-        private readonly CahGame game;
+        private const string BloodSacrificeText = "#BloodSacrifice";
+        private readonly ISaveManager<CahGame> saveManager;
+        private CahGame game => saveManager.GetCharacterSaveInMemory() ?? throw new Exception("Null save loaded");
         private readonly CahDataLoader loader;
         private readonly CahChatOutput chatOutput;
         private readonly ILogService logService;
@@ -27,10 +29,10 @@ namespace CardsAgainstHyurmanity.Modules
         private readonly IClientChatGui clientChatGui;
         private readonly IChatListener chatListener;
 
-        public GameActions(CahGame game, CahDataLoader loader, IConfigurationService<Configuration> configService, CahChatOutput chatOutput,
+        public GameActions(ISaveManager<CahGame> saveManager, CahDataLoader loader, IConfigurationService<Configuration> configService, CahChatOutput chatOutput,
             ILogService logService, ITargetingService targetingService, IClientChatGui clientChatGui, IChatListener chatListener)
         {
-            this.game = game;
+            this.saveManager = saveManager;
             this.loader = loader;
             this.chatOutput = chatOutput;
             this.logService = logService;
@@ -46,7 +48,7 @@ namespace CardsAgainstHyurmanity.Modules
             game.Deck = loader.RandomizeDeck(loader.BuildDeck(configuration.PackSelections));
         }
 
-        [StateChangingAndSavingAction]
+        //[StateChangingAndSavingAction]
         public void RemovePlayer(Player player)
         {
             game.Players.Remove(player);
@@ -60,7 +62,9 @@ namespace CardsAgainstHyurmanity.Modules
                 player.AwesomePoints = 0;
             }
 
-            if (game.Deck == null)
+            logService.Warning($"Game.Deck {game.Deck?.BlackCards.Length.ToString() ?? "null"}");
+
+            if (game.Deck == null || game.Deck.NotProperlyLoaded)
             {
                 game.Deck = loader.BuildDeck(configuration.PackSelections);
             }
@@ -148,7 +152,7 @@ namespace CardsAgainstHyurmanity.Modules
             }
             if (new Random().Next(100) <= 5)
             {
-                chatOutput.WriteChat($"Hey, you. You can type {bloodSacrificeText} to sacrifice an Awesome Point to the dark lord and receive a new set of white cards. But you didn't hear it from me.");
+                chatOutput.WriteChat($"Hey, you. You can type {BloodSacrificeText} to sacrifice an Awesome Point to the dark lord and receive a new set of white cards. But you didn't hear it from me.");
             }
         }
 
@@ -369,7 +373,7 @@ namespace CardsAgainstHyurmanity.Modules
 
         private void BloodSacrificeChatListener(XivChatType type, string senderFullName, string message, DateTime receivedAt)
         {
-            if (message.Trim().Equals(bloodSacrificeText, StringComparison.OrdinalIgnoreCase))
+            if (message.Trim().Equals(BloodSacrificeText, StringComparison.OrdinalIgnoreCase))
             {
                 var player = game.Players.Find(p => p.FullName == senderFullName);
                 if (player == null)

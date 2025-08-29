@@ -94,10 +94,8 @@ public sealed class Plugin : IDalamudPlugin
         serviceCollection.AddSingleton<ReceivedChatMuter>();
         serviceCollection.AddSingleton<ContextMenuManager>();
         serviceCollection.AddSingleton<ISaveManager<CahGame>, SaveManager<CahGame>>(sp => 
-            new SaveManager<CahGame>("CaHSaveGame.json", sp.GetRequiredService<ILogService>(), sp.GetRequiredService<IClientState>()));
-        serviceCollection.AddSingleton<CahGame>((sp) => sp.GetRequiredService<IFramework>().RunOnFrameworkThread(
-            () => sp.GetRequiredService<ISaveManager<CahGame>>().GetCharacterSaveInMemory()).Result);
-
+            new SaveManager<CahGame>("./CaHSaveGame.json", sp.GetRequiredService<ILogService>(),
+            sp.GetRequiredService<IClientState>(), sp.GetRequiredService<IFramework>(), pluginInterface));
         return serviceCollection.BuildServiceProvider();
     }
 
@@ -116,6 +114,7 @@ public sealed class Plugin : IDalamudPlugin
         {
             serviceProvider.GetRequiredService<CahGame>().AddTestPlayers();
         }
+        serviceProvider.GetRequiredService<ISaveManager<CahGame>>();
     }
 
     private void OnCommand(string command, string args)

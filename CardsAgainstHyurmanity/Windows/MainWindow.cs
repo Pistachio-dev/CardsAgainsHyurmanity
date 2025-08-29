@@ -2,13 +2,14 @@ using CardsAgainstHyurmanity.Model.CAHData;
 using CardsAgainstHyurmanity.Model.Game;
 using CardsAgainstHyurmanity.Modules;
 using CardsAgainstHyurmanity.Modules.DataLoader;
+using Dalamud.Bindings.ImGui;
 using DalamudBasics.Chat.ClientOnlyDisplay;
 using DalamudBasics.Configuration;
 using DalamudBasics.Extensions;
 using DalamudBasics.GUI.Windows;
 using DalamudBasics.Logging;
+using DalamudBasics.SaveGames;
 using DalamudBasics.Targeting;
-using Dalamud.Bindings.ImGui;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
@@ -19,7 +20,8 @@ namespace CardsAgainstHyurmanity.Windows;
 public class MainWindow : PluginWindowBase, IDisposable
 {
     private readonly Plugin plugin;
-    private CahGame game;
+    private readonly ISaveManager<CahGame> saveManager;
+    private CahGame? game => saveManager.GetCharacterSaveInMemory();
     private GameActions gameActions;
     private CahDataLoader dataLoader;
     private ITargetingService targetingService;
@@ -36,7 +38,7 @@ public class MainWindow : PluginWindowBase, IDisposable
             MaximumSize = new Vector2(float.MaxValue, float.MaxValue)
         };
 
-        game = serviceProvider.GetRequiredService<CahGame>();
+        this.saveManager = serviceProvider.GetRequiredService<ISaveManager<CahGame>>();
         this.plugin = plugin;
         this.gameActions = serviceProvider.GetRequiredService<GameActions>();
         this.dataLoader = serviceProvider.GetRequiredService<CahDataLoader>();
@@ -50,6 +52,11 @@ public class MainWindow : PluginWindowBase, IDisposable
 
     protected override void SafeDraw()
     {
+        if (game == null)
+        {
+            ImGui.TextUnformatted("Game failed to load");
+            return;
+        }
         if (!plugin.CardsAreLoaded)
         {
             ImGui.TextUnformatted("Cards are not loaded");
@@ -105,6 +112,12 @@ public class MainWindow : PluginWindowBase, IDisposable
 
     private void DrawPlayerTable()
     {
+        if (game == null)
+        {
+            ImGui.TextUnformatted("Game failed to load");
+            return;
+        }
+
         const ImGuiTableFlags flags = ImGuiTableFlags.SizingFixedFit | ImGuiTableFlags.Resizable | ImGuiTableFlags.Borders;
 
         if (ImGui.BeginTable("##PlayerTable", 3, flags))

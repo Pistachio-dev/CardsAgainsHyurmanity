@@ -6,6 +6,8 @@ namespace CardsAgainstHyurmanity.Model.Game
 {
     public class LoadedCahCards
     {
+        public bool NotProperlyLoaded => !(WhiteCards.Any() || BlackCards.Any());
+
         public string[] WhiteCards = [];
         public BlackCard[] BlackCards = [];
         public string[] LoadedPackNames = [];

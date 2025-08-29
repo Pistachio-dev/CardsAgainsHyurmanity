@@ -1,13 +1,9 @@
-using CardsAgainstHyurmanity.Model.Game;
 using Dalamud.Game.Gui.ContextMenu;
 using Dalamud.Plugin.Services;
 using DalamudBasics.Logging;
 using ECommons.ExcelServices;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CardsAgainstHyurmanity.Modules
 {
@@ -32,16 +28,12 @@ namespace CardsAgainstHyurmanity.Modules
         private readonly ILogService logService;
         private readonly GameActions gameActions;
         private readonly IContextMenu contextMenu;
-        private readonly CahGame cahGame;
-        private readonly IChatGui chatGui;
 
-        public ContextMenuManager(ILogService logService, GameActions gameActions, IContextMenu contextMenu, CahGame cahGame, IChatGui chatGui)
+        public ContextMenuManager(ILogService logService, GameActions gameActions, IContextMenu contextMenu)
         {
             this.logService = logService;
             this.gameActions = gameActions;
             this.contextMenu = contextMenu;
-            this.cahGame = cahGame;
-            this.chatGui = chatGui;
             contextMenu.OnMenuOpened += OpenContextMenu;
         }
 

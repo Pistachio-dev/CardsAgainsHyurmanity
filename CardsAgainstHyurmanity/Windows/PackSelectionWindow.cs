@@ -22,7 +22,6 @@ public class PackSelectionWindow : PluginWindowBase, IDisposable
     private IConfigurationService<Configuration> configService;
     private Configuration configuration;
     private GameActions gameActions;
-    private CahGame game;
     private HashSet<int> changedIndexes = new();
     private CahDataLoader loader;
 
@@ -35,7 +34,6 @@ public class PackSelectionWindow : PluginWindowBase, IDisposable
             MaximumSize = new Vector2(float.MaxValue, 900)
         };
 
-        game = serviceProvider.GetRequiredService<CahGame>();
         configService = serviceProvider.GetRequiredService<IConfigurationService<Configuration>>();
         configuration = configService.GetConfiguration();
         fullData = serviceProvider.GetRequiredService<CahDataLoader>().GetFullData();
