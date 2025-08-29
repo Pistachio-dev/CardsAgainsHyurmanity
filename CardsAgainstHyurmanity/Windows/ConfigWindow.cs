@@ -7,12 +7,13 @@ using Dalamud.Bindings.ImGui;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Numerics;
+using System.Linq;
+using ECommons;
 
 namespace CardsAgainstHyurmanity.Windows;
 
 public class ConfigWindow : PluginWindowBase, IDisposable
 {
-    private Configuration configuration;
     private ImGuiFormFactory<Configuration> formFactory;
     private IConfigurationService<Configuration> configurationService;
     private readonly Vector4 lightGreen = new Vector4(162 / 255f, 1, 153 / 255f, 1);
@@ -36,14 +37,8 @@ public class ConfigWindow : PluginWindowBase, IDisposable
     protected override void SafeDraw()
     {
         DrawSectionHeader("Chat");
-        ImGui.BeginGroup();
-        ImGui.TextUnformatted("Write to: ");
-        formFactory.DrawUshortRadio(nameof(Configuration.DefaultOutputChatType), sameLine: true,
-            [("/echo", (ushort)XivChatType.Echo, null),
-                ("/party", (ushort)XivChatType.Party, null),
-                ("/alliance", (ushort)XivChatType.Alliance, null),
-                ("/say", (ushort)XivChatType.Say, null)]);
-        ImGui.EndGroup();
+
+        DrawChatChannelSelector();
 
         DrawSectionHeader("Game");
         formFactory.AddValidationText(formFactory.DrawIntInput("Starting white cards", nameof(Configuration.InitialWhiteCardsDrawnAmount), EnforcePositiveInt));
@@ -62,5 +57,26 @@ public class ConfigWindow : PluginWindowBase, IDisposable
     private string? EnforcePositiveInt(int number)
     {
         return number >= 0 ? null : "Number must be positive";
+    }
+
+    private void DrawChatChannelSelector()
+    {
+        XivChatType[] channels = { XivChatType.Echo, XivChatType.Party, XivChatType.Alliance, XivChatType.Say,
+                XivChatType.Ls1, XivChatType.Ls2, XivChatType.Ls3, XivChatType.Ls4, XivChatType.Ls5, XivChatType.Ls6, XivChatType.Ls7, XivChatType.Ls8,
+                XivChatType.CrossLinkShell1, XivChatType.CrossLinkShell2, XivChatType.CrossLinkShell3, XivChatType.CrossLinkShell4, XivChatType.CrossLinkShell5, XivChatType.CrossLinkShell6, XivChatType.CrossLinkShell7, XivChatType.CrossLinkShell8};
+        string[] options = channels.Select(entry => entry.ToString()).ToArray();
+        var local = channels.IndexOf(configurationService.GetConfiguration().DefaultOutputChatType);
+        if (local == -1)
+        {
+            local = 0;
+        }
+        if (ImGui.Combo("Chat channel", ref local, options))
+        {
+            if (local >= channels.Length)
+            {
+                return;
+            }
+            configurationService.GetConfiguration().DefaultOutputChatType = channels[local];
+        }        
     }
 }
