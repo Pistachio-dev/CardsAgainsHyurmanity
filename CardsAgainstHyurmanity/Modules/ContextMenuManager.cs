@@ -1,5 +1,6 @@
 using Dalamud.Game.Gui.ContextMenu;
 using Dalamud.Plugin.Services;
+using DalamudBasics.Configuration;
 using DalamudBasics.Logging;
 using ECommons.ExcelServices;
 using System;
@@ -28,12 +29,14 @@ namespace CardsAgainstHyurmanity.Modules
         private readonly ILogService logService;
         private readonly GameActions gameActions;
         private readonly IContextMenu contextMenu;
+        private readonly IConfigurationService<Configuration> configSvc;
 
-        public ContextMenuManager(ILogService logService, GameActions gameActions, IContextMenu contextMenu)
+        public ContextMenuManager(ILogService logService, GameActions gameActions, IContextMenu contextMenu, IConfigurationService<Configuration> configSvc)
         {
             this.logService = logService;
             this.gameActions = gameActions;
             this.contextMenu = contextMenu;
+            this.configSvc = configSvc;
             contextMenu.OnMenuOpened += OpenContextMenu;
         }
 
@@ -43,7 +46,11 @@ namespace CardsAgainstHyurmanity.Modules
         }
         private void OpenContextMenu(IMenuOpenedArgs args)
         {
-            logService.Warning("OnOpenContextMenu");
+            if (!configSvc.GetConfiguration().AddToContextMenu)
+            {
+                return;
+            }
+            
             if (ValidAddons.Contains(args.AddonName) && args.Target is MenuTargetDefault def 
                 && def.TargetName != null && ExcelWorldHelper.Get(def.TargetHomeWorld.RowId, true) != null)
             {

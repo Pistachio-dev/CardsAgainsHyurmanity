@@ -22,4 +22,6 @@ public class Configuration : IConfiguration
     public bool RemoveOutgoingCardsChat { get; set; } = true;
 
     public bool UseTestData { get; set; } = false;
+
+    public bool AddToContextMenu {  get; set; } = true;
 }
