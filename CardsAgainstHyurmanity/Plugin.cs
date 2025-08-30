@@ -112,7 +112,7 @@ public sealed class Plugin : IDalamudPlugin
         serviceProvider.GetRequiredService<ContextMenuManager>();
         if (config.UseTestData)
         {
-            serviceProvider.GetRequiredService<CahGame>().AddTestPlayers();
+            serviceProvider.GetRequiredService<ISaveManager<CahGame>>().GetCharacterSaveInMemory()?.AddTestPlayers();
         }
         serviceProvider.GetRequiredService<ISaveManager<CahGame>>();
     }

@@ -48,7 +48,7 @@ namespace CardsAgainstHyurmanity.Modules
             game.Deck = loader.RandomizeDeck(loader.BuildDeck(configuration.PackSelections));
         }
 
-        //[StateChangingAndSavingAction]
+        [StateChangingAndSavingAction]
         public void RemovePlayer(Player player)
         {
             game.Players.Remove(player);
@@ -72,9 +72,9 @@ namespace CardsAgainstHyurmanity.Modules
             loader.RandomizeDeck(game.Deck);
             SetOrAdvanceTzar();
 
-            foreach (var player in game.Players)
+            foreach (Player player in game.Players)
             {
-                player.WhiteCards = game.Deck.DrawWhite(configuration.InitialWhiteCardsDrawnAmount);
+                player.WhiteCards = DrawWhiteCards(configuration.InitialWhiteCardsDrawnAmount);
                 player.Picks.Clear();
                 SendWhiteCardsOrTzarNotice(player);
             }
@@ -99,7 +99,33 @@ namespace CardsAgainstHyurmanity.Modules
         [StateChangingAndSavingAction]
         private void DrawNewBlackCard()
         {
+            EnsureCardsAreLoaded();
             game.BlackCard = game.Deck.DrawBlack(1)[0];
+        }
+
+        [StateChangingAndSavingAction]
+        private List<string> DrawWhiteCards(int amount)
+        {
+            EnsureCardsAreLoaded();
+            return game.Deck.DrawWhite(amount);
+        }
+
+        private void EnsureCardsAreLoaded()
+        {
+            if (game.Deck.NotProperlyLoaded)
+            {
+                if (game.Deck.LoadedPackNames.Any())
+                {
+                    game.Deck = loader.BuildDeck(game.Deck.LoadedPackNames);                    
+                }
+                else
+                {
+                    // Initial load
+                    game.Deck = loader.BuildDeck(configuration.PackSelections);
+                }
+
+                loader.RandomizeDeck(game.Deck);                    
+            }
         }
 
         [StateChangingAndSavingAction]
@@ -108,7 +134,7 @@ namespace CardsAgainstHyurmanity.Modules
             SetOrAdvanceTzar();
             foreach (var player in game.Players)
             {
-                player.WhiteCards.AddRange(game.Deck.DrawWhite(player.Picks.Count));
+                player.WhiteCards.AddRange(DrawWhiteCards(player.Picks.Count));
                 player.Picks.Clear();
                 player.AssignedNumberForTzarPick = 0;
                 SendWhiteCardsOrTzarNotice(player);
@@ -136,7 +162,7 @@ namespace CardsAgainstHyurmanity.Modules
             player.AwesomePoints -= 1;
             int currentCardAmount = player.WhiteCards.Count();
             player.WhiteCards.Clear();
-            player.WhiteCards.AddRange(game.Deck.DrawWhite(currentCardAmount));
+            player.WhiteCards.AddRange(DrawWhiteCards(currentCardAmount));
 
             chatOutput.WriteChat($"The dark lord looks upon {player.FullName.GetFirstName()}'s offering, satisfied, and waves their hand. Your sacrifice grants them a new set of white cards.");
             chatOutput.TellPlayerWhiteCards(player);
@@ -178,7 +204,7 @@ namespace CardsAgainstHyurmanity.Modules
                 playerNumber++;
             }
 
-            chatOutput.WriteChat($"{game.Tzar.FullName.GetFirstName()}, write the number of your favorite", null, configuration.AnswersRolloutDelayInMs);
+            chatOutput.WriteChat($"{game.Tzar?.FullName.GetFirstName() ?? "Tzar"}, write the number of your favorite", null, configuration.AnswersRolloutDelayInMs);
         }
 
         private string GetPlayerResponse(Player player)
@@ -228,7 +254,7 @@ namespace CardsAgainstHyurmanity.Modules
             var player = new Player() { FullName = fullName };
             if (game.Stage != GameStage.NotStarted)
             {
-                player.WhiteCards.AddRange(game.Deck.DrawWhite(configuration.InitialWhiteCardsDrawnAmount));
+                player.WhiteCards.AddRange(DrawWhiteCards(configuration.InitialWhiteCardsDrawnAmount));
             }
 
             game.Players.Add(player);

@@ -10,10 +10,10 @@ namespace CardsAgainstHyurmanity.Model.Game
 
         public string[] WhiteCards = [];
         public BlackCard[] BlackCards = [];
-        public string[] LoadedPackNames = [];
+        public string[] LoadedPackNames { get; set; } = [];
 
-        public int WhiteDrawIndex = 0;
-        public int BlackDrawIndex = 0;
+        public int WhiteDrawIndex { get; set; } = 0;
+        public int BlackDrawIndex { get; set; } = 0;
 
         public List<BlackCard> DrawBlack(int amount)
         {

@@ -77,6 +77,7 @@ public class ConfigWindow : PluginWindowBase, IDisposable
                 return;
             }
             configurationService.GetConfiguration().DefaultOutputChatType = channels[local];
+            configurationService.SaveConfiguration();
         }        
     }
 }

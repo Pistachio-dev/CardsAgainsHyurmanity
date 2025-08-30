@@ -34,6 +34,11 @@ namespace CardsAgainstHyurmanity.Modules.DataLoader
             return data!;
         }
 
+        public LoadedCahCards BuildDeck(string[] packNames)
+        {
+            var indexes = configService.GetConfiguration().PackSelections.Where(pack => packNames.Contains(pack.Name)).Select(pack => pack.IndexInData).ToList();
+            return BuildDeck(indexes);
+        }
         public LoadedCahCards BuildDeck(List<CahPackSettings> settings)
         {
             var indexes = settings.Where(p => p.Enabled).Select(p => p.IndexInData).ToList();
