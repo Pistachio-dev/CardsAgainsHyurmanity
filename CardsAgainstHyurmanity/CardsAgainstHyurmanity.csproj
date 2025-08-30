@@ -24,6 +24,7 @@
 </PropertyGroup>
 
 <ItemGroup>
+  <Content Include="CardsAgainstHyurmanity.json" />
   <Content Include="NewestRelease.json" />
 </ItemGroup>
     
