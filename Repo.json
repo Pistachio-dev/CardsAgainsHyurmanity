@@ -1,7 +1,7 @@
 [
   {
     "Author": "Pistachio Herald",
-    "Name": "Cards Agains Hyurmanity",
+    "Name": "Cards Against Hyurmanity",
     "Punchline": "Cards Against Humanity, ingame",
     "Description": "Play cards against humanity over game chat. Type /cah to open the main window.",
     "ApplicableVersion": "any",
@@ -18,12 +18,17 @@
       "politically",
       "incorrect"
     ],
+    "IconUrl": "https://raw.githubusercontent.com/Pistachio-dev/CardsAgainsHyurmanity/refs/heads/master/CardsAgainstHyurmanity/CardsAgainstHyurmanityLogo.png",
     "DalamudApiLevel": 13,
     "AssemblyVersion": "0.3.1.0",
     "Changelog": "7.3 patch",
     "DownloadLinkInstall": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.3.1.0_release/CardsAgainstHyurmanity.zip",
     "DownloadLinkUpdate": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.3.1.0_release/CardsAgainstHyurmanity.zip",
-    "LastUpdate": 1754825664,
+    "TestingDalamudApiLevel": 13,
+    "TestingAssemblyVersion": "0.5.0.1",
+    "TestingChangelog": "- Added a context menu entry so that players can be added from party list or friend list, just right click\n- Added game auto save and auto load, so crashes don't cockblock everyone\n- Added and updated several cards\n- Score is now written after each win\n- Added linkshells as usable chat channels",
+    "DownloadLinkTesting": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.5.0.1_testing/CardsAgainstHyurmanity.zip",
+    "LastUpdate": 1756546371,
     "InternalName": "CardsAgainstHyurmanity"
   }
 ]
