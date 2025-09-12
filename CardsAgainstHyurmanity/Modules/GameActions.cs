@@ -182,6 +182,33 @@ namespace CardsAgainstHyurmanity.Modules
             }
         }
 
+        public void PickUpWhereWeLeft()
+        {
+            if (game.Stage == GameStage.NotStarted)
+            {
+                clientChatGui.Print("Game was not started.");
+                return;
+            }
+
+            chatOutput.WriteChat("Picking up where we left...");
+            if (game.Stage == GameStage.PlayersPicking)
+            {
+                foreach (Player? player in game.Players)
+                {
+                    SendWhiteCardsOrTzarNotice(player);
+                }
+
+                IEnumerable<Player> pickingPlayers = game.Players.Where(p => p != game.Tzar && !p.AFK && !(p.Picks.Count > 0));
+                chatOutput.WriteChat($"Still picking: {pickingPlayers.Humanize()}");
+                return;
+            }
+            if (game.Stage == GameStage.TzarPicking)
+            {
+                PresentPicks();
+                return;
+            }
+        }
+
         [StateChangingAndSavingAction]
         public void PresentPicks()
         {

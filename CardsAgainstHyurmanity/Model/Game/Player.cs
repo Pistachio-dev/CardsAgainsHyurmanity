@@ -18,5 +18,10 @@ namespace CardsAgainstHyurmanity.Model.Game
             Picks.Clear();
             AssignedNumberForTzarPick = 0;
         }
+
+        public override string ToString()
+        {
+            return FullName;
+        }
     }
 }

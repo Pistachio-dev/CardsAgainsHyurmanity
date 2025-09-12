@@ -95,6 +95,9 @@ public class MainWindow : PluginWindowBase, IDisposable
             ImGui.SameLine();
             DrawActionButton(() => gameActions.WritePlayerScores(), "Write scores");
             DrawTooltip("Writes the player scores in chat.");
+            ImGui.SameLine();
+            DrawActionButton(() => gameActions.PickUpWhereWeLeft(), "Pick up where we left");
+            DrawTooltip("Resend white and black cars, and who still needs to pick");
         }
 
         if (configuration.UseTestData)
