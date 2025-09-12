@@ -1,5 +1,11 @@
 [
   {
+    "AssemblyVersion": "0.5.1.1",
+    "DalamudApiLevel": 13,
+    "ChangeLog": "- Added a button to continue the game where you left it. - Added more cards",
+    "IsTest": true
+  },
+  {
     "AssemblyVersion": "0.5.0.1",
     "DalamudApiLevel": 13,
     "ChangeLog": "- Added a context menu entry so that players can be added from party list or friend list, just right click\n- Added game auto save and auto load, so crashes don't cockblock everyone\n- Added and updated several cards\n- Score is now written after each win\n- Added linkshells as usable chat channels",
