@@ -2,5 +2,5 @@
     "AssemblyVersion": "0.5.1.1",
     "DalamudApiLevel": 13,
     "ChangeLog": "- Added a button to continue the game where you left it. - Added more cards",
-    "IsTest": true
+    "IsTest": false
 }
