@@ -181,7 +181,8 @@ namespace CardsAgainstHyurmanity.Modules
 
         private void PresentBlackCard()
         {
-            chatOutput.WriteChat($"Black card: {game.BlackCard.text}.");
+            string text = combinedCardFitter.FitCombinedCard(game.BlackCard.text);
+            chatOutput.WriteChat($"Black card: {text}.");
             chatOutput.WriteChat($"Pick {"white card".ToQuantity(game.BlackCard.pick)} by writing their number");
             if (game.BlackCard.pick > 1)
             {
