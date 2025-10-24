@@ -132,6 +132,8 @@ namespace CardsAgainstHyurmanity.Modules
         public void NextRound()
         {
             SetOrAdvanceTzar();
+            DrawNewBlackCard();
+
             foreach (var player in game.Players)
             {
                 player.WhiteCards.AddRange(DrawWhiteCards(player.Picks.Count));
@@ -139,8 +141,7 @@ namespace CardsAgainstHyurmanity.Modules
                 player.AssignedNumberForTzarPick = 0;
                 SendWhiteCardsOrTzarNotice(player);
             }
-            
-            DrawNewBlackCard();
+                        
             PresentBlackCard();
             game.Stage = GameStage.PlayersPicking;
         }
@@ -295,7 +296,7 @@ namespace CardsAgainstHyurmanity.Modules
         {
             foreach (var player in game.Players)
             {
-                chatOutput.WriteChat($"{player.FullName.WithoutWorldName()}: {player.AwesomePoints} A-points");
+                chatOutput.WriteChat($"{player.FullName.GetNameOnly()}: {player.AwesomePoints} A-points");
             }
         }
 
@@ -368,7 +369,7 @@ namespace CardsAgainstHyurmanity.Modules
             }
 
             chatOutput.WriteCommand("mk attack1", 1000, game.Tzar.FullName);
-            chatOutput.WriteChat($"{game.Tzar.FullName.WithoutWorldName()} is the card Tzar.");
+            chatOutput.WriteChat($"{game.Tzar.FullName.GetNameOnly()} is the card Tzar.");
         }
 
         private int GetNextTzarIndex()
@@ -394,7 +395,7 @@ namespace CardsAgainstHyurmanity.Modules
                 return;
             }
 
-            chatOutput.WriteChat($"{winner.FullName.WithoutWorldName()} wins and gets one Awesome point!" +
+            chatOutput.WriteChat($"{winner.FullName.GetNameOnly()} wins and gets one Awesome point!" +
                 $" {winner.AwesomePoints}/{configuration.AwesomePointsToWin} <se.15>");
             chatOutput.WriteChat($"Their answer was {GetPlayerResponse(winner)}", null, 1000);
             NextRound();

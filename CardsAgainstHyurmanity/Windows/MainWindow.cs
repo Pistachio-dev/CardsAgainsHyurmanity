@@ -2,6 +2,7 @@ using CardsAgainstHyurmanity.Model.CAHData;
 using CardsAgainstHyurmanity.Model.Game;
 using CardsAgainstHyurmanity.Modules;
 using CardsAgainstHyurmanity.Modules.DataLoader;
+using CardsAgainstHyurmanity.Modules.WhiteCardFitting;
 using Dalamud.Bindings.ImGui;
 using DalamudBasics.Chat.ClientOnlyDisplay;
 using DalamudBasics.Configuration;
@@ -28,6 +29,7 @@ public class MainWindow : PluginWindowBase, IDisposable
     private IClientChatGui chatGui;
     private Player? playerToRemove;
     private Configuration configuration;
+    private WhiteCardFitter whiteCardFitter;
 
     public MainWindow(ILogService logService, IServiceProvider serviceProvider, Plugin plugin)
         : base(logService, "CardsAgainstHyurmanity", ImGuiWindowFlags.AlwaysAutoResize)
@@ -45,6 +47,7 @@ public class MainWindow : PluginWindowBase, IDisposable
         this.targetingService = serviceProvider.GetRequiredService<ITargetingService>();
         this.chatGui = serviceProvider.GetRequiredService<IClientChatGui>();
         this.configuration = serviceProvider.GetRequiredService<IConfigurationService<Configuration>>().GetConfiguration();
+        this.whiteCardFitter = serviceProvider.GetRequiredService<WhiteCardFitter>();
     }
 
     public void Dispose()
@@ -63,6 +66,7 @@ public class MainWindow : PluginWindowBase, IDisposable
             DrawActionButton(() =>
             {
                 dataLoader.GetFullData();
+                whiteCardFitter.LoadDictionaries();
                 plugin.CardsAreLoaded = true;
             }, "Load cards");
 
@@ -136,7 +140,7 @@ public class MainWindow : PluginWindowBase, IDisposable
             {
                 ImGui.TableNextRow();
                 ImGui.TableNextColumn();
-                string playerNameText = player.FullName.WithoutWorldName();
+                string playerNameText = player.FullName.GetNameOnly();
                 if (player.AFK)
                 {
                     playerNameText += "(AFK)";

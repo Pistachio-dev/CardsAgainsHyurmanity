@@ -37,6 +37,22 @@
   <ItemGroup>
     <ProjectReference Include="..\DalamudBasics\DalamudBasics\DalamudBasics.csproj" />
   </ItemGroup>
+    
+  <ItemGroup>
+    <Folder Include="Data\Language\" />
+  </ItemGroup>
+    
+  <ItemGroup>
+    <EmbeddedResource Include="..\VerbGeneration\Resources\irregularVerbList.csv" Link="Data\Language\irregularVerbList.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+    
+  <ItemGroup>
+    <EmbeddedResource Include="..\VerbGeneration\Resources\regularVerbList.csv" Link="Data\Language\regularVerbList.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
     <Target Name="GetGitHash" BeforeTargets="GetAssemblyVersion" Returns="InformationalVersion">
     <Exec Command="git rev-parse --short HEAD" ConsoleToMSBuild="true" StandardOutputImportance="low" ContinueOnError="true">
       <Output TaskParameter="ExitCode" PropertyName="GitCommitHashSuccess" />

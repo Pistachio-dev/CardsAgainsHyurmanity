@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardsAgainstHyurmanity", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalamudBasics", "DalamudBasics\DalamudBasics\DalamudBasics.csproj", "{ED5F0D5F-A2A0-C677-0882-DA9111030853}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerbGeneration", "VerbGeneration\VerbGeneration.csproj", "{CA2935D8-7FF7-45B7-9E25-DFBCE5499E72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{D4260564-EB81-4BBC-B7EB-78750A4E08B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +25,14 @@ Global
 		{ED5F0D5F-A2A0-C677-0882-DA9111030853}.Debug|x64.Build.0 = Debug|x64
 		{ED5F0D5F-A2A0-C677-0882-DA9111030853}.Release|x64.ActiveCfg = Release|x64
 		{ED5F0D5F-A2A0-C677-0882-DA9111030853}.Release|x64.Build.0 = Release|x64
+		{CA2935D8-7FF7-45B7-9E25-DFBCE5499E72}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CA2935D8-7FF7-45B7-9E25-DFBCE5499E72}.Debug|x64.Build.0 = Debug|Any CPU
+		{CA2935D8-7FF7-45B7-9E25-DFBCE5499E72}.Release|x64.ActiveCfg = Release|Any CPU
+		{CA2935D8-7FF7-45B7-9E25-DFBCE5499E72}.Release|x64.Build.0 = Release|Any CPU
+		{D4260564-EB81-4BBC-B7EB-78750A4E08B3}.Debug|x64.ActiveCfg = Debug|x64
+		{D4260564-EB81-4BBC-B7EB-78750A4E08B3}.Debug|x64.Build.0 = Debug|x64
+		{D4260564-EB81-4BBC-B7EB-78750A4E08B3}.Release|x64.ActiveCfg = Release|x64
+		{D4260564-EB81-4BBC-B7EB-78750A4E08B3}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,6 +2,7 @@ using CardsAgainstHyurmanity.Data.TestData;
 using CardsAgainstHyurmanity.Model.Game;
 using CardsAgainstHyurmanity.Modules;
 using CardsAgainstHyurmanity.Modules.DataLoader;
+using CardsAgainstHyurmanity.Modules.WhiteCardFitting;
 using CardsAgainstHyurmanity.Windows;
 using Dalamud.Game.Command;
 using Dalamud.Interface.Windowing;
@@ -93,6 +94,7 @@ public sealed class Plugin : IDalamudPlugin
         serviceCollection.AddSingleton<CahChatOutput>();
         serviceCollection.AddSingleton<ReceivedChatMuter>();
         serviceCollection.AddSingleton<ContextMenuManager>();
+        serviceCollection.AddSingleton<WhiteCardFitter>();
         serviceCollection.AddSingleton<ISaveManager<CahGame>, SaveManager<CahGame>>(sp => 
             new SaveManager<CahGame>("./CaHSaveGame.json", sp.GetRequiredService<ILogService>(),
             sp.GetRequiredService<IClientState>(), sp.GetRequiredService<IFramework>(), pluginInterface));
@@ -102,7 +104,7 @@ public sealed class Plugin : IDalamudPlugin
     private void InitializeServices(IServiceProvider serviceProvider)
     {
         IFramework framework = serviceProvider.GetRequiredService<IFramework>();
-        serviceProvider.GetRequiredService<ILogService>().AttachToGameLogicLoop(framework);
+        serviceProvider.GetRequiredService<ILogService>().AttachToGameLogicLoop();
         serviceProvider.GetRequiredService<IChatListener>().InitializeAndRun(Watermark, ChatChannelSets.CommonChannelsAndLinkshells);
         serviceProvider.GetRequiredService<HookManager>();
         serviceProvider.GetRequiredService<CahChatOutput>().InitializeAndAttachToGameLogicLoop(framework, Watermark);
