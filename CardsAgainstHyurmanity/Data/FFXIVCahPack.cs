@@ -243,7 +243,7 @@ namespace CardsAgainstHyurmanity.Data
             "La-hee brea",
             "Booze powered relic making",
             "Deep dungeon chameleons",
-            "Spamming Holy until your retinas are burnt",
+            "Spaming Holy until your retinas are burnt",
             "Salt Riot",
             "Pet human",
             "Mud ball time",
