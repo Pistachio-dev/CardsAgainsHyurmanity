@@ -19,7 +19,7 @@ public class WhiteCardFitter
     private readonly Hashtable Present = new();
     private readonly Hashtable Past = new();
     private readonly Hashtable PastParticiple = new();
-    private readonly Hashtable Infinitive = new();
+    private readonly Hashtable Gerund = new();
 
     record class FullForm (string present, string past, string pastParticiple, string infinitive);
     private readonly ILogService log;
@@ -50,7 +50,8 @@ public class WhiteCardFitter
             "0" => VerbForm.Present,
             "1" => VerbForm.Past,
             "2" => VerbForm.PastParticiple,
-            "3" => VerbForm.Infinitive
+            "3" => VerbForm.Gerund,
+            _ => VerbForm.Gerund
         };
     }
 
@@ -75,14 +76,14 @@ public class WhiteCardFitter
             VerbForm.Present => fullForm.present,
             VerbForm.Past => fullForm.past,
             VerbForm.PastParticiple => fullForm.pastParticiple,
-            VerbForm.Infinitive => fullForm.infinitive,
+            VerbForm.Gerund => fullForm.infinitive,
             _ => throw new NotImplementedException()
         };
     }
 
     private FullForm? FindMatch(string word)
     {
-        Hashtable[] collections = [Present, Past, PastParticiple, Infinitive];
+        Hashtable[] collections = [Present, Past, PastParticiple, Gerund];
         var wordLower = word.ToLower();
         foreach (var collection in collections)
         {
@@ -97,7 +98,7 @@ public class WhiteCardFitter
         LoadFromResource($"{routeToResources}.irregularVerbList.csv");
         LoadFromResource($"{routeToResources}.regularVerbList.csv");
         log.Info($"Loaded: Present({Present.Count} Past({Past.Count} " +
-            $"PastParticiple({PastParticiple.Count} Infinitive({Infinitive.Count} ");
+            $"PastParticiple({PastParticiple.Count} Infinitive({Gerund.Count} ");
     }
 
     private void LoadFromResource(string resourceName)
@@ -128,7 +129,7 @@ public class WhiteCardFitter
                         AddToCollection(Present, verbs[0], full);
                         AddToCollection(Past, verbs[1], full);
                         AddToCollection(PastParticiple, verbs[2], full);
-                        AddToCollection(Infinitive, verbs[3], full);
+                        AddToCollection(Gerund, verbs[3], full);
                     }
                     catch (ArgumentException)
                     {

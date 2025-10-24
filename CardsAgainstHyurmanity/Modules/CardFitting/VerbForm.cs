@@ -11,7 +11,7 @@ namespace CardsAgainstHyurmanity.Modules.WhiteCardFitting
         Present,
         Past,
         PastParticiple,
-        Infinitive,
+        Gerund,
         NoChange
     }
 }
