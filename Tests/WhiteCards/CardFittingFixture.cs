@@ -1,4 +1,6 @@
+using CardsAgainstHyurmanity;
 using CardsAgainstHyurmanity.Modules.WhiteCardFitting;
+using DalamudBasics.Configuration;
 using DalamudBasics.Logging;
 using Moq;
 using System;
@@ -14,7 +16,7 @@ namespace Tests.WhiteCards
         internal WhiteCardFitter fitter;
         public CardFittingFixture()
         {
-            fitter = new WhiteCardFitter(new Mock<ILogService>().Object);
+            fitter = new WhiteCardFitter(new Mock<ILogService>().Object, new Mock<IConfigurationService<Configuration>>().Object);
             fitter.LoadDictionaries();
         }
 
