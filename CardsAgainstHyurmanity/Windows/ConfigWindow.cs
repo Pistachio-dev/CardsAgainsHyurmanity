@@ -46,6 +46,8 @@ public class ConfigWindow : PluginWindowBase, IDisposable
         formFactory.AddValidationText(formFactory.DrawIntInput("Delay between answers (in ms)", nameof(Configuration.AnswersRolloutDelayInMs), EnforcePositiveInt));
         formFactory.DrawCheckbox("Remove outgoing /tells", nameof(Configuration.RemoveOutgoingCardsChat));
         DrawTooltip("Removes the outgoing /tell for player cards, so your chatbox does not get spammed. This will not affect any other messaage.");
+        formFactory.DrawCheckbox("Match verbs to black cards", nameof(Configuration.MatchVerbsToBlackCards));
+        DrawTooltip("For instance, if the black card says \"We once _\" and the withe is \"Getting drunk\", it will change to \"Got drunk\". May be janky");
 
         formFactory.DrawCheckbox("Add \"Add player to CaH\" entry on context menus", nameof(Configuration.AddToContextMenu));
     }

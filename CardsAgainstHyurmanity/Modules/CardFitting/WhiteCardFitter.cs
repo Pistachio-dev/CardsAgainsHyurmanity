@@ -1,3 +1,4 @@
+using DalamudBasics.Configuration;
 using DalamudBasics.Logging;
 using System;
 using System.Collections;
@@ -12,9 +13,10 @@ namespace CardsAgainstHyurmanity.Modules.WhiteCardFitting;
 // Changes white cards to better match the black card
 public class WhiteCardFitter
 {
-    public WhiteCardFitter(ILogService log)
+    public WhiteCardFitter(ILogService log, IConfigurationService<Configuration> configService)
     {
         this.log = log;
+        this.configService = configService;
     }
     private readonly Hashtable Present = new();
     private readonly Hashtable Past = new();
@@ -23,12 +25,18 @@ public class WhiteCardFitter
 
     record class FullForm (string present, string past, string pastParticiple, string infinitive);
     private readonly ILogService log;
+    private readonly IConfigurationService<Configuration> configService;
 
     // Exceptions: we check the second word if the first one is one of these
     private readonly string[] exceptions = ["not", "limit", "accidentally", "single", "subtly", "french"];
 
     public List<string> AdaptWhiteCards(string blackCard, List<string> whiteCards)
     {
+        if (!configService.GetConfiguration().MatchVerbsToBlackCards)
+        {
+            return whiteCards;
+        }
+
         if (Present.Count == 0) LoadDictionaries();
         var verb = ExtractVerbFormInfo(blackCard);
         if (verb == VerbForm.NoChange) return whiteCards;
