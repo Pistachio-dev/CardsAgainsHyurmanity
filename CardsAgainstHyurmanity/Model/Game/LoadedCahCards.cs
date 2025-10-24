@@ -17,7 +17,7 @@ namespace CardsAgainstHyurmanity.Model.Game
 
         public List<BlackCard> DrawBlack(int amount)
         {
-            if (BlackDrawIndex + amount >= BlackCards.Length)
+            if (BlackDrawIndex + amount > BlackCards.Length)
             {
                 BlackDrawIndex = 0;
             }
@@ -29,7 +29,7 @@ namespace CardsAgainstHyurmanity.Model.Game
 
         public List<string> DrawWhite(int amount)
         {
-            if (WhiteDrawIndex + amount >= WhiteCards.Length)
+            if (WhiteDrawIndex + amount > WhiteCards.Length)
             {
                 WhiteDrawIndex = 0;
             }
