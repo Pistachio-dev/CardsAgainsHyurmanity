@@ -3,7 +3,7 @@ using DalamudBasics.Logging;
 using FluentAssertions;
 using Moq;
 
-namespace Tests
+namespace Tests.WhiteCards
 {
     public class WhiteCardFittingTests : IClassFixture<CardFittingFixture>
     {
@@ -18,7 +18,7 @@ namespace Tests
         public void FitWhiteCard_Present_CorrectChange()
         {
             // Arrange
-            string blackCard = "Something _ something@0";
+            var blackCard = "Something _ something@0";
 
             // Act
             var result = fixture.fitter.AdaptWhiteCards(blackCard, fixture.SourceCards);
@@ -31,7 +31,7 @@ namespace Tests
         public void FitWhiteCard_Past_CorrectChange()
         {
             // Arrange
-            string blackCard = "Something _ something@1";
+            var blackCard = "Something _ something@1";
 
             // Act
             var result = fixture.fitter.AdaptWhiteCards(blackCard, fixture.SourceCards);
@@ -44,7 +44,7 @@ namespace Tests
         public void FitWhiteCard_PastPartifiple_CorrectChange()
         {
             // Arrange
-            string blackCard = "Something _ something@2";
+            var blackCard = "Something _ something@2";
 
             // Act
             var result = fixture.fitter.AdaptWhiteCards(blackCard, fixture.SourceCards);
@@ -57,7 +57,7 @@ namespace Tests
         public void FitWhiteCard_Infinitive_CorrectChange()
         {
             // Arrange
-            string blackCard = "Something _ something@3";
+            var blackCard = "Something _ something@3";
 
             // Act
             var result = fixture.fitter.AdaptWhiteCards(blackCard, fixture.SourceCards);

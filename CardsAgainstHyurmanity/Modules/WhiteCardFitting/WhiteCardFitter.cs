@@ -27,32 +27,11 @@ internal class WhiteCardFitter
     // Exceptions: we check the second word if the first one is one of these
     private readonly string[] exceptions = ["not", "limit", "accidentally", "single", "subtly", "french"];
 
-
-    public string RemoveMarkersFromBlackCard(string blackCard)
-    {
-        if (blackCard[blackCard.Length - 2] == '@')
-        {
-            return blackCard.Substring(0, blackCard.Length - 2);
-        }
-
-        return blackCard;
-    }
-
     public List<string> AdaptWhiteCards(string blackCard, List<string> whiteCards)
     {
         var verb = ExtractVerbFormInfo(blackCard);
         if (verb == VerbForm.NoChange) return whiteCards;
         return whiteCards.Select(wc => AdaptCard(wc, verb)).ToList();
-    }
-
-    public string RemoveDuplicateArticles(string combinedCard)
-    {
-        combinedCard.Replace("the the", "the", StringComparison.OrdinalIgnoreCase);
-        combinedCard.Replace("a the", "a", StringComparison.OrdinalIgnoreCase);
-        combinedCard.Replace("the a", "the", StringComparison.OrdinalIgnoreCase);
-        combinedCard.Replace("a a", "a", StringComparison.OrdinalIgnoreCase);
-
-        return combinedCard;
     }
 
     private VerbForm ExtractVerbFormInfo(string blackCard)
