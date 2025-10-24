@@ -29,6 +29,7 @@ public class WhiteCardFitter
 
     public List<string> AdaptWhiteCards(string blackCard, List<string> whiteCards)
     {
+        if (Present.Count == 0) LoadDictionaries();
         var verb = ExtractVerbFormInfo(blackCard);
         if (verb == VerbForm.NoChange) return whiteCards;
         return whiteCards.Select(wc => AdaptCard(wc, verb)).ToList();

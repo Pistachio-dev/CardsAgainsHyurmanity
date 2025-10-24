@@ -2,6 +2,7 @@ using CardsAgainstHyurmanity.Data;
 using CardsAgainstHyurmanity.Model.CAH;
 using CardsAgainstHyurmanity.Model.CAHData;
 using CardsAgainstHyurmanity.Model.Game;
+using CardsAgainstHyurmanity.Modules.WhiteCardFitting;
 using DalamudBasics.Configuration;
 using DalamudBasics.Logging;
 using System;

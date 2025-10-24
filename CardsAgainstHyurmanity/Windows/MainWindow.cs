@@ -66,7 +66,6 @@ public class MainWindow : PluginWindowBase, IDisposable
             DrawActionButton(() =>
             {
                 dataLoader.GetFullData();
-                whiteCardFitter.LoadDictionaries();
                 plugin.CardsAreLoaded = true;
             }, "Load cards");
 
