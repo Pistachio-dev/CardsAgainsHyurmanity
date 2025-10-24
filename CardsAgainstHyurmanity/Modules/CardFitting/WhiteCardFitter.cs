@@ -12,7 +12,7 @@ namespace CardsAgainstHyurmanity.Modules.WhiteCardFitting;
 // Changes white cards to better match the black card
 public class WhiteCardFitter
 {
-    internal WhiteCardFitter(ILogService log)
+    public WhiteCardFitter(ILogService log)
     {
         this.log = log;
     }

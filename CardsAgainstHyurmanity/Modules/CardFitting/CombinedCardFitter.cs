@@ -11,7 +11,7 @@ namespace CardsAgainstHyurmanity.Modules.WhiteCardFitting
     {
         public ILogService Log { get; }
 
-        internal CombinedCardFitter(ILogService log)
+        public CombinedCardFitter(ILogService log)
         {
             Log = log;
         }
