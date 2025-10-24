@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 namespace CardsAgainstHyurmanity.Modules.WhiteCardFitting;
 
 // Changes white cards to better match the black card
-internal class WhiteCardFitter
+public class WhiteCardFitter
 {
     internal WhiteCardFitter(ILogService log)
     {

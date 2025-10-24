@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CardsAgainstHyurmanity.Modules.WhiteCardFitting
 {
-    internal class CombinedCardFitter
+    public class CombinedCardFitter
     {
         public ILogService Log { get; }
 

@@ -95,6 +95,7 @@ public sealed class Plugin : IDalamudPlugin
         serviceCollection.AddSingleton<ReceivedChatMuter>();
         serviceCollection.AddSingleton<ContextMenuManager>();
         serviceCollection.AddSingleton<WhiteCardFitter>();
+        serviceCollection.AddSingleton<CombinedCardFitter>();
         serviceCollection.AddSingleton<ISaveManager<CahGame>, SaveManager<CahGame>>(sp => 
             new SaveManager<CahGame>("./CaHSaveGame.json", sp.GetRequiredService<ILogService>(),
             sp.GetRequiredService<IClientState>(), sp.GetRequiredService<IFramework>(), pluginInterface));

@@ -6,6 +6,7 @@ using DalamudBasics.Configuration;
 using DalamudBasics.Extensions;
 using DalamudBasics.Logging;
 using DalamudBasics.Targeting;
+using System.Collections.Generic;
 using System.Text;
 
 namespace CardsAgainstHyurmanity.Modules
@@ -23,24 +24,24 @@ namespace CardsAgainstHyurmanity.Modules
             _configuration = configurationService.GetConfiguration();
         }
 
-        public void TellPlayerWhiteCards(Player player)
+        public void TellPlayerWhiteCards(string fullPlayerName, List<string> whiteCards)
         {
             StringBuilder s = new StringBuilder($"{Plugin.Watermark}Your white cards: ");
-            for (int i = 0; i < player.WhiteCards.Count; i++)
+            for (int i = 0; i < whiteCards.Count; i++)
             {
-                if ((s.Length + player.WhiteCards[i].Length) > 420)
+                if ((s.Length + whiteCards[i].Length) > 420)
                 {
-                    SendTell(s.ToString(), player.FullName, GetOutputTypeForTell(), DelayBetweenTells);
+                    SendTell(s.ToString(), fullPlayerName, GetOutputTypeForTell(), DelayBetweenTells);
                     s.Clear();
                 }
-                s.Append($"({i + 1}) {player.WhiteCards[i]}");                
+                s.Append($"({i + 1}) {whiteCards[i]}");                
             }
 
-            SendTell(s.ToString(), player.FullName, GetOutputTypeForTell(), DelayBetweenTells);
+            SendTell(s.ToString(), fullPlayerName, GetOutputTypeForTell(), DelayBetweenTells);
 
             if (_configuration.RemoveOutgoingCardsChat)
             {
-                _chatGui.Print($"{player.FullName.GetFirstName()} received their {player.WhiteCards.Count} cards");
+                _chatGui.Print($"{fullPlayerName.GetFirstName()} received their {whiteCards.Count} cards");
                 return;
             }
         }

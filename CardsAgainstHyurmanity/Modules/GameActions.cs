@@ -1,5 +1,6 @@
 using CardsAgainstHyurmanity.Model.Game;
 using CardsAgainstHyurmanity.Modules.DataLoader;
+using CardsAgainstHyurmanity.Modules.WhiteCardFitting;
 using Dalamud.Game.Text;
 using DalamudBasics.Chat.ClientOnlyDisplay;
 using DalamudBasics.Chat.Listener;
@@ -22,24 +23,31 @@ namespace CardsAgainstHyurmanity.Modules
         private readonly ISaveManager<CahGame> saveManager;
         private CahGame game => saveManager.GetCharacterSaveInMemory() ?? throw new Exception("Null save loaded");
         private readonly CahDataLoader loader;
+        private readonly IConfigurationService<Configuration> configService;
         private readonly CahChatOutput chatOutput;
         private readonly ILogService logService;
         private readonly Configuration configuration;
         private readonly ITargetingService targetingService;
         private readonly IClientChatGui clientChatGui;
         private readonly IChatListener chatListener;
+        private readonly WhiteCardFitter whiteCardFitter;
+        private readonly CombinedCardFitter combinedCardFitter;
 
         public GameActions(ISaveManager<CahGame> saveManager, CahDataLoader loader, IConfigurationService<Configuration> configService, CahChatOutput chatOutput,
-            ILogService logService, ITargetingService targetingService, IClientChatGui clientChatGui, IChatListener chatListener)
+            ILogService logService, ITargetingService targetingService, IClientChatGui clientChatGui, IChatListener chatListener, WhiteCardFitter whiteCardFitter,
+            CombinedCardFitter combinedCardFitter)
         {
             this.saveManager = saveManager;
             this.loader = loader;
+            this.configService = configService;
             this.chatOutput = chatOutput;
             this.logService = logService;
             this.configuration = configService.GetConfiguration();
             this.targetingService = targetingService;
             this.clientChatGui = clientChatGui;
             this.chatListener = chatListener;
+            this.whiteCardFitter = whiteCardFitter;
+            this.combinedCardFitter = combinedCardFitter;
         }
 
         [StateChangingAndSavingAction]
@@ -72,19 +80,19 @@ namespace CardsAgainstHyurmanity.Modules
             loader.RandomizeDeck(game.Deck);
             SetOrAdvanceTzar();
 
+            DrawNewBlackCard();
             foreach (Player player in game.Players)
             {
                 player.WhiteCards = DrawWhiteCards(configuration.InitialWhiteCardsDrawnAmount);
                 player.Picks.Clear();
-                SendWhiteCardsOrTzarNotice(player);
+                SendWhiteCardsOrTzarNotice(player, game.BlackCard.text);
             }
-
-            DrawNewBlackCard();
+            
             PresentBlackCard();
             game.Stage = GameStage.PlayersPicking;
         }
 
-        private void SendWhiteCardsOrTzarNotice(Player player)
+        private void SendWhiteCardsOrTzarNotice(Player player, string blackCard)
         {
             if (player == game.Tzar)
             {
@@ -92,7 +100,8 @@ namespace CardsAgainstHyurmanity.Modules
             }
             else
             {
-                chatOutput.TellPlayerWhiteCards(player);
+                var adaptedCards = whiteCardFitter.AdaptWhiteCards(blackCard, player.WhiteCards);
+                chatOutput.TellPlayerWhiteCards(player.FullName, adaptedCards);
             }
         }
 
@@ -139,7 +148,7 @@ namespace CardsAgainstHyurmanity.Modules
                 player.WhiteCards.AddRange(DrawWhiteCards(player.Picks.Count));
                 player.Picks.Clear();
                 player.AssignedNumberForTzarPick = 0;
-                SendWhiteCardsOrTzarNotice(player);
+                SendWhiteCardsOrTzarNotice(player, game.BlackCard.text);
             }
                         
             PresentBlackCard();
@@ -166,7 +175,8 @@ namespace CardsAgainstHyurmanity.Modules
             player.WhiteCards.AddRange(DrawWhiteCards(currentCardAmount));
 
             chatOutput.WriteChat($"The dark lord looks upon {player.FullName.GetFirstName()}'s offering, satisfied, and waves their hand. Your sacrifice grants them a new set of white cards.");
-            chatOutput.TellPlayerWhiteCards(player);
+            var adaptedCards = whiteCardFitter.AdaptWhiteCards(game.BlackCard.text, player.WhiteCards);
+            chatOutput.TellPlayerWhiteCards(player.FullName, adaptedCards);
         }
 
         private void PresentBlackCard()
@@ -196,7 +206,7 @@ namespace CardsAgainstHyurmanity.Modules
             {
                 foreach (Player? player in game.Players)
                 {
-                    SendWhiteCardsOrTzarNotice(player);
+                    SendWhiteCardsOrTzarNotice(player, game.BlackCard.text);
                 }
 
                 IEnumerable<Player> pickingPlayers = game.Players.Where(p => p != game.Tzar && !p.AFK && !(p.Picks.Count > 0));
@@ -238,7 +248,8 @@ namespace CardsAgainstHyurmanity.Modules
         private string GetPlayerResponse(Player player)
         {
             var response = game.BlackCard.text;
-            foreach (var pick in player.Picks)
+            var adaptedPicks = whiteCardFitter.AdaptWhiteCards(game.BlackCard.text, player.Picks);
+            foreach (var pick in adaptedPicks)
             {
                 if (response.Contains("_"))
                 {
@@ -249,6 +260,8 @@ namespace CardsAgainstHyurmanity.Modules
                     response = $"{response} {pick}";
                 }
             }
+
+            response = combinedCardFitter.FitCombinedCard(response);
 
             return response;
         }
