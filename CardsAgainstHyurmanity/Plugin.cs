@@ -106,7 +106,7 @@ public sealed class Plugin : IDalamudPlugin
     {
         IFramework framework = serviceProvider.GetRequiredService<IFramework>();
         serviceProvider.GetRequiredService<ILogService>().AttachToGameLogicLoop();
-        serviceProvider.GetRequiredService<IChatListener>().InitializeAndRun(Watermark, ChatChannelSets.CommonChannelsAndLinkshells);
+        serviceProvider.GetRequiredService<IChatListener>().InitializeAndRun(Watermark, true, ChatChannelSets.CommonChannelsAndLinkshells);       
         serviceProvider.GetRequiredService<HookManager>();
         serviceProvider.GetRequiredService<CahChatOutput>().InitializeAndAttachToGameLogicLoop(framework, Watermark);
         serviceProvider.GetRequiredService<GameActions>().AddChatListeners();
