@@ -24,11 +24,11 @@
     "TestingChangelog": "- Added a button to continue the game where you left it. - Added more cards",
     "DownloadLinkTesting": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.5.1.1_testing/CardsAgainstHyurmanity.zip",
     "DalamudApiLevel": 13,
-    "AssemblyVersion": "0.5.1.1",
-    "Changelog": "- Added a button to continue the game where you left it. - Added more cards",
-    "DownloadLinkInstall": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.5.1.1_release/CardsAgainstHyurmanity.zip",
-    "DownloadLinkUpdate": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.5.1.1_release/CardsAgainstHyurmanity.zip",
-    "LastUpdate": 1758357517,
+    "AssemblyVersion": "0.6.0.0",
+    "Changelog": "- Added conjugation of verbs to match the black card. For instance:\n    - Before: Remember us. Remember that we once standing AFK in Limsa.\n    - Now: Remember us. Remember that we once stood AFK in Limsa.\n    - This is implemented with big lists of verbs and not a full language model, so there will be jank\n- Added more cards, modified some others\n- Fixed the last card of the deck always being skipped\n",
+    "DownloadLinkInstall": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.6.0.0_release/CardsAgainstHyurmanity.zip",
+    "DownloadLinkUpdate": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.6.0.0_release/CardsAgainstHyurmanity.zip",
+    "LastUpdate": 1761320122,
     "InternalName": "CardsAgainstHyurmanity"
   }
 ]
