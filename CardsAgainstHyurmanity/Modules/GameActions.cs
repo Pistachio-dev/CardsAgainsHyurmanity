@@ -1,5 +1,6 @@
 using CardsAgainstHyurmanity.Model.Game;
 using CardsAgainstHyurmanity.Modules.DataLoader;
+using CardsAgainstHyurmanity.Modules.Extensions;
 using CardsAgainstHyurmanity.Modules.WhiteCardFitting;
 using Dalamud.Game.Text;
 using DalamudBasics.Chat.ClientOnlyDisplay;

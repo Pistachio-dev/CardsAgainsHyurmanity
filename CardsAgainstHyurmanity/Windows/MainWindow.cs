@@ -2,6 +2,7 @@ using CardsAgainstHyurmanity.Model.CAHData;
 using CardsAgainstHyurmanity.Model.Game;
 using CardsAgainstHyurmanity.Modules;
 using CardsAgainstHyurmanity.Modules.DataLoader;
+using CardsAgainstHyurmanity.Modules.Extensions;
 using CardsAgainstHyurmanity.Modules.WhiteCardFitting;
 using Dalamud.Bindings.ImGui;
 using DalamudBasics.Chat.ClientOnlyDisplay;
