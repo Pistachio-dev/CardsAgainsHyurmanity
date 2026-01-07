@@ -210,7 +210,7 @@ namespace CardsAgainstHyurmanity.Data
             "\"The hearts of men are black with _ and must needs be cleansed!\" ~ Agrias, Zodiark Yapper",
             "\"Even the strongest of _ cannot defend the weakest of _.\" ~ the Thunder God",
             "\"A feeble _ protects nothing!\" ~ Thancred, as imagined by _",
-            "Talse of loss, and fire, and _",
+            "Tales of loss, and fire, and _",
             "If _ was a tank, their LB3 would be _",
             "If _ was a healer, their LB3 would be _",
             "If _ was a DPS, their LB3 would be _",
