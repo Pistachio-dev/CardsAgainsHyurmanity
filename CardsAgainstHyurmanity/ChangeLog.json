@@ -1,5 +1,11 @@
 [
   {
+    "AssemblyVersion": "0.6.2.0",
+    "DalamudApiLevel": 14,
+    "ChangeLog": "- Added some cards\n- Added button to add host as a player\n- Added /yell and /shout channels. Use at your own risk\n- Improved UI looks\n- Reduced the list of recognized verbs to verbs not used as noun ever\n- Added a button that prints a short \"How to play\" guide\n- Added more spacing to white cards for better readability",
+    "IsTest": false
+  },
+  {
     "AssemblyVersion": "0.6.1.4",
     "DalamudApiLevel": 14,
     "ChangeLog": "- Patch 7.4h1 update",
