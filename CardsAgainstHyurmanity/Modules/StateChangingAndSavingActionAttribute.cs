@@ -31,6 +31,7 @@ namespace CardsAgainstHyurmanity.Modules
                         throw new Exception("Attempting to write a null save");
                     }
 
+                    this.logService.Info(System.Text.Json.JsonSerializer.Serialize(saveManager.GetCharacterSaveInMemory()));
                     saveManager.WriteCharacterSave();
                 });
             }

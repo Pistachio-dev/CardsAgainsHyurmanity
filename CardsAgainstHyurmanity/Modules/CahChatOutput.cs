@@ -34,7 +34,7 @@ namespace CardsAgainstHyurmanity.Modules
                     SendTell(s.ToString(), fullPlayerName, GetOutputTypeForTell(), DelayBetweenTells);
                     s.Clear();
                 }
-                s.Append($"({i + 1}) {whiteCards[i]}");                
+                s.Append($"  ({i + 1}) {whiteCards[i]}");                
             }
 
             SendTell(s.ToString(), fullPlayerName, GetOutputTypeForTell(), DelayBetweenTells);

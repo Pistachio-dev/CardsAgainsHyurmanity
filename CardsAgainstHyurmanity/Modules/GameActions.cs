@@ -1,8 +1,8 @@
 using CardsAgainstHyurmanity.Model.Game;
 using CardsAgainstHyurmanity.Modules.DataLoader;
-using CardsAgainstHyurmanity.Modules.Extensions;
 using CardsAgainstHyurmanity.Modules.WhiteCardFitting;
 using Dalamud.Game.Text;
+using Dalamud.Plugin.Services;
 using DalamudBasics.Chat.ClientOnlyDisplay;
 using DalamudBasics.Chat.Listener;
 using DalamudBasics.Configuration;
@@ -33,10 +33,11 @@ namespace CardsAgainstHyurmanity.Modules
         private readonly IChatListener chatListener;
         private readonly WhiteCardFitter whiteCardFitter;
         private readonly CombinedCardFitter combinedCardFitter;
+        private readonly IObjectTable objectTable;
 
         public GameActions(ISaveManager<CahGame> saveManager, CahDataLoader loader, IConfigurationService<Configuration> configService, CahChatOutput chatOutput,
             ILogService logService, ITargetingService targetingService, IClientChatGui clientChatGui, IChatListener chatListener, WhiteCardFitter whiteCardFitter,
-            CombinedCardFitter combinedCardFitter)
+            CombinedCardFitter combinedCardFitter, IObjectTable objectTable)
         {
             this.saveManager = saveManager;
             this.loader = loader;
@@ -49,6 +50,7 @@ namespace CardsAgainstHyurmanity.Modules
             this.chatListener = chatListener;
             this.whiteCardFitter = whiteCardFitter;
             this.combinedCardFitter = combinedCardFitter;
+            this.objectTable = objectTable;
         }
 
         [StateChangingAndSavingAction]
@@ -273,6 +275,12 @@ namespace CardsAgainstHyurmanity.Modules
             AddPlayer(fullName);
         }
 
+        public bool IsHostPlaying()
+        {
+            var host = objectTable.LocalPlayer;
+            return host != null && game.Players.Any(p => p.FullName == host.GetFullName());
+        }
+
         public void AddTargetPlayer()
         {
             if (!targetingService.TrySaveTargetPlayerReference(out var targetReference) || targetReference == null)
@@ -283,6 +291,27 @@ namespace CardsAgainstHyurmanity.Modules
 
             var targetFullName = targetReference.GetFullName();
             AddPlayer(targetFullName);
+        }
+
+        public void AddHostAsPlayer()
+        {
+            var host = objectTable.LocalPlayer;
+            if (host == null)
+            {
+                logService.Warning("No local player. Can't be added as player.");
+                return;
+            }
+
+            AddPlayer(host.GetFullName());
+        }
+
+        public void PrintHowToPlay()
+        {
+            chatOutput.WriteChat($"\"BLACK CARDS\" are sentences with gaps, \"WHITE CARDS\" are words to fit those gaps");
+            chatOutput.WriteChat($"The objective of the game is to make the FUNNIEST, DIRTIEST or more POLITICALLY INCORRECT sentence by placing white cards in the black card's gaps");
+            chatOutput.WriteChat($"Every round, a \"black card\" with a one or more blanks (_) will be written in chat, and {configuration.InitialWhiteCardsDrawnAmount} \"white cards\" sent to all players through /tell");
+            chatOutput.WriteChat("Except for one, that is chosen as the \"CARD TZAR\", and must select their favorite combination once all players choose their own");
+            chatOutput.WriteChat("Tzar role rotates every round");
         }
 
         [StateChangingAndSavingAction]
@@ -311,7 +340,7 @@ namespace CardsAgainstHyurmanity.Modules
         {
             foreach (var player in game.Players)
             {
-                chatOutput.WriteChat($"{player.FullName.GetNameOnly()}: {player.AwesomePoints} A-points");
+                chatOutput.WriteChat($"{player.FullName.GetFirstName()}: {player.AwesomePoints} A-points");
             }
         }
 
@@ -384,7 +413,7 @@ namespace CardsAgainstHyurmanity.Modules
             }
 
             chatOutput.WriteCommand("mk attack1", 1000, game.Tzar.FullName);
-            chatOutput.WriteChat($"{game.Tzar.FullName.GetNameOnly()} is the card Tzar.");
+            chatOutput.WriteChat($"{game.Tzar.FullName.GetFirstName()} is the card Tzar.");
         }
 
         private int GetNextTzarIndex()
@@ -410,7 +439,7 @@ namespace CardsAgainstHyurmanity.Modules
                 return;
             }
 
-            chatOutput.WriteChat($"{winner.FullName.GetNameOnly()} wins and gets one Awesome point!" +
+            chatOutput.WriteChat($"{winner.FullName.GetFirstName()} wins and gets one Awesome point!" +
                 $" {winner.AwesomePoints}/{configuration.AwesomePointsToWin} <se.15>");
             chatOutput.WriteChat($"Their answer was {GetPlayerResponse(winner)}", null, 1000);
             NextRound();
