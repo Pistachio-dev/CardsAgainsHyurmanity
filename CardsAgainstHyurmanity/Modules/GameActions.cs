@@ -305,6 +305,15 @@ namespace CardsAgainstHyurmanity.Modules
             AddPlayer(host.GetFullName());
         }
 
+        public void PrintHowToPlay()
+        {
+            chatOutput.WriteChat($"\"BLACK CARDS\" are sentences with gaps, \"WHITE CARDS\" are words to fit those gaps");
+            chatOutput.WriteChat($"The objective of the game is to make the FUNNIEST, DIRTIEST or more POLITICALLY INCORRECT sentence by placing white cards in the black card's gaps");
+            chatOutput.WriteChat($"Every round, a \"black card\" with a one or more blanks (_) will be written in chat, and {configuration.InitialWhiteCardsDrawnAmount} \"white cards\" sent to all players through /tell");
+            chatOutput.WriteChat("Except for one, that is chosen as the \"CARD TZAR\", and must select their favorite combination once all players choose their own");
+            chatOutput.WriteChat("Tzar role rotates every round");
+        }
+
         [StateChangingAndSavingAction]
         private void AddPlayer(string fullName)
         {

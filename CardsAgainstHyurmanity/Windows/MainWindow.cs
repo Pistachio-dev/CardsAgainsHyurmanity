@@ -116,7 +116,12 @@ public class MainWindow : PluginWindowBase, IDisposable
         {
             gameActions.AddTargetPlayer();
         }
-        
+
+        if (ImGuiComponents.IconButtonWithText(Dalamud.Interface.FontAwesomeIcon.Info, "Write \"How to play\" to chat", Colors.Purple))
+        {
+            gameActions.PrintHowToPlay();
+        }
+
         if (ImGuiComponents.IconButtonWithText(Dalamud.Interface.FontAwesomeIcon.Plus, "Select card packs"))
         {
             plugin.TogglePackSelectorUI();
