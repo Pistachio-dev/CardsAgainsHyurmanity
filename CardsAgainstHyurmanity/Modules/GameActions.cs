@@ -1,6 +1,5 @@
 using CardsAgainstHyurmanity.Model.Game;
 using CardsAgainstHyurmanity.Modules.DataLoader;
-using CardsAgainstHyurmanity.Modules.Extensions;
 using CardsAgainstHyurmanity.Modules.WhiteCardFitting;
 using Dalamud.Game.Text;
 using DalamudBasics.Chat.ClientOnlyDisplay;
@@ -311,7 +310,7 @@ namespace CardsAgainstHyurmanity.Modules
         {
             foreach (var player in game.Players)
             {
-                chatOutput.WriteChat($"{player.FullName.GetNameOnly()}: {player.AwesomePoints} A-points");
+                chatOutput.WriteChat($"{player.FullName.GetFirstName()}: {player.AwesomePoints} A-points");
             }
         }
 
@@ -384,7 +383,7 @@ namespace CardsAgainstHyurmanity.Modules
             }
 
             chatOutput.WriteCommand("mk attack1", 1000, game.Tzar.FullName);
-            chatOutput.WriteChat($"{game.Tzar.FullName.GetNameOnly()} is the card Tzar.");
+            chatOutput.WriteChat($"{game.Tzar.FullName.GetFirstName()} is the card Tzar.");
         }
 
         private int GetNextTzarIndex()
@@ -410,7 +409,7 @@ namespace CardsAgainstHyurmanity.Modules
                 return;
             }
 
-            chatOutput.WriteChat($"{winner.FullName.GetNameOnly()} wins and gets one Awesome point!" +
+            chatOutput.WriteChat($"{winner.FullName.GetFirstName()} wins and gets one Awesome point!" +
                 $" {winner.AwesomePoints}/{configuration.AwesomePointsToWin} <se.15>");
             chatOutput.WriteChat($"Their answer was {GetPlayerResponse(winner)}", null, 1000);
             NextRound();

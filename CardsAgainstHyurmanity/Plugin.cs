@@ -98,15 +98,15 @@ public sealed class Plugin : IDalamudPlugin
         serviceCollection.AddSingleton<CombinedCardFitter>();
         serviceCollection.AddSingleton<ISaveManager<CahGame>, SaveManager<CahGame>>(sp => 
             new SaveManager<CahGame>("./CaHSaveGame.json", sp.GetRequiredService<ILogService>(),
-            sp.GetRequiredService<IObjectTable>()));
+                sp.GetRequiredService<IClientState>(), sp.GetRequiredService<IFramework>(), pluginInterface, sp.GetRequiredService<IObjectTable>()));
         return serviceCollection.BuildServiceProvider();
     }
 
     private void InitializeServices(IServiceProvider serviceProvider)
     {
         IFramework framework = serviceProvider.GetRequiredService<IFramework>();
-        serviceProvider.GetRequiredService<ILogService>().AttachToGameLogicLoop(framework);
-        serviceProvider.GetRequiredService<IChatListener>().InitializeAndRun(Watermark, ChatChannelSets.CommonChannelsAndLinkshells);       
+        serviceProvider.GetRequiredService<ILogService>().AttachToGameLogicLoop();
+        serviceProvider.GetRequiredService<IChatListener>().InitializeAndRun(Watermark, true, ChatChannelSets.CommonChannelsAndLinkshells);       
         serviceProvider.GetRequiredService<HookManager>();
         serviceProvider.GetRequiredService<CahChatOutput>().InitializeAndAttachToGameLogicLoop(framework, Watermark);
         serviceProvider.GetRequiredService<GameActions>().AddChatListeners();
