@@ -158,6 +158,7 @@ namespace CardsAgainstHyurmanity.Data
             "\"I am sworn to _ my queen! I will _ before I yield!\" ~ Commander Beatrix@0",
             "I can't believe they added _ to the Mogstore!",
             "60 dollars for _, Square Enix? That's outrageous! But I'll buy it anyway.",
+            "She's draining the audience! ...of their _",
             //-------------------- Borrowed. Well, some are. I lost track.
             "Im sorry sire we don't allow _ at the Gold Saucer",
             "After weeks of grinding, I finally got _",
@@ -219,6 +220,7 @@ namespace CardsAgainstHyurmanity.Data
         ];
 
         public string[] White => [
+            "cumming to M9S",
             "killing soooo many people",
             "Twerking like you're in A3S",
             "Fat ass",
