@@ -2,6 +2,7 @@ using CardsAgainstHyurmanity.Model.Game;
 using CardsAgainstHyurmanity.Modules.DataLoader;
 using CardsAgainstHyurmanity.Modules.WhiteCardFitting;
 using Dalamud.Game.Text;
+using Dalamud.Plugin.Services;
 using DalamudBasics.Chat.ClientOnlyDisplay;
 using DalamudBasics.Chat.Listener;
 using DalamudBasics.Configuration;
@@ -32,10 +33,11 @@ namespace CardsAgainstHyurmanity.Modules
         private readonly IChatListener chatListener;
         private readonly WhiteCardFitter whiteCardFitter;
         private readonly CombinedCardFitter combinedCardFitter;
+        private readonly IObjectTable objectTable;
 
         public GameActions(ISaveManager<CahGame> saveManager, CahDataLoader loader, IConfigurationService<Configuration> configService, CahChatOutput chatOutput,
             ILogService logService, ITargetingService targetingService, IClientChatGui clientChatGui, IChatListener chatListener, WhiteCardFitter whiteCardFitter,
-            CombinedCardFitter combinedCardFitter)
+            CombinedCardFitter combinedCardFitter, IObjectTable objectTable)
         {
             this.saveManager = saveManager;
             this.loader = loader;
@@ -48,6 +50,7 @@ namespace CardsAgainstHyurmanity.Modules
             this.chatListener = chatListener;
             this.whiteCardFitter = whiteCardFitter;
             this.combinedCardFitter = combinedCardFitter;
+            this.objectTable = objectTable;
         }
 
         [StateChangingAndSavingAction]
@@ -272,6 +275,12 @@ namespace CardsAgainstHyurmanity.Modules
             AddPlayer(fullName);
         }
 
+        public bool IsHostPlaying()
+        {
+            var host = objectTable.LocalPlayer;
+            return host != null && game.Players.Any(p => p.FullName == host.GetFullName());
+        }
+
         public void AddTargetPlayer()
         {
             if (!targetingService.TrySaveTargetPlayerReference(out var targetReference) || targetReference == null)
@@ -282,6 +291,18 @@ namespace CardsAgainstHyurmanity.Modules
 
             var targetFullName = targetReference.GetFullName();
             AddPlayer(targetFullName);
+        }
+
+        public void AddHostAsPlayer()
+        {
+            var host = objectTable.LocalPlayer;
+            if (host == null)
+            {
+                logService.Warning("No local player. Can't be added as player.");
+                return;
+            }
+
+            AddPlayer(host.GetFullName());
         }
 
         [StateChangingAndSavingAction]

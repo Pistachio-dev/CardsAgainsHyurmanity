@@ -2,7 +2,6 @@ using CardsAgainstHyurmanity.Model.CAHData;
 using CardsAgainstHyurmanity.Model.Game;
 using CardsAgainstHyurmanity.Modules;
 using CardsAgainstHyurmanity.Modules.DataLoader;
-using CardsAgainstHyurmanity.Modules.Extensions;
 using CardsAgainstHyurmanity.Modules.WhiteCardFitting;
 using Dalamud.Bindings.ImGui;
 using DalamudBasics.Chat.ClientOnlyDisplay;
@@ -74,9 +73,16 @@ public class MainWindow : PluginWindowBase, IDisposable
         }
 
         DrawPlayerTable();
-        if (game.Players.Count >= 3 && game.Stage == GameStage.NotStarted)
+        if (game.Players.Count >= 3)
         {
-            DrawActionButton(() => gameActions.StartGame(), "Start game");
+            if (game.Stage == GameStage.NotStarted)
+            {
+                DrawActionButton(() => gameActions.StartGame(), "Start game");
+            }            
+        }
+        else
+        {
+            ImGui.TextColored(new Vector4(1, 1, 0, 1),"Cards Against Humanity needs a minimum of three players");
         }
         if (game.Stage == GameStage.PlayersPicking)
         {
@@ -85,6 +91,11 @@ public class MainWindow : PluginWindowBase, IDisposable
         if (game.Stage == GameStage.TzarPicking)
         {
             DrawActionButton(() => gameActions.NextRound(), "Tzar is afk, skip to next round");
+        }
+
+        if (!gameActions.IsHostPlaying())
+        {
+            DrawActionButton(() => gameActions.AddHostAsPlayer(), "Add yourself as player");
         }
 
         DrawActionButton(() => gameActions.AddTargetPlayer(), "Add target player");
@@ -140,7 +151,7 @@ public class MainWindow : PluginWindowBase, IDisposable
             {
                 ImGui.TableNextRow();
                 ImGui.TableNextColumn();
-                string playerNameText = player.FullName.GetNameOnly();
+                string playerNameText = player.FullName.GetFirstName();
                 if (player.AFK)
                 {
                     playerNameText += "(AFK)";
