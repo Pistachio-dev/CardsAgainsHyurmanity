@@ -4,6 +4,7 @@ using CardsAgainstHyurmanity.Modules;
 using CardsAgainstHyurmanity.Modules.DataLoader;
 using CardsAgainstHyurmanity.Modules.WhiteCardFitting;
 using Dalamud.Bindings.ImGui;
+using Dalamud.Interface.Components;
 using DalamudBasics.Chat.ClientOnlyDisplay;
 using DalamudBasics.Configuration;
 using DalamudBasics.Extensions;
@@ -77,30 +78,50 @@ public class MainWindow : PluginWindowBase, IDisposable
         {
             if (game.Stage == GameStage.NotStarted)
             {
-                DrawActionButton(() => gameActions.StartGame(), "Start game");
+                if (ImGuiComponents.IconButtonWithText(Dalamud.Interface.FontAwesomeIcon.Play, "Start game", Colors.DarkGreen)){
+                    gameActions.StartGame();
+                }
             }            
         }
         else
         {
-            ImGui.TextColored(new Vector4(1, 1, 0, 1),"Cards Against Humanity needs a minimum of three players");
+            ImGui.TextColored(Colors.Yellow,"Cards Against Humanity needs a minimum of three players");
         }
         if (game.Stage == GameStage.PlayersPicking)
         {
-            DrawActionButton(() => gameActions.PresentPicks(), "Someone is afk, skip to the round end");
+            if (ImGuiComponents.IconButtonWithText(Dalamud.Interface.FontAwesomeIcon.FastForward, "Someone is afk, skip to the round end", Colors.Blue))
+            {
+                gameActions.PresentPicks();
+            }
         }
         if (game.Stage == GameStage.TzarPicking)
         {
-            DrawActionButton(() => gameActions.NextRound(), "Tzar is afk, skip to next round");
+            if (ImGuiComponents.IconButtonWithText(Dalamud.Interface.FontAwesomeIcon.FastForward, "Tzar is afk, skip to next round", Colors.Blue))
+            {
+                gameActions.NextRound();
+            }
         }
 
         if (!gameActions.IsHostPlaying())
         {
-            DrawActionButton(() => gameActions.AddHostAsPlayer(), "Add yourself as player");
+            
+            if (ImGuiComponents.IconButtonWithText(Dalamud.Interface.FontAwesomeIcon.Plus, "Add yourself as player", Colors.Blue))
+            {
+                gameActions.AddHostAsPlayer();
+            }
+            ImGui.SameLine();
         }
 
-        DrawActionButton(() => gameActions.AddTargetPlayer(), "Add target player");
-        ImGui.SameLine();
-        DrawActionButton(() => plugin.TogglePackSelectorUI(), "Select card packs");
+        if (ImGuiComponents.IconButtonWithText(Dalamud.Interface.FontAwesomeIcon.Bullseye, "Add target player", Colors.Blue))
+        {
+            gameActions.AddTargetPlayer();
+        }
+        
+        if (ImGuiComponents.IconButtonWithText(Dalamud.Interface.FontAwesomeIcon.Plus, "Select card packs"))
+        {
+            plugin.TogglePackSelectorUI();
+        }
+
         ImGui.SameLine();
         DrawActionButton(() => plugin.ToggleConfigUI(), "Configuration");
         if (game.Stage != GameStage.NotStarted)
