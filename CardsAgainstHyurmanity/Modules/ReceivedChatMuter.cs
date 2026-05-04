@@ -1,3 +1,4 @@
+using Dalamud.Game.Chat;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Plugin.Services;
@@ -28,16 +29,17 @@ namespace CardsAgainstHyurmanity.Modules
             chatGui.ChatMessage += RemoveCardSentMessage;
         }
 
-        private void RemoveCardSentMessage(XivChatType type, int timestamp, ref SeString messageSender, ref SeString messageMessage, ref bool isHandled)
+        private void RemoveCardSentMessage(IHandleableChatMessage messageRaw)
         {
+            var type = messageRaw.LogKind;
             if (type != XivChatType.TellOutgoing)
             {
                 return;
             }
 
-            if (configuration.RemoveOutgoingCardsChat && messageMessage.TextValue.StartsWith(Plugin.Watermark, StringComparison.OrdinalIgnoreCase))
+            if (configuration.RemoveOutgoingCardsChat && messageRaw.Message.TextValue.StartsWith(Plugin.Watermark, StringComparison.OrdinalIgnoreCase))
             {
-                isHandled = true;
+                messageRaw.PreventOriginal();
             }            
         }
 

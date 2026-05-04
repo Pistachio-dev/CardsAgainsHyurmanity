@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using Dalamud.Interface.Windowing;
 
 namespace CardsAgainstHyurmanity.Windows;
 

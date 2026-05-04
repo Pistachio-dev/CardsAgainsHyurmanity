@@ -5,6 +5,7 @@ using CardsAgainstHyurmanity.Modules.DataLoader;
 using CardsAgainstHyurmanity.Modules.WhiteCardFitting;
 using Dalamud.Bindings.ImGui;
 using Dalamud.Interface.Components;
+using Dalamud.Interface.Windowing;
 using DalamudBasics.Chat.ClientOnlyDisplay;
 using DalamudBasics.Configuration;
 using DalamudBasics.Extensions;
