@@ -24,11 +24,11 @@
     "TestingChangelog": "- Added a button to continue the game where you left it. - Added more cards",
     "DownloadLinkTesting": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.5.1.1_testing/CardsAgainstHyurmanity.zip",
     "DalamudApiLevel": 14,
-    "AssemblyVersion": "0.6.1.4",
-    "Changelog": "- Patch 7.4h1 update",
-    "DownloadLinkInstall": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.6.1.4_release/CardsAgainstHyurmanity.zip",
-    "DownloadLinkUpdate": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.6.1.4_release/CardsAgainstHyurmanity.zip",
-    "LastUpdate": 1766253205,
+    "AssemblyVersion": "0.6.2.0",
+    "Changelog": "- Added some cards\n- Added button to add host as a player\n- Added /yell and /shout channels. Use at your own risk\n- Improved UI looks\n- Reduced the list of recognized verbs to verbs not used as noun ever\n- Added a button that prints a short \"How to play\" guide\n- Added more spacing to white cards for better readability",
+    "DownloadLinkInstall": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.6.2.0_release/CardsAgainstHyurmanity.zip",
+    "DownloadLinkUpdate": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.6.2.0_release/CardsAgainstHyurmanity.zip",
+    "LastUpdate": 1773326564,
     "InternalName": "CardsAgainstHyurmanity"
   }
 ]
