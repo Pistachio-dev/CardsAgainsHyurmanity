@@ -21,7 +21,7 @@ public class Configuration : IConfiguration
     public int AnswersRolloutDelayInMs { get; set; } = 4000;
     public bool RemoveOutgoingCardsChat { get; set; } = true;
 
-    public bool MatchVerbsToBlackCards { get; set; } = true;
+    public bool MatchVerbsToBlackCards { get; set; } = false;
 
     public bool UseTestData { get; set; } = false;
 
