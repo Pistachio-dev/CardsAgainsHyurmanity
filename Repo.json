@@ -23,12 +23,12 @@
     "TestingAssemblyVersion": "0.5.1.1",
     "TestingChangelog": "- Added a button to continue the game where you left it. - Added more cards",
     "DownloadLinkTesting": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.5.1.1_testing/CardsAgainstHyurmanity.zip",
-    "DalamudApiLevel": 14,
-    "AssemblyVersion": "0.6.3.0",
+    "DalamudApiLevel": 15,
+    "AssemblyVersion": "0.6.3.1",
     "Changelog": "- 7.5 update",
-    "DownloadLinkInstall": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.6.3.0_release/CardsAgainstHyurmanity.zip",
-    "DownloadLinkUpdate": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.6.3.0_release/CardsAgainstHyurmanity.zip",
-    "LastUpdate": 1777905428,
+    "DownloadLinkInstall": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.6.3.1_release/CardsAgainstHyurmanity.zip",
+    "DownloadLinkUpdate": "https://github.com/Pistachio-dev/CardsAgainsHyurmanity/releases/download/0.6.3.1_release/CardsAgainstHyurmanity.zip",
+    "LastUpdate": 1779743537,
     "InternalName": "CardsAgainstHyurmanity"
   }
 ]
