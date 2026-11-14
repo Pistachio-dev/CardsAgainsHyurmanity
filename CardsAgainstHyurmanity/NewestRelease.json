@@ -1,6 +1,6 @@
 {
-    "AssemblyVersion": "0.6.3.1",
+    "AssemblyVersion": "0.6.3.2",
     "DalamudApiLevel": 15,
-    "ChangeLog": "- 7.5 update",
+    "ChangeLog": "- Fixed plugin sometimes removing chunks of words it mistook for duplicate article, like \"the allagans\" to \"thellagans\".",
     "IsTest": false
 }
