@@ -36,10 +36,13 @@ namespace CardsAgainstHyurmanity.Modules.WhiteCardFitting
 
         private string RemoveDuplicateArticles(string combinedCard)
         {
-            combinedCard = combinedCard.Replace("the the", "the", StringComparison.OrdinalIgnoreCase);
-            combinedCard = combinedCard.Replace("a the", "a", StringComparison.OrdinalIgnoreCase);
-            combinedCard = combinedCard.Replace("the a", "the", StringComparison.OrdinalIgnoreCase);
-            combinedCard = combinedCard.Replace("a a", "a", StringComparison.OrdinalIgnoreCase);
+            combinedCard = combinedCard.Replace(" the the ", " the ", StringComparison.OrdinalIgnoreCase);
+            combinedCard = combinedCard.Replace(" a the ", " a ", StringComparison.OrdinalIgnoreCase);
+            combinedCard = combinedCard.Replace(" a a ", " a ", StringComparison.OrdinalIgnoreCase);
+            combinedCard = combinedCard.Replace(" the a ", " the ", StringComparison.OrdinalIgnoreCase);
+            combinedCard = combinedCard.Replace(" a an ", " an ", StringComparison.OrdinalIgnoreCase);
+            combinedCard = combinedCard.Replace(" the an ", " the ", StringComparison.OrdinalIgnoreCase);
+
 
             return combinedCard;
         }

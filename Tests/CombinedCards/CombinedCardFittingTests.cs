@@ -25,7 +25,18 @@ namespace Tests.CombinedCards
         [InlineData("Get this marker out@2", "Get this marker out")]
         [InlineData("Get this marker out@3", "Get this marker out")]
         [InlineData("a bit of the the everything in a a possible thing@3", "A bit of the everything in a possible thing")]
-        [InlineData("","")]
+        [InlineData("fake duplicate a, gamba and", "Fake duplicate a, gamba and")]
+        [InlineData("fake and real double a, gamba and a a duplicate", "Fake and real double a, gamba and a duplicate")]
+        [InlineData("fake the writhe a", "Fake the writhe a")]
+        [InlineData("fake the writhe the", "Fake the writhe the")]
+        [InlineData("fake a bola the thing", "Fake a bola the thing")]
+        [InlineData("fake a bola a thing", "Fake a bola a thing")]
+        [InlineData("fake and real the the writhe the", "Fake and real the writhe the")]
+        [InlineData("damn the the allagans", "Damn the allagans")]
+        [InlineData("damn the theory", "Damn the theory")]
+        [InlineData("damn a theory", "Damn a theory")]
+        [InlineData("try a an theory", "Try an theory")]
+        [InlineData("try the an offer","Try the offer")]
         public void FitBlackCard_AnyCard_CorrectlyAdapted(string card, string expected)
         {
             // Arrange
