@@ -11,12 +11,12 @@ namespace CardsAgainstHyurmanity.Modules
 {
     public class StateChangingAndSavingActionAttribute : OverrideMethodAspect
     {
+        //[IntroduceDependency]
+        //private readonly ISaveManager<CahGame> saveManager;
+        //[IntroduceDependency]
+        //private readonly ILogService logService;
         [IntroduceDependency]
-        private readonly ISaveManager<CahGame> saveManager;
-        [IntroduceDependency]
-        private readonly ILogService logService;
-        [IntroduceDependency]
-        private readonly IFramework framework;
+        private readonly IFramework _framework;
 
         public override dynamic? OverrideMethod()
         {
@@ -24,27 +24,28 @@ namespace CardsAgainstHyurmanity.Modules
             var returnValue = meta.Proceed();
             try
             {
-                saveTask = framework.RunOnFrameworkThread(() =>
-                {
-                    if (saveManager.GetCharacterSaveInMemory() == null)
+                this._framework.RunOnFrameworkThread(() =>
                     {
-                        throw new Exception("Attempting to write a null save");
-                    }
+                        if (meta.This.saveManager.GetCharacterSaveInMemory() == null)
+                        {
+                            throw new Exception("Attempting to write a null save");
+                        }
 
-                    this.logService.Info(System.Text.Json.JsonSerializer.Serialize(saveManager.GetCharacterSaveInMemory()));
-                    saveManager.WriteCharacterSave();
-                });
+                        meta.This.logService.Info(System.Text.Json.JsonSerializer.Serialize(meta.This.saveManager.GetCharacterSaveInMemory()));
+                        meta.This.saveManager.WriteCharacterSave();
+                    });
             }
             catch (Exception ex)
             {
-                this.logService.Error(ex, "Error on " + nameof(StateChangingAndSavingActionAttribute));
+                meta.This.logService.Error(ex, "Error on " + nameof(StateChangingAndSavingActionAttribute));
                 if (saveTask?.Exception != null)
                 {
-                    this.logService.Error(saveTask.Exception, "Error on framework thread");
-                }                
+                    meta.This.logService.Error(saveTask.Exception, "Error on framework thread");
+                }
             }
 
             return returnValue;
         }
+
     }
 }

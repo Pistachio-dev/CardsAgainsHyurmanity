@@ -18,7 +18,7 @@ using System.Linq;
 
 namespace CardsAgainstHyurmanity.Modules
 {
-    public class GameActions
+    public partial class GameActions
     {
         private const string BloodSacrificeText = "#BloodSacrifice";
         private readonly ISaveManager<CahGame> saveManager;
@@ -33,11 +33,11 @@ namespace CardsAgainstHyurmanity.Modules
         private readonly IChatListener chatListener;
         private readonly WhiteCardFitter whiteCardFitter;
         private readonly CombinedCardFitter combinedCardFitter;
-        private readonly IObjectTable objectTable;
+        private readonly IObjectTable objectTable;        
 
         public GameActions(ISaveManager<CahGame> saveManager, CahDataLoader loader, IConfigurationService<Configuration> configService, CahChatOutput chatOutput,
             ILogService logService, ITargetingService targetingService, IClientChatGui clientChatGui, IChatListener chatListener, WhiteCardFitter whiteCardFitter,
-            CombinedCardFitter combinedCardFitter, IObjectTable objectTable)
+            CombinedCardFitter combinedCardFitter, IObjectTable objectTable, IFramework framework)
         {
             this.saveManager = saveManager;
             this.loader = loader;

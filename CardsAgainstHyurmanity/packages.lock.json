@@ -22,38 +22,38 @@
       },
       "Metalama.Extensions.DependencyInjection": {
         "type": "Direct",
-        "requested": "[2025.1.12, )",
-        "resolved": "2025.1.12",
-        "contentHash": "12+AIId9vns88ZkZROm3ytruByWKZFgu5k762lbaGmPFmWtAmcTtju0zM/FsLNEuVMY5l/9o14Mkp7CIYI3/rQ==",
+        "requested": "[2026.1.32, )",
+        "resolved": "2026.1.32",
+        "contentHash": "92NdjjHdQhtxqpCpCdLXihoZFNjG2uGNat+kPX1z0TwIgTWarRsT1CjyQyrob+n8hot7VEOVbPWSSjHhxC7T2Q==",
         "dependencies": {
-          "JetBrains.Annotations": "2024.2.0",
-          "Metalama.Framework": "2025.1.12"
+          "JetBrains.Annotations": "2025.2.4",
+          "Metalama.Framework": "2026.1.32"
         }
       },
       "Metalama.Framework": {
         "type": "Direct",
-        "requested": "[2025.1.12, )",
-        "resolved": "2025.1.12",
-        "contentHash": "xBw9bL1DpLwUrduKRvFBFvRo4DTG/zWttXRNP2EN2gGoP8inlvo/XOLxSPsnLMuYP6Q/guqZAbO9oXfYqrH4sw==",
+        "requested": "[2026.1.32, )",
+        "resolved": "2026.1.32",
+        "contentHash": "fhzEGtCQf0T4LuQJSDr3vSVKgTHUAiIULKO8/2kOZTaNlvmneT7eEcWpdBywj+7tT5f8ed3RLDzwiQNSKvm0Ig==",
         "dependencies": {
-          "Metalama.Compiler": "2025.1.6",
-          "Metalama.Framework.Redist": "2025.1.12"
+          "Metalama.Compiler": "2026.1.21",
+          "Metalama.Framework.Redist": "2026.1.32"
         }
       },
       "JetBrains.Annotations": {
         "type": "Transitive",
-        "resolved": "2024.2.0",
-        "contentHash": "GNnqCFW/163p1fOehKx0CnAqjmpPrUSqrgfHM6qca+P+RN39C9rhlfZHQpJhxmQG/dkOYe/b3Z0P8b6Kv5m1qw=="
+        "resolved": "2025.2.4",
+        "contentHash": "TwbgxAkXxY+vNEhNVx/QXjJ4vqxmepOjsgRvvImQPbHkHMMb4W+ahL3laMsxXKtNT7iMy+E1B3xkqao2hf1n3A=="
       },
       "Metalama.Compiler": {
         "type": "Transitive",
-        "resolved": "2025.1.6",
-        "contentHash": "0cpjwwV+Iw4GrVUBfm4n945pmNjEEJQrqYqRJbBChQSxe3ZWKCGos5YS4NKCw7DC+0ASCDW4DcQ9s0ag+78J2g=="
+        "resolved": "2026.1.21",
+        "contentHash": "hIJH2MShfH8ckC6STDDT+Xy0VCNaJKgoKInQj7Hftf6zsduRjDF/KlZxT0ZrTG5ZZu+AI8SAksjjUhL9kLWPTg=="
       },
       "Metalama.Framework.Redist": {
         "type": "Transitive",
-        "resolved": "2025.1.12",
-        "contentHash": "6yC0DDO35tFfEjcS1naLLo0aDGVgXE/SBRJzUj0yNeg0lgL75SBAZxVWNM11HyphdYLib1pZfrSkK2v0usxRbA=="
+        "resolved": "2026.1.32",
+        "contentHash": "0/cdc0LG0oiDm5YNZ1hQ29oiNl1IaVZVXAKogV2+i+G15VntiaSrr//VTaR6tSunF2VZiXwZ6dNS5kvzujgVVw=="
       },
       "Microsoft.Extensions.DependencyInjection": {
         "type": "Transitive",
